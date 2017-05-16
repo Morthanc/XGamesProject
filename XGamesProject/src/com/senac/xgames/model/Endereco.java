@@ -6,6 +6,7 @@ public class Endereco {
 
 private Long id;
 private String logradouro;
+private String bairro;
 private String complemento;
 private String cep;
 private String numero;
@@ -36,6 +37,13 @@ private String estado;
         this.complemento = complemento;
     }
 
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
     public String getCep() {
         return cep;
     }

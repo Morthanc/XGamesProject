@@ -1,7 +1,7 @@
 package com.senac.xgames.model;
 
 public class Produto {
-
+    
     private Long id;
     private String titulo;
     private String desenvolvedor;
@@ -9,7 +9,6 @@ public class Produto {
     private String categoria;
     private String plataforma;
     private String genero;
-    private Boolean multiplayer;
     private String classificacao;
     private Double preco;
     
@@ -67,14 +66,6 @@ public class Produto {
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-
-    public Boolean getMultiplayer() {
-        return multiplayer;
-    }
-
-    public void setMultiplayer(Boolean multiplayer) {
-        this.multiplayer = multiplayer;
     }
 
     public String getClassificacao() {

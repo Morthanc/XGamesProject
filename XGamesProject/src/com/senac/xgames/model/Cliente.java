@@ -6,7 +6,6 @@ public class Cliente {
 
     private Long id;
     private String nome;
-    private String sobrenome;
     private String rg;
     private String cpf;
     private Date dataNascimento;
@@ -28,14 +27,6 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
     }
 
     public String getRg() {
