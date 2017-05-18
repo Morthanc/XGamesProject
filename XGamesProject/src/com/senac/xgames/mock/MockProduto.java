@@ -41,6 +41,7 @@ public class MockProduto {
                     produto.setGenero(produtoProcura.getGenero());
                     produto.setClassificacao(produtoProcura.getClassificacao());
                     produto.setPreco(produtoProcura.getPreco());
+                    produto.setEstoque(produtoProcura.getEstoque());
                 break;
                 }
             }
