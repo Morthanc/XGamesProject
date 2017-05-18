@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Cliente {
 
-    private Long id;
+    private Integer id;
     private String nome;
     private String rg;
     private String cpf;
@@ -13,11 +13,11 @@ public class Cliente {
     private String telefone2;
     private String email;
     
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

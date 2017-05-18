@@ -2,7 +2,7 @@ package com.senac.xgames.model;
 
 public class Produto {
     
-    private Long id;
+    private Integer id;
     private String titulo;
     private String desenvolvedor;
     private String fornecedor;
@@ -12,11 +12,11 @@ public class Produto {
     private String classificacao;
     private Double preco;
     
-    public Long getId() {
-        return id;
+    public int getId() {
+        return id;      
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
