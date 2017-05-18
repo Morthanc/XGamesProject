@@ -11,6 +11,15 @@ public class Produto {
     private String genero;
     private String classificacao;
     private Double preco;
+
+    public Integer getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Integer estoque) {
+        this.estoque = estoque;
+    }
+    private Integer estoque;
     
     public int getId() {
         return id;      
