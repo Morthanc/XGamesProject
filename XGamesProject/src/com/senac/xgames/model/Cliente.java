@@ -8,7 +8,7 @@ public class Cliente {
     private String nome;
     private String rg;
     private String cpf;
-    private Date dataNascimento;
+    private int idade;
     private String telefone1;
     private String telefone2;
     private String email;
@@ -109,12 +109,12 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
     public String getTelefone1() {

@@ -56,11 +56,21 @@ public class Menu extends javax.swing.JFrame {
 
         PainelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder("Menu"));
 
-        PainelClientes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        PainelClientes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clientes", 2, 0));
 
         BTCadastrarCliente.setText("Cadastrar Clientes");
+        BTCadastrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTCadastrarClienteActionPerformed(evt);
+            }
+        });
 
         BTConAltCliente.setText("Consultas/ Alterações");
+        BTConAltCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTConAltClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelClientesLayout = new javax.swing.GroupLayout(PainelClientes);
         PainelClientes.setLayout(PainelClientesLayout);
@@ -83,11 +93,21 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PainelProdutos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Produtos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        PainelProdutos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Produtos", 2, 0));
 
         BTCadastrarProduto.setText("Cadastrar Produtos ");
+        BTCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTCadastrarProdutoActionPerformed(evt);
+            }
+        });
 
         BTConAltProduto.setText("Consultas/ Alterações");
+        BTConAltProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTConAltProdutoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelProdutosLayout = new javax.swing.GroupLayout(PainelProdutos);
         PainelProdutos.setLayout(PainelProdutosLayout);
@@ -113,8 +133,18 @@ public class Menu extends javax.swing.JFrame {
         PainelVendas.setBorder(javax.swing.BorderFactory.createTitledBorder("Vendas"));
 
         BTVenda.setText("Efetuar Venda");
+        BTVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTVendaActionPerformed(evt);
+            }
+        });
 
         BTRelatorio.setText("Gerar Relatório");
+        BTRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTRelatorioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelVendasLayout = new javax.swing.GroupLayout(PainelVendas);
         PainelVendas.setLayout(PainelVendasLayout);
@@ -138,6 +168,11 @@ public class Menu extends javax.swing.JFrame {
         );
 
         BTSair.setText("Sair");
+        BTSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelMenuLayout = new javax.swing.GroupLayout(PainelMenu);
         PainelMenu.setLayout(PainelMenuLayout);
@@ -189,6 +224,46 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTCadastrarClienteActionPerformed
+       this.setVisible(false);
+       CadastroCliente telaCadastro = new CadastroCliente();
+       telaCadastro.setVisible(true);
+    }//GEN-LAST:event_BTCadastrarClienteActionPerformed
+
+    private void BTSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_BTSairActionPerformed
+
+    private void BTConAltClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTConAltClienteActionPerformed
+       this.setVisible(false);
+       ConsultaCliente telaConsultaCliente = new ConsultaCliente();
+       telaConsultaCliente.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTConAltClienteActionPerformed
+
+    private void BTCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTCadastrarProdutoActionPerformed
+       this.setVisible(false);
+       CadastroProduto cadastroProduto = new CadastroProduto();
+       cadastroProduto.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_BTCadastrarProdutoActionPerformed
+
+    private void BTConAltProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTConAltProdutoActionPerformed
+       this.setVisible(false);
+       ConsultaProduto consultaProduto = new ConsultaProduto();
+       consultaProduto.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_BTConAltProdutoActionPerformed
+
+    private void BTVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTVendaActionPerformed
+       this.setVisible(false);
+       Venda venda = new Venda();
+       venda.setVisible(true);  
+    }//GEN-LAST:event_BTVendaActionPerformed
+
+    private void BTRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTRelatorioActionPerformed
+       this.setVisible(false);
+       Relatorio relatorio = new Relatorio();
+       relatorio.setVisible(true);          // TODO add your handling code here:
+    }//GEN-LAST:event_BTRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
