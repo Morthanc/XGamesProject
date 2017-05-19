@@ -7,6 +7,7 @@ public class Cliente {
     private Integer id;
     private String nome;
     private String sobrenome;
+    private String sexo;
     private String rg;
     private String cpf;
     private int idade;
@@ -28,6 +29,15 @@ public class Cliente {
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
     }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+    
     
     public int getId() {
         return id;
