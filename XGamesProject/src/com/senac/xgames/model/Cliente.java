@@ -10,7 +10,7 @@ public class Cliente {
     private String sexo;
     private String rg;
     private String cpf;
-    private int idade;
+    private String idade;
     private String telefone1;
     private String telefone2;
     private String email;
@@ -127,11 +127,11 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public int getIdade() {
+    public String getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(String idade) {
         this.idade = idade;
     }
 
