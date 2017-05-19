@@ -56,7 +56,7 @@ public class Menu extends javax.swing.JFrame {
 
         PainelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder("Menu"));
 
-        PainelClientes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clientes", 2, 0));
+        PainelClientes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clientes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         BTCadastrarCliente.setText("Cadastrar Clientes");
         BTCadastrarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +93,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        PainelProdutos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Produtos", 2, 0));
+        PainelProdutos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Produtos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         BTCadastrarProduto.setText("Cadastrar Produtos ");
         BTCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
@@ -223,6 +223,7 @@ public class Menu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTCadastrarClienteActionPerformed

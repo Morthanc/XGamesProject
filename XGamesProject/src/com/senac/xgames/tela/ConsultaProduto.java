@@ -135,6 +135,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonvoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonvoltarActionPerformed
