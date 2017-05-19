@@ -6,6 +6,7 @@ public class Cliente {
 
     private Integer id;
     private String nome;
+    private String sobrenome;
     private String rg;
     private String cpf;
     private int idade;
@@ -20,6 +21,13 @@ public class Cliente {
     private String cidade;
     private String estado;
     
+     public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
     
     public int getId() {
         return id;
