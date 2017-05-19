@@ -23,7 +23,7 @@ public class MockCliente {
             for (Cliente cliente : listaClientes) {
                 if (cliente != null && cliente.getId() == clienteProcura.getId()) {
                     cliente.setCpf(clienteProcura.getCpf());
-                    cliente.setDataNascimento(clienteProcura.getDataNascimento());
+                    cliente.setIdade(clienteProcura.getIdade());
                     cliente.setNome(clienteProcura.getNome());
                     cliente.setRg(clienteProcura.getRg());
                     cliente.setEmail(clienteProcura.getEmail());

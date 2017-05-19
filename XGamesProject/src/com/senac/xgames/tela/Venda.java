@@ -106,6 +106,11 @@ public class Venda extends javax.swing.JFrame {
         });
 
         jButtonVoltar.setText("Voltar");
+        jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVoltarActionPerformed(evt);
+            }
+        });
 
         jButtonAdicionarCarrinho.setText("Adicionar ao Carrinho");
 
@@ -215,6 +220,12 @@ public class Venda extends javax.swing.JFrame {
     private void jButtonFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarVendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonFinalizarVendaActionPerformed
+
+    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
+        this.setVisible(false);
+        Menu menu = new Menu();
+        menu.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonVoltarActionPerformed
 
     /**
      * @param args the command line arguments

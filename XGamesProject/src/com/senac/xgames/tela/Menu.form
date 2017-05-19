@@ -146,11 +146,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cadastrar Clientes"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTCadastrarClienteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BTConAltCliente">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consultas/ Altera&#xe7;&#xf5;es"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTConAltClienteActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -193,11 +199,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cadastrar Produtos "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTCadastrarProdutoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BTConAltProduto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consultas/ Altera&#xe7;&#xf5;es"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTConAltProdutoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -240,11 +252,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Efetuar Venda"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTVendaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BTRelatorio">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gerar Relat&#xf3;rio"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTRelatorioActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -252,6 +270,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Sair"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTSairActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

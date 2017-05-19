@@ -85,6 +85,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         });
 
         jButtonVoltar.setText("Voltar");
+        jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVoltarActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jogo", "Console", "Acessório" }));
 
@@ -211,6 +216,12 @@ public class CadastroProduto extends javax.swing.JFrame {
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
+
+    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
+        this.setVisible(false);
+        Menu menu = new Menu();
+        menu.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonVoltarActionPerformed
 
     /**
      * @param args the command line arguments

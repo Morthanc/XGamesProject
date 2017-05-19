@@ -5,15 +5,16 @@
  */
 package com.senac.xgames.tela;
 
+import com.senac.xgames.mock.MockCliente;
+import com.senac.xgames.model.Cliente;
+
 /**
  *
  * @author geoinformacao
  */
 public class CadastroCliente extends javax.swing.JFrame {
-
-    /**
-     * Creates new form CadastroCliente
-     */
+    MockCliente mockCliente = new MockCliente();
+    
     public CadastroCliente() {
         initComponents();
     }
@@ -34,7 +35,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextRG = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldCPF = new javax.swing.JTextField();
+        jTextCpf = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldIdade = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -44,7 +45,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTextLogradouro = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTexComplemento = new javax.swing.JTextField();
+        jTextComplemento = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextCep = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -144,6 +145,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         });
 
         jButtonVoltar.setText("Voltar");
+        jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVoltarActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Bairro:");
 
@@ -167,7 +173,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
-                                .addComponent(jTextFieldCPF))
+                                .addComponent(jTextCpf))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -225,7 +231,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTexComplemento, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(jTextComplemento, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                             .addComponent(jTextNumero)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(120, 120, 120)
@@ -262,7 +268,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2)
@@ -272,16 +278,13 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jLabel14)
                             .addComponent(jTextTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel5))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
@@ -299,7 +302,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jTextLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jTexComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,7 +358,28 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
-       
+        Cliente cliente = new Cliente();
+        cliente.setNome(jTextNome.getText());
+        cliente.setRg(jTextRG.getText());
+        cliente.setCpf(jTextCpf.getText());
+        cliente.setIdade(Integer.valueOf(jTextFieldIdade.getText()));
+        cliente.setTelefone1(jTextTelefone.getText());
+        cliente.setTelefone2(jTextCelular.getText());
+        cliente.setCep(jTextCep.getText());
+        cliente.setLogradouro(jTextLogradouro.getText());
+        cliente.setBairro(jTextBairro.getText());
+        cliente.setComplemento(jTextComplemento.getText());
+        cliente.setNumero(jTextNumero.getText());
+        cliente.setEmail(jTextEmail.getText());
+        cliente.setEstado(jComboEstado.getSelectedItem().toString());
+        cliente.setCidade(jTextCidade.getText());
+
+        try{
+            mockCliente.inserir(cliente);
+        }catch(Exception e){
+            
+        }
+        
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     private void jTextNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeActionPerformed
@@ -369,6 +393,12 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboEstadoActionPerformed
+
+    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
+        this.setVisible(false);
+        Menu menu = new Menu();
+        menu.setVisible(true);
+    }//GEN-LAST:event_jButtonVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,13 +460,13 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTexComplemento;
     private javax.swing.JTextField jTextBairro;
     private javax.swing.JTextField jTextCelular;
     private javax.swing.JTextField jTextCep;
     private javax.swing.JTextField jTextCidade;
+    private javax.swing.JTextField jTextComplemento;
+    private javax.swing.JTextField jTextCpf;
     private javax.swing.JTextField jTextEmail;
-    private javax.swing.JTextField jTextFieldCPF;
     private javax.swing.JTextField jTextFieldIdade;
     private javax.swing.JTextField jTextLogradouro;
     private javax.swing.JTextField jTextNome;
