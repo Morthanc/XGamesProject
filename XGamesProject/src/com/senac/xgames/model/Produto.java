@@ -11,7 +11,8 @@ public class Produto {
     private String genero;
     private String classificacao;
     private Double preco;
-
+    private Integer estoque;
+    
     public Integer getEstoque() {
         return estoque;
     }
@@ -19,7 +20,6 @@ public class Produto {
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
     }
-    private Integer estoque;
     
     public int getId() {
         return id;      
