@@ -112,6 +112,11 @@ public class ValidadorCliente {
             throw new ClienteException("É necessário digitar somente "
                     + "números no cpf " + e);
         }
+
+          if(cliente.getCpf().length() != 11){
+              throw new ClienteException("Campo CPF só deve ter "
+                    + "11 números");
+          }
         
     }
 }
