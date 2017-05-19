@@ -398,7 +398,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         cliente.setNome(jTextNome.getText());
         cliente.setRg(jTextRG.getText());
         cliente.setCpf(jTextCpf.getText());
-        cliente.setIdade(Integer.valueOf(jTextFieldIdade.getText()));
+        cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
         cliente.setTelefone1(jTextTelefone.getText());
         cliente.setTelefone2(jTextCelular.getText());
         cliente.setCep(jTextCep.getText());
