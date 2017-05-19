@@ -18,7 +18,9 @@ public class Venda {
     private String nomeCliente;
     private Date data;
     private String Hora;
-
+    private Double valorTotal;
+    private List<ItemVenda> listaItemVenda= new ArrayList<ItemVenda>();
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -60,14 +62,13 @@ public class Venda {
     }
 
     public List<ItemVenda> getListaItemReserva() {
-        return listaItemReserva;
+        return listaItemVenda;
     }
 
     public void setListaItemReserva(List<ItemVenda> listaItemReserva) {
-        this.listaItemReserva = listaItemReserva;
+        this.listaItemVenda = listaItemReserva;
     }
-    private Double valorTotal;
-    private List<ItemVenda> listaItemReserva = new ArrayList<ItemVenda>();
+    
     
     
 }
