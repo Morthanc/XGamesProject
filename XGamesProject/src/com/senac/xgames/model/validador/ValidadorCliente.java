@@ -98,25 +98,7 @@ public class ValidadorCliente {
             throw new ClienteException("É necessário informar o "
                     + "estado do cliente");
         }
-          
-          try {
-            Integer.parseInt(cliente.getIdade());
-        } catch (NumberFormatException e) {
-            throw new ClienteException("É necessário digitar somente "
-                    + "números na idade " + e);
-        }
-          
-          try {
-            Integer.parseInt(cliente.getCpf());
-        } catch (NumberFormatException e) {
-            throw new ClienteException("É necessário digitar somente "
-                    + "números no cpf " + e);
-        }
 
-          if(cliente.getCpf().length() != 11){
-              throw new ClienteException("Campo CPF só deve ter "
-                    + "11 números");
-          }
         
     }
 }
