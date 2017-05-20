@@ -7,13 +7,17 @@ package com.senac.xgames.tela;
 
 import com.senac.xgames.mock.MockCliente;
 import com.senac.xgames.model.Cliente;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import com.senac.xgames.service.ServicoCliente;
 
 /**
  *
  * @author geoinformacao
  */
 public class CadastroCliente extends javax.swing.JFrame {
-    MockCliente mockCliente = new MockCliente();
+    ServicoCliente servicoCliente = new ServicoCliente();
     
     public CadastroCliente() {
         initComponents();
@@ -65,10 +69,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jTextBairro = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jTextNomeSobrenome = new javax.swing.JTextField();
+        jTextSobrenome = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jComboEstado1 = new javax.swing.JComboBox<>();
+        jComboSexo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,10 +161,10 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabel17.setText("Bairro:");
 
-        jTextNomeSobrenome.setToolTipText("");
-        jTextNomeSobrenome.addActionListener(new java.awt.event.ActionListener() {
+        jTextSobrenome.setToolTipText("");
+        jTextSobrenome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNomeSobrenomeActionPerformed(evt);
+                jTextSobrenomeActionPerformed(evt);
             }
         });
 
@@ -168,10 +172,10 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabel19.setText("Sexo:");
 
-        jComboEstado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
-        jComboEstado1.addActionListener(new java.awt.event.ActionListener() {
+        jComboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
+        jComboSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboEstado1ActionPerformed(evt);
+                jComboSexoActionPerformed(evt);
             }
         });
 
@@ -259,7 +263,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jLabel19))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboEstado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextEmail))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +278,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextNomeSobrenome)
+                    .addComponent(jTextSobrenome)
                     .addComponent(jTextFieldIdade)
                     .addComponent(jTextCelular)
                     .addComponent(jTextRG, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
@@ -311,7 +315,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel18)
-                            .addComponent(jTextNomeSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -327,7 +331,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jComboEstado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -393,6 +397,8 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         Cliente cliente = new Cliente();
         cliente.setNome(jTextNome.getText());
+        cliente.setSobrenome(jTextSobrenome.getText());
+        cliente.setSexo(jComboSexo.getSelectedItem().toString());
         cliente.setRg(jTextRG.getText());
         cliente.setCpf(jTextCpf.getText());
         cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
@@ -406,12 +412,40 @@ public class CadastroCliente extends javax.swing.JFrame {
         cliente.setEmail(jTextEmail.getText());
         cliente.setEstado(jComboEstado.getSelectedItem().toString());
         cliente.setCidade(jTextCidade.getText());
-
-        try{
-            mockCliente.inserir(cliente);
-        }catch(Exception e){
-            
+        
+        
+        try {
+            //Chama o serviço para cadastro do cliente
+            ServicoCliente.cadastrarCliente(cliente);
+        } catch (Exception e) {
+            //Exibe mensagens de erro para o usuário
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        
+        //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
+        //Então exibe uma mensagem de sucesso para o usuário
+        JOptionPane.showMessageDialog(rootPane, "Cliente inserido com sucesso",
+                "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
+        
+        //Limpa tela apos inclusao do cadastro
+        jTextNome.setText("");
+        jTextSobrenome.setText("");
+        jTextRG.setText("");
+        jTextCpf.setText("");
+        jTextFieldIdade.setText("");
+        jTextTelefone.setText("");
+        jTextCelular.setText("");
+        jTextCep.setText("");
+        jTextLogradouro.setText("");
+        jTextBairro.setText("");
+        jTextComplemento.setText("");
+        jTextNumero.setText("");
+        jTextEmail.setText("");
+        jTextCidade.setText("");
+        jComboSexo.setSelectedIndex(0);
+        jComboEstado.setSelectedIndex(0);
         
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
@@ -433,13 +467,13 @@ public class CadastroCliente extends javax.swing.JFrame {
         menu.setVisible(true);
     }//GEN-LAST:event_jButtonVoltarActionPerformed
 
-    private void jTextNomeSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeSobrenomeActionPerformed
+    private void jTextSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextSobrenomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextNomeSobrenomeActionPerformed
+    }//GEN-LAST:event_jTextSobrenomeActionPerformed
 
-    private void jComboEstado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboEstado1ActionPerformed
+    private void jComboSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboSexoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboEstado1ActionPerformed
+    }//GEN-LAST:event_jComboSexoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,7 +514,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonVoltar;
     private javax.swing.JComboBox<String> jComboEstado;
-    private javax.swing.JComboBox<String> jComboEstado1;
+    private javax.swing.JComboBox<String> jComboSexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -514,9 +548,9 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldIdade;
     private javax.swing.JTextField jTextLogradouro;
     private javax.swing.JTextField jTextNome;
-    private javax.swing.JTextField jTextNomeSobrenome;
     private javax.swing.JTextField jTextNumero;
     private javax.swing.JTextField jTextRG;
+    private javax.swing.JTextField jTextSobrenome;
     private javax.swing.JTextField jTextTelefone;
     // End of variables declaration//GEN-END:variables
 }
