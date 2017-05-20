@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package com.senac.xgames.tela;
-
+import com.senac.xgames.service.ServicoProduto;
+import com.senac.xgames.model.Produto;
+import javax.swing.JOptionPane;
 /**
  *
  * @author geoinformacao
@@ -50,7 +52,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jTextEstoque = new javax.swing.JTextField();
         jButtonCadastrar = new javax.swing.JButton();
         jButtonVoltar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,7 +93,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jogo", "Console", "Acessório" }));
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jogo", "Console", "Acessório" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,7 +140,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                             .addComponent(jTextDesenvolvedora, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                             .addComponent(jTextPlataforma)
                             .addComponent(jTextClassificacao)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jComboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 208, Short.MAX_VALUE)
@@ -166,7 +168,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTextFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -216,6 +218,48 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         // TODO add your handling code here:
+        //Instancia da Classe de ServicoProduto
+        ServicoProduto servicoproduto = new ServicoProduto();
+        
+        //Instancia do modelo produto
+        Produto produto = new Produto();
+        
+        produto.setTitulo(jTextTitulo.getText());
+        produto.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
+        produto.setDesenvolvedor(jTextDesenvolvedora.getText());
+        produto.setFornecedor(jTextFornecedor.getText());
+        produto.setGenero(jTextGenero.getText());
+        produto.setPlataforma(jTextPlataforma.getText());
+        produto.setPreco(Double.parseDouble(jTextPreco.getText()));
+        produto.setClassificacao(jTextClassificacao.getText());
+        produto.setEstoque(Integer.parseInt(jTextEstoque.getText()));
+        
+        try {
+            //Insere novo produto na base de dados
+            servicoproduto.cadastrarProduto(produto);
+        } catch (Exception e) {
+            //Exibe mensagens de erro para o usuário
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
+        //Então exibe uma mensagem de sucesso para o usuário
+        JOptionPane.showMessageDialog(rootPane, "Produto inserido com sucesso",
+                "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
+        
+        
+        //Limpa Tela apos inclusao do cadastro
+        jTextTitulo.setText("");
+        jComboBoxCategoria.setSelectedIndex(0);
+        jTextDesenvolvedora.setText("");
+        jTextFornecedor.setText("");
+        jTextGenero.setText("");
+        jTextPlataforma.setText("");
+        jTextPreco.setText("");
+        jTextClassificacao.setText("");
+        jTextEstoque.setText("");
         
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
@@ -263,7 +307,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonVoltar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
