@@ -8,9 +8,12 @@ package com.senac.xgames.tela;
 import com.senac.xgames.exceptions.ClienteException;
 import com.senac.xgames.model.Cliente;
 import com.senac.xgames.service.ServicoCliente;
+import java.awt.Component;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -52,6 +55,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setAutoscrolls(true);
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Cliente");
 
@@ -83,6 +88,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableCliente.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(jTableCliente);
 
         jButtonPesquisar.setText("Pesquisar");
@@ -93,8 +99,18 @@ public class ConsultaCliente extends javax.swing.JFrame {
         });
 
         jButtonAlterar.setText("Alterar");
+        jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAlterarActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonVoltar.setText("Voltar");
         jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +146,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -199,7 +215,74 @@ public class ConsultaCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "A pesquisa não retornou resultados ",
                     "Sem resultados", JOptionPane.ERROR_MESSAGE);
         }
+        
+        //Serve para ajustar tamanho das colunas com texto utilizado.
+        for (int column = 0; column < jTableCliente.getColumnCount(); column++){
+        
+            TableColumn tableColumn = jTableCliente.getColumnModel().getColumn(column);
+            int preferredWidth = tableColumn.getMinWidth();
+            int maxWidth = tableColumn.getMaxWidth();
+ 
+            for (int row = 0; row < jTableCliente.getRowCount(); row++){
+            
+                TableCellRenderer cellRenderer = jTableCliente.getCellRenderer(row, column);
+                Component c = jTableCliente.prepareRenderer(cellRenderer, row, column);
+                int width = c.getPreferredSize().width + jTableCliente.getIntercellSpacing().width;
+                preferredWidth = Math.max(preferredWidth, width);
+ 
+            if (preferredWidth >= maxWidth){
+            preferredWidth = maxWidth;
+            break;
+                }
+            }
+ 
+            tableColumn.setPreferredWidth( preferredWidth );
+        }
+        
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+  
+        //Verifica se há itens selecionados para exclusão.
+        //Caso negativo, ignora o comando
+        if (jTableCliente.getSelectedRow() >= 0) {
+            
+            //Obtém a linha do item selecionado
+            final int row = jTableCliente.getSelectedRow();
+            //Obtém o nome do cliente da linha indicada para exibição
+            //de mensagem de confirmação de exclusão utilizando seu nome
+            String nome = (String) jTableCliente.getValueAt(row, 1);
+            //Mostra o diálogo de confirmação de exclusão
+            int resposta = JOptionPane.showConfirmDialog(rootPane,
+                "Excluir o cliente \"" + nome + "\"?",
+                "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+            //Se o valor de resposta for "Sim" para a exclusão
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    //Obtém o ID do cliente
+                    Integer id = (Integer) jTableCliente.getValueAt(row, 0);
+                    //Solicita ao serviço a inativação do cliente com o ID
+                    ServicoCliente.excluirCliente(id);
+                    //Atualiza a lista após a "exclusão"
+                    this.refreshListClientes();
+                } catch (Exception e) {
+                    //Se ocorrer algum erro técnico, mostra-o no console,
+                    //mas esconde-o do usuário
+                    e.printStackTrace();
+                    //Exibe uma mensagem de erro genérica ao usuário
+                    JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                            "Falha na Exclusão", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        CadastroCliente cadastroCliente = new CadastroCliente();
+        cadastroCliente.setVisible(true);  
+    }//GEN-LAST:event_jButtonAlterarActionPerformed
     //Atualiza a lista de clientes. Pode ser chamado por outras telas
     public boolean refreshListClientes() throws ClienteException, Exception {
         //Realiza a pesquisa de clientes com o último valor de pesquisa
@@ -212,6 +295,9 @@ public class ConsultaCliente extends javax.swing.JFrame {
         //Indica que a tabela deve excluir todos seus elementos
         //Isto limpará a lista, mesmo que a pesquisa não tenha sucesso
         model.setRowCount(0);
+        
+    
+        
 
         //Verifica se não existiram resultados. Caso afirmativo, encerra a
         //atualização e indica ao elemento acionador o não sucesso da pesquisa
