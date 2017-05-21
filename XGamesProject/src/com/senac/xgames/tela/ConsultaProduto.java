@@ -5,12 +5,25 @@
  */
 package com.senac.xgames.tela;
 
+import com.senac.xgames.exceptions.ClienteException;
+import com.senac.xgames.exceptions.ProdutoException;
+import com.senac.xgames.model.Produto;
+import com.senac.xgames.service.ServicoProduto;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author geoinformacao
  */
 public class ConsultaProduto extends javax.swing.JFrame {
-
+    
+    //Instancia do Form CadastrarProduto para efetuar alteracoes
+    CadastroProduto formAlterar = new CadastroProduto();
+    //Armazena a ultima pesquisa
+    String ultimaPesquisa = null;
+    
     /**
      * Creates new form ConsultaCliente
      */
@@ -47,18 +60,38 @@ public class ConsultaProduto extends javax.swing.JFrame {
 
         jTableProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Título", "Fornecedor", "Categoria", "Plataforma", "Gênero", "Classificação", "Preço", "Estoque"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableProdutos);
 
         jButtonPesquisar.setText("Pesquisar");
+        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarActionPerformed(evt);
+            }
+        });
 
         jButtonAlterar.setText("Alterar");
 
@@ -79,28 +112,31 @@ public class ConsultaProduto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButtonPesquisar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonvoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(310, 310, 310))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,6 +180,75 @@ public class ConsultaProduto extends javax.swing.JFrame {
         menu.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonvoltarActionPerformed
 
+    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
+        // TODO add your handling code here:
+        
+        // TODO add your handling code here:
+        //Determina o valor do resultado da pesquisa
+        boolean resultadoPesquisa = false;
+        
+        //Pega valor da pesquisa e atribui a variavel para efetuar busca
+        ultimaPesquisa = jTextFieldNomeProduto.getText();
+        
+        try {
+            //Solicita a atualização da lista com o novo critério
+            //de pesquisa (ultimaPesquisa)
+            resultadoPesquisa = refreshListProdutos();
+        } catch (Exception e) {
+            //Exibe mensagens de erro na fonte de dados e para o listener
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                    "Falha ao obter lista", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //Exibe mensagem de erro caso a pesquisa não tenha resultados
+        if (!resultadoPesquisa) {
+            JOptionPane.showMessageDialog(rootPane, "A pesquisa não retornou resultados ",
+                    "Sem resultados", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonPesquisarActionPerformed
+//Atualiza a lista de clientes. Pode ser chamado por outras telas
+    public boolean refreshListProdutos() throws ProdutoException, Exception {
+        //Realiza a pesquisa de clientes com o último valor de pesquisa
+        //para atualizar a lista
+        List<Produto> resultado = ServicoProduto.
+                procurarProduto(ultimaPesquisa);
+
+        //Obtém o elemento representante do conteúdo da tabela na tela
+        DefaultTableModel model = (DefaultTableModel) jTableProdutos.getModel();
+        //Indica que a tabela deve excluir todos seus elementos
+        //Isto limpará a lista, mesmo que a pesquisa não tenha sucesso
+        model.setRowCount(0);
+
+        //Verifica se não existiram resultados. Caso afirmativo, encerra a
+        //atualização e indica ao elemento acionador o não sucesso da pesquisa
+        if (resultado == null || resultado.size() <= 0) {
+            return false;
+        }
+
+        //Percorre a lista de resultados e os adiciona na tabela
+        for (int i = 0; i < resultado.size(); i++) {
+            Produto pro = resultado.get(i);
+            if (pro != null) {
+                Object[] row = new Object[13];
+                row[0] = pro.getId();
+                row[1] = pro.getTitulo();
+                row[2] = pro.getFornecedor();
+                row[3] = pro.getCategoria();
+                row[4] = pro.getPlataforma();
+                row[5] = pro.getGenero();
+                row[6] = pro.getClassificacao();
+                row[7] = pro.getPreco();
+                row[8] = pro.getEstoque();
+                model.addRow(row);
+            }
+        }
+
+        //Se chegamos até aqui, a pesquisa teve sucesso, então
+        //retornamos "true" para o elemento acionante, indicando
+        //que não devem ser exibidas mensagens de erro
+        return true;
+    }
     /**
      * @param args the command line arguments
      */

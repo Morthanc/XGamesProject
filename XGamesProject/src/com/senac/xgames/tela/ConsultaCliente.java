@@ -186,7 +186,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
         try {
             //Solicita a atualização da lista com o novo critério
             //de pesquisa (ultimaPesquisa)
-            resultadoPesquisa = refreshList();
+            resultadoPesquisa = refreshListClientes();
         } catch (Exception e) {
             //Exibe mensagens de erro na fonte de dados e para o listener
             JOptionPane.showMessageDialog(rootPane, e.getMessage(),
@@ -201,7 +201,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
     //Atualiza a lista de clientes. Pode ser chamado por outras telas
-    public boolean refreshList() throws ClienteException, Exception {
+    public boolean refreshListClientes() throws ClienteException, Exception {
         //Realiza a pesquisa de clientes com o último valor de pesquisa
         //para atualizar a lista
         List<Cliente> resultado = ServicoCliente.
