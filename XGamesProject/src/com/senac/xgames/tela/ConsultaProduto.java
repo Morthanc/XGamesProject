@@ -5,7 +5,6 @@
  */
 package com.senac.xgames.tela;
 
-import com.senac.xgames.exceptions.ClienteException;
 import com.senac.xgames.exceptions.ProdutoException;
 import com.senac.xgames.model.Produto;
 import com.senac.xgames.service.ServicoProduto;
