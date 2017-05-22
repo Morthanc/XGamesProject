@@ -11,13 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import com.senac.xgames.service.ServicoCliente;
-
+import com.senac.xgames.tela.ConsultaCliente;
+import javax.swing.JDesktopPane;
+import javax.swing.event.InternalFrameListener;
 /**
  *
  * @author geoinformacao
  */
 public class CadastroCliente extends javax.swing.JFrame {
+    
     ServicoCliente servicoCliente = new ServicoCliente();
+    
+    //Armazena o cliente em edição
+    Cliente ClienteAltera = new Cliente();
+    
+    public Cliente getCliente() {
+        return ClienteAltera;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.ClienteAltera = cliente;
+    }
+    
+    //Variável para verificar possível alteração
+    public boolean alterar = false;
     
     public CadastroCliente() {
         initComponents();
@@ -385,7 +402,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+ 
     private void jTextLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLogradouroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextLogradouroActionPerformed
@@ -395,57 +412,95 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
-        Cliente cliente = new Cliente();
-        cliente.setNome(jTextNome.getText());
-        cliente.setSobrenome(jTextSobrenome.getText());
-        cliente.setSexo(jComboSexo.getSelectedItem().toString());
-        cliente.setRg(jTextRG.getText());
-        cliente.setCpf(jTextCpf.getText());
-        cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
-        cliente.setTelefone1(jTextTelefone.getText());
-        cliente.setTelefone2(jTextCelular.getText());
-        cliente.setCep(jTextCep.getText());
-        cliente.setLogradouro(jTextLogradouro.getText());
-        cliente.setBairro(jTextBairro.getText());
-        cliente.setComplemento(jTextComplemento.getText());
-        cliente.setNumero(jTextNumero.getText());
-        cliente.setEmail(jTextEmail.getText());
-        cliente.setEstado(jComboEstado.getSelectedItem().toString());
-        cliente.setCidade(jTextCidade.getText());
+        if(alterar == false){
+           JOptionPane.showMessageDialog(null, alterar);
+            Cliente cliente = new Cliente();
+            cliente.setNome(jTextNome.getText());
+            cliente.setSobrenome(jTextSobrenome.getText());
+            cliente.setSexo(jComboSexo.getSelectedItem().toString());
+            cliente.setRg(jTextRG.getText());
+            cliente.setCpf(jTextCpf.getText());
+            cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
+            cliente.setTelefone1(jTextTelefone.getText());
+            cliente.setTelefone2(jTextCelular.getText());
+            cliente.setCep(jTextCep.getText());
+            cliente.setLogradouro(jTextLogradouro.getText());
+            cliente.setBairro(jTextBairro.getText());
+            cliente.setComplemento(jTextComplemento.getText());
+            cliente.setNumero(jTextNumero.getText());
+            cliente.setEmail(jTextEmail.getText());
+            cliente.setEstado(jComboEstado.getSelectedItem().toString());
+            cliente.setCidade(jTextCidade.getText());
         
         
-        try {
-            //Chama o serviço para cadastro do cliente
-            ServicoCliente.cadastrarCliente(cliente);
-        } catch (Exception e) {
-            //Exibe mensagens de erro para o usuário
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(),
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
+            try {
+                //Chama o serviço para cadastro do cliente
+                ServicoCliente.cadastrarCliente(cliente);
+            } catch (Exception e) {
+                //Exibe mensagens de erro para o usuário
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
+            //Então exibe uma mensagem de sucesso para o usuário
+            JOptionPane.showMessageDialog(rootPane, "Cliente inserido com sucesso",
+                    "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
+        
+            //Limpa tela apos inclusao do cadastro
+            jTextNome.setText("");
+            jTextSobrenome.setText("");
+            jTextRG.setText("");
+            jTextCpf.setText("");
+            jTextFieldIdade.setText("");
+            jTextTelefone.setText("");
+            jTextCelular.setText("");
+            jTextCep.setText("");
+            jTextLogradouro.setText("");
+            jTextBairro.setText("");
+            jTextComplemento.setText("");
+            jTextNumero.setText("");
+            jTextEmail.setText("");
+            jTextCidade.setText("");
+            jComboSexo.setSelectedIndex(0);
+            jComboEstado.setSelectedIndex(0);
+        }else if(alterar == true){
+            ClienteAltera.setNome(jTextNome.getText());
+            ClienteAltera.setSobrenome(jTextSobrenome.getText());
+            ClienteAltera.setSexo(jComboSexo.getSelectedItem().toString());
+            ClienteAltera.setRg(jTextRG.getText());
+            ClienteAltera.setCpf(jTextCpf.getText());
+            ClienteAltera.setIdade(String.valueOf(jTextFieldIdade.getText()));
+            ClienteAltera.setTelefone1(jTextTelefone.getText());
+            ClienteAltera.setTelefone2(jTextCelular.getText());
+            ClienteAltera.setCep(jTextCep.getText());
+            ClienteAltera.setLogradouro(jTextLogradouro.getText());
+            ClienteAltera.setBairro(jTextBairro.getText());
+            ClienteAltera.setComplemento(jTextComplemento.getText());
+            ClienteAltera.setNumero(jTextNumero.getText());
+            ClienteAltera.setEmail(jTextEmail.getText());
+            ClienteAltera.setEstado(jComboEstado.getSelectedItem().toString());
+            ClienteAltera.setCidade(jTextCidade.getText());
+        
+        
+            try {
+                //Chama o serviço para cadastro do cliente
+                ServicoCliente.atualizarCliente(ClienteAltera);
+            } catch (Exception e) {
+                //Exibe mensagens de erro para o usuário
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
+            //Então exibe uma mensagem de sucesso para o usuário
+            JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso",
+                    "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
         }
         
-        //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
-        //Então exibe uma mensagem de sucesso para o usuário
-        JOptionPane.showMessageDialog(rootPane, "Cliente inserido com sucesso",
-                "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
         
-        //Limpa tela apos inclusao do cadastro
-        jTextNome.setText("");
-        jTextSobrenome.setText("");
-        jTextRG.setText("");
-        jTextCpf.setText("");
-        jTextFieldIdade.setText("");
-        jTextTelefone.setText("");
-        jTextCelular.setText("");
-        jTextCep.setText("");
-        jTextLogradouro.setText("");
-        jTextBairro.setText("");
-        jTextComplemento.setText("");
-        jTextNumero.setText("");
-        jTextEmail.setText("");
-        jTextCidade.setText("");
-        jComboSexo.setSelectedIndex(0);
-        jComboEstado.setSelectedIndex(0);
         
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
@@ -474,7 +529,53 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jComboSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboSexoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboSexoActionPerformed
+    
 
+    public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            
+    }
+    
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {                                         
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        alterar = new ConsultaCliente().alterar;
+        JOptionPane.showMessageDialog(null, alterar);
+        if(alterar == true){
+            jTextNome.setText(ClienteAltera.getNome());
+            jTextSobrenome.setText(ClienteAltera.getSobrenome());
+            jTextRG.setText(ClienteAltera.getRg());
+            jTextCpf.setText(ClienteAltera.getCpf());
+            jTextFieldIdade.setText(ClienteAltera.getIdade());
+            jTextTelefone.setText(ClienteAltera.getTelefone1());
+            jTextCelular.setText(ClienteAltera.getTelefone2());
+            jTextCep.setText(ClienteAltera.getCep());
+            jTextLogradouro.setText(ClienteAltera.getLogradouro());
+            jTextBairro.setText(ClienteAltera.getBairro());
+            jTextComplemento.setText(ClienteAltera.getComplemento());
+            jTextNumero.setText(ClienteAltera.getNumero());
+            jTextEmail.setText(ClienteAltera.getEmail());
+            jTextCidade.setText(ClienteAltera.getCidade());
+            
+            for(int i = 0; i < jComboSexo.getItemCount(); i++){
+                if(jComboSexo.getItemAt(i).equals(ClienteAltera.getSexo())){
+                    jComboSexo.setSelectedIndex(i);
+                    break;
+                }
+            }
+      
+            
+            for(int i = 0; i < jComboEstado.getItemCount(); i++){
+                if(jComboEstado.getItemAt(i).equals(ClienteAltera.getEstado())){
+                    jComboEstado.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+    }    
+    
+    
+    
     /**
      * @param args the command line arguments
      */

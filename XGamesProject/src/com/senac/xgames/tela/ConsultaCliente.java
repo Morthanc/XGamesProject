@@ -9,7 +9,9 @@ import com.senac.xgames.exceptions.ClienteException;
 import com.senac.xgames.model.Cliente;
 import com.senac.xgames.service.ServicoCliente;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.List;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -23,6 +25,10 @@ public class ConsultaCliente extends javax.swing.JFrame {
     
     //Instancia do Form CadastrarCliente para efetuar alteracoes
     CadastroCliente formAlterar = new CadastroCliente();
+    //Variável para verificar que alteração foi solicitada
+    public boolean alterar = false;
+    
+    
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
     
@@ -279,13 +285,40 @@ public class ConsultaCliente extends javax.swing.JFrame {
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         // TODO add your handling code here:
+        alterar = true;
         
+        try {
+            //Obtém a linha selecionada na tabela de resultados
+            final int row = jTableCliente.getSelectedRow();
+            //Verifica se há linha selecionada na tabela
+            if (row >= 0) {
+                //Obtém a linha selecionada na tabela
+                Integer id = (Integer) jTableCliente.getValueAt(row, 0);
+                
+                //Solicita ao serviço a obtenção do cliente a partir do
+                //ID selecionado na tabela
+                Cliente cliente = ServicoCliente.obterCliente(id);
+              
+                this.setVisible(false);
+                CadastroCliente alteraCliente = new CadastroCliente();
+                alteraCliente.setCliente(cliente);
+                alteraCliente.setVisible(true); 
+            }
+        } catch (Exception e) {
+            //Se ocorrer algum erro técnico, mostra-o no console,
+            //mas esconde-o do usuário
+            e.printStackTrace();
+            //Exibe uma mensagem de erro genérica ao usuário
+            JOptionPane.showMessageDialog(rootPane, "Não é possível "
+                + "exibir os detalhes deste cliente.",
+                "Erro ao abrir detalhe", JOptionPane.ERROR_MESSAGE);
+        }
         
-        this.setVisible(false);
-        CadastroCliente cadastroCliente = new CadastroCliente();
-        cadastroCliente.setVisible(true);  
+        alterar = false;
     }//GEN-LAST:event_jButtonAlterarActionPerformed
-    //Atualiza a lista de clientes. Pode ser chamado por outras telas
+        
+    
+//Atualiza a lista de clientes. Pode ser chamado por outras telas
     public boolean refreshListClientes() throws ClienteException, Exception {
         //Realiza a pesquisa de clientes com o último valor de pesquisa
         //para atualizar a lista
