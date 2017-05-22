@@ -219,7 +219,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
                     "Sem resultados", JOptionPane.ERROR_MESSAGE);
         }
         
-        //Serve para ajustar tamanho das colunas com texto utilizado.
+        /*//Serve para ajustar tamanho das colunas com texto utilizado.
         for (int column = 0; column < jTableProdutos.getColumnCount(); column++){
         
             TableColumn tableColumn = jTableProdutos.getColumnModel().getColumn(column);
@@ -240,7 +240,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
             }
  
             tableColumn.setPreferredWidth( preferredWidth );
-        }
+        }*/
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed

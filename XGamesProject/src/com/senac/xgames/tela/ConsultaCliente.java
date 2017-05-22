@@ -216,7 +216,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                     "Sem resultados", JOptionPane.ERROR_MESSAGE);
         }
         
-        //Serve para ajustar tamanho das colunas com texto utilizado.
+       /* //Serve para ajustar tamanho das colunas com texto utilizado.
         for (int column = 0; column < jTableCliente.getColumnCount(); column++){
         
             TableColumn tableColumn = jTableCliente.getColumnModel().getColumn(column);
@@ -237,7 +237,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
             }
  
             tableColumn.setPreferredWidth( preferredWidth );
-        }
+        }*/
         
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
@@ -279,6 +279,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         // TODO add your handling code here:
+        
+        
         this.setVisible(false);
         CadastroCliente cadastroCliente = new CadastroCliente();
         cadastroCliente.setVisible(true);  
