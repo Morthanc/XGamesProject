@@ -33,13 +33,31 @@ public class CadastroCliente extends javax.swing.JFrame {
         this.ClienteAltera = cliente;
     }
     
+    public boolean isAlterar() {
+        return alterar;
+    }
+
     //Variável para verificar possível alteração
-    public boolean alterar = false;
+    public void setAlterar(boolean alterar) {
+        this.alterar = alterar;
+    }
+
+    public boolean alterar;
     
     public CadastroCliente() {
         initComponents();
     }
 
+    public void populateFields(Cliente cliente){
+        jTextNome.setText(cliente.getNome());
+        jTextSobrenome.setText(cliente.getSobrenome());
+        setAlterar(true);
+        jInternalFrame1.show();
+        formInternalFrameOpened(cliente);
+
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +67,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -92,6 +111,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         jComboSexo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jInternalFrame1.setVisible(true);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Cadastro de Cliente");
@@ -225,7 +246,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                                 .addComponent(jLabel17)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
@@ -242,7 +263,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                         .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(82, 82, 82)))
                 .addGap(24, 24, 24))
@@ -349,7 +370,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(jComboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
@@ -388,15 +409,32 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jInternalFrame1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jInternalFrame1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -412,8 +450,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
-        if(alterar == false){
-           JOptionPane.showMessageDialog(null, alterar);
+        if(isAlterar()==false){
             Cliente cliente = new Cliente();
             cliente.setNome(jTextNome.getText());
             cliente.setSobrenome(jTextSobrenome.getText());
@@ -465,7 +502,12 @@ public class CadastroCliente extends javax.swing.JFrame {
             jTextCidade.setText("");
             jComboSexo.setSelectedIndex(0);
             jComboEstado.setSelectedIndex(0);
-        }else if(alterar == true){
+            
+            this.dispose();
+            Menu menu = new Menu();
+            menu.setVisible(true);
+        
+        }else{
             ClienteAltera.setNome(jTextNome.getText());
             ClienteAltera.setSobrenome(jTextSobrenome.getText());
             ClienteAltera.setSexo(jComboSexo.getSelectedItem().toString());
@@ -481,25 +523,31 @@ public class CadastroCliente extends javax.swing.JFrame {
             ClienteAltera.setNumero(jTextNumero.getText());
             ClienteAltera.setEmail(jTextEmail.getText());
             ClienteAltera.setEstado(jComboEstado.getSelectedItem().toString());
-            ClienteAltera.setCidade(jTextCidade.getText());
-        
+            ClienteAltera.setCidade(jTextCidade.getText());        
         
             try {
                 //Chama o serviço para cadastro do cliente
                 ServicoCliente.atualizarCliente(ClienteAltera);
+                JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso",
+                    "Atualização efetuada", JOptionPane.INFORMATION_MESSAGE);
+                
+                Menu menu = new Menu();
+                this.dispose();
+                menu.setVisible(true);
+                
             } catch (Exception e) {
                 //Exibe mensagens de erro para o usuário
                 JOptionPane.showMessageDialog(rootPane, e.getMessage(),
                         "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
             }
+    }
+//        
+//            //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
+//            //Então exibe uma mensagem de sucesso para o usuário
+//            JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso",
+//                    "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE)
         
-            //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
-            //Então exibe uma mensagem de sucesso para o usuário
-            JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso",
-                    "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
+ 
         
         
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
@@ -532,33 +580,32 @@ public class CadastroCliente extends javax.swing.JFrame {
     
 
     public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
+               // formInternalFrameOpened(evt);
             
     }
     
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {                                         
+    private void formInternalFrameOpened(Cliente cliente) {                                         
         // TODO add your handling code here:
          // TODO add your handling code here:
-        alterar = new ConsultaCliente().alterar;
-        JOptionPane.showMessageDialog(null, alterar);
-        if(alterar == true){
-            jTextNome.setText(ClienteAltera.getNome());
-            jTextSobrenome.setText(ClienteAltera.getSobrenome());
-            jTextRG.setText(ClienteAltera.getRg());
-            jTextCpf.setText(ClienteAltera.getCpf());
-            jTextFieldIdade.setText(ClienteAltera.getIdade());
-            jTextTelefone.setText(ClienteAltera.getTelefone1());
-            jTextCelular.setText(ClienteAltera.getTelefone2());
-            jTextCep.setText(ClienteAltera.getCep());
-            jTextLogradouro.setText(ClienteAltera.getLogradouro());
-            jTextBairro.setText(ClienteAltera.getBairro());
-            jTextComplemento.setText(ClienteAltera.getComplemento());
-            jTextNumero.setText(ClienteAltera.getNumero());
-            jTextEmail.setText(ClienteAltera.getEmail());
-            jTextCidade.setText(ClienteAltera.getCidade());
+        //JOptionPane.showMessageDialog(null, alterar);
+       
+            jTextNome.setText(cliente.getNome());
+            jTextSobrenome.setText(cliente.getSobrenome());
+            jTextRG.setText(cliente.getRg());
+            jTextCpf.setText(cliente.getCpf());
+            jTextFieldIdade.setText(cliente.getIdade());
+            jTextTelefone.setText(cliente.getTelefone1());
+            jTextCelular.setText(cliente.getTelefone2());
+            jTextCep.setText(cliente.getCep());
+            jTextLogradouro.setText(cliente.getLogradouro());
+            jTextBairro.setText(cliente.getBairro());
+            jTextComplemento.setText(cliente.getComplemento());
+            jTextNumero.setText(cliente.getNumero());
+            jTextEmail.setText(cliente.getEmail());
+            jTextCidade.setText(cliente.getCidade());
             
             for(int i = 0; i < jComboSexo.getItemCount(); i++){
-                if(jComboSexo.getItemAt(i).equals(ClienteAltera.getSexo())){
+                if(jComboSexo.getItemAt(i).equals(cliente.getSexo())){
                     jComboSexo.setSelectedIndex(i);
                     break;
                 }
@@ -566,12 +613,12 @@ public class CadastroCliente extends javax.swing.JFrame {
       
             
             for(int i = 0; i < jComboEstado.getItemCount(); i++){
-                if(jComboEstado.getItemAt(i).equals(ClienteAltera.getEstado())){
+                if(jComboEstado.getItemAt(i).equals(cliente.getEstado())){
                     jComboEstado.setSelectedIndex(i);
                     break;
                 }
             }
-        }
+        
     }    
     
     
@@ -616,6 +663,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButtonVoltar;
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<String> jComboSexo;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
