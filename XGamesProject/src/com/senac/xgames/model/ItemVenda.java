@@ -5,19 +5,18 @@
  */
 package com.senac.xgames.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author magno
  */
 public class ItemVenda {
     private Integer codigo;
+    private Integer codigoVenda;
     private String produto;
     private Integer quantidade;
-    private Double preco;
-
-    public String getProduto() {
-        return produto;
-    }
 
     public Integer getCodigo() {
         return codigo;
@@ -25,6 +24,18 @@ public class ItemVenda {
 
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
+    }
+
+    public Integer getCodigoVenda() {
+        return codigoVenda;
+    }
+
+    public void setCodigoVenda(Integer codigoVenda) {
+        this.codigoVenda = codigoVenda;
+    }
+
+    public String getProduto() {
+        return produto;
     }
 
     public void setProduto(String produto) {
@@ -39,12 +50,12 @@ public class ItemVenda {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
-    
+    private double preco;
 }
