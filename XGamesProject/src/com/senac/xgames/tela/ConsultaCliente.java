@@ -327,7 +327,9 @@ public class ConsultaCliente extends javax.swing.JFrame {
                 formAlterar.invalidate();
                 formAlterar.validate();
                 formAlterar.repaint();
-                formAlterar.setCliente(cliente);  
+                formAlterar.setCliente(cliente);    
+                this.dispose();
+                this.setVisible(false);
                 formAlterar.setVisible(true); 
                             
                // formAlterar.toFront();

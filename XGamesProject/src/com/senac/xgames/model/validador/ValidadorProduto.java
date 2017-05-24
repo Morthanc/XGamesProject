@@ -25,25 +25,19 @@ public class ValidadorProduto {
           if(produto.getCategoria() == null || "".equals(produto.getCategoria())){
             throw new ProdutoException("Não foi informada uma categoria");
         }
-          
-           if(produto.getEstoque()== null || "".equals(produto.getEstoque())){
-            throw new ProdutoException("Não foi informado o valor de estoque");
-        }
            
            try {
-            String.valueOf(produto.getEstoque());
+            if(String.valueOf(produto.getEstoque())==null)
+                  throw new ProdutoException("Não foi informado o valor de estoque");
         }  catch (NumberFormatException e) {
             throw new ProdutoException("É necessário digitar somente "
                     + "números para alimentar o estoque" + e);
         }
-             
             
-            if(produto.getPreco()== null || "".equals(produto.getPreco())){
-            throw new ProdutoException("Não foi informado o preço do produto");
-        }
             
                try {
-                produto.getPreco();
+                if(String.valueOf(produto.getPreco())==null)
+                    throw new ProdutoException("Não foi informado o preço do produto");
         }  catch (NumberFormatException e) {
             throw new ProdutoException("É necessário digitar somente "
                     + "números para preço" + e);

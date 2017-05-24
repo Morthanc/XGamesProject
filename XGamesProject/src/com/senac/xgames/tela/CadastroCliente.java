@@ -5,15 +5,11 @@
  */
 package com.senac.xgames.tela;
 
-import com.senac.xgames.mock.MockCliente;
 import com.senac.xgames.model.Cliente;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import com.senac.xgames.service.ServicoCliente;
-import com.senac.xgames.tela.ConsultaCliente;
-import javax.swing.JDesktopPane;
-import javax.swing.event.InternalFrameListener;
+
+
 /**
  *
  * @author geoinformacao
@@ -49,8 +45,6 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     public void populateFields(Cliente cliente){
-        jTextNome.setText(cliente.getNome());
-        jTextSobrenome.setText(cliente.getSobrenome());
         setAlterar(true);
         jInternalFrame1.show();
         formInternalFrameOpened(cliente);

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.senac.xgames.tela;
+import com.senac.xgames.exceptions.ProdutoException;
 import com.senac.xgames.service.ServicoProduto;
 import com.senac.xgames.model.Produto;
 import javax.swing.JOptionPane;
@@ -13,9 +14,34 @@ import javax.swing.JOptionPane;
  */
 public class CadastroProduto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CadastroProduto
-     */
+    ServicoProduto servicoProduto = new ServicoProduto();
+    Menu menu = new Menu();
+    
+    public boolean alterar;
+    Produto produto = new Produto();
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public boolean isAlterar() {
+        return alterar;
+    }
+
+    public void setAlterar(boolean alterar) {
+        this.alterar = alterar;
+    }
+    
+        public void populateFields(Produto produto){
+        setAlterar(true);
+        atualizarForm(produto);
+
+    }
+    
     public CadastroProduto() {
         initComponents();
     }
@@ -40,11 +66,9 @@ public class CadastroProduto extends javax.swing.JFrame {
         jTextFornecedor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextPlataforma = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextGenero = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextClassificacao = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextPreco = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
@@ -53,6 +77,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         jButtonCadastrar = new javax.swing.JButton();
         jButtonVoltar = new javax.swing.JButton();
         jComboBoxCategoria = new javax.swing.JComboBox<>();
+        jComboBoxPlataforma = new javax.swing.JComboBox<>();
+        jComboBoxClassificacao = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +103,7 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jLabel10.setText("Preço:");
 
-        jLabel11.setText("Estoque");
+        jLabel11.setText("Estoque:");
 
         jButtonCadastrar.setText("Salvar");
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +119,11 @@ public class CadastroProduto extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jogo", "Console", "Acessório" }));
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jogo", "DLC", "Expansão", "Console", "Acessório" }));
+
+        jComboBoxPlataforma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PC", "Nintendo Wii", "Nintendo Switch", "Playstation One", "Playstation 2", "Playstation 3", "Playstation 4", "Xbox", "Xbox 360", "Xbox One", " " }));
+
+        jComboBoxClassificacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "13 Anos", "16 Anos", "18 Anos" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -101,54 +131,53 @@ public class CadastroProduto extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextEstoque)
+                    .addComponent(jTextGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(jTextFornecedor, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextTitulo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextPreco))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextEstoque)
-                            .addComponent(jTextGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(jTextFornecedor, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextTitulo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextPreco))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(57, 57, 57)
-                                        .addComponent(jLabel3))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(88, 88, 88)
-                                        .addComponent(jLabel5)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(83, 83, 83)
-                                    .addComponent(jLabel7)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel3))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(jLabel9)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextDesenvolvedora, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(jTextPlataforma)
-                            .addComponent(jTextClassificacao)
-                            .addComponent(jComboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(88, 88, 88)
+                                .addComponent(jLabel5)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(83, 83, 83)
+                            .addComponent(jLabel7)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel9)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextDesenvolvedora, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(jComboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxPlataforma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxClassificacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 160, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129)
+                .addGap(137, 137, 137)
                 .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(147, 147, 147))
+                .addGap(156, 156, 156))
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(230, 230, 230))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,11 +203,11 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextPlataforma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxPlataforma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jTextClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBoxClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -187,16 +216,16 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(jTextPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
                     .addComponent(jTextEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jButtonVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,7 +238,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         pack();
@@ -220,52 +249,104 @@ public class CadastroProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Instancia da Classe de ServicoProduto
         ServicoProduto servicoproduto = new ServicoProduto();
-        
+
         //Instancia do modelo produto
-        Produto produto = new Produto();
-        
-        produto.setTitulo(jTextTitulo.getText());
-        produto.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
-        produto.setDesenvolvedor(jTextDesenvolvedora.getText());
-        produto.setFornecedor(jTextFornecedor.getText());
-        produto.setGenero(jTextGenero.getText());
-        produto.setPlataforma(jTextPlataforma.getText());
-        produto.setPreco(Double.parseDouble(jTextPreco.getText()));
-        produto.setClassificacao(jTextClassificacao.getText());
-        produto.setEstoque(Integer.parseInt(jTextEstoque.getText()));
-        
-        try {
-            //Insere novo produto na base de dados
-            servicoproduto.cadastrarProduto(produto);
-        } catch (Exception e) {
-            //Exibe mensagens de erro para o usuário
-            JOptionPane.showMessageDialog(rootPane, e.getMessage(),
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
+        if(isAlterar()==false){            
+            produto.setTitulo(jTextTitulo.getText());
+            produto.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
+            produto.setDesenvolvedor(jTextDesenvolvedora.getText());
+            produto.setFornecedor(jTextFornecedor.getText());
+            produto.setGenero(jTextGenero.getText());
+            produto.setPlataforma(jComboBoxPlataforma.getSelectedItem().toString());
+            produto.setClassificacao(jComboBoxClassificacao.getSelectedItem().toString());
+        try{
+            produto.setEstoque(Integer.parseInt(jTextEstoque.getText()));
+            produto.setPreco(Double.parseDouble(jTextPreco.getText()));
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(rootPane, "Os campos 'Estoque' e 'Preço' devem ser preenchidos com caracteres válidos",
+                "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
-        //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
-        //Então exibe uma mensagem de sucesso para o usuário
-        JOptionPane.showMessageDialog(rootPane, "Produto inserido com sucesso",
-                "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
-        
-        
-        //Limpa Tela apos inclusao do cadastro
-        jTextTitulo.setText("");
-        jComboBoxCategoria.setSelectedIndex(0);
-        jTextDesenvolvedora.setText("");
-        jTextFornecedor.setText("");
-        jTextGenero.setText("");
-        jTextPlataforma.setText("");
-        jTextPreco.setText("");
-        jTextClassificacao.setText("");
-        jTextEstoque.setText("");
-        
+            try {
+                //Insere novo produto na base de dados
+                servicoproduto.cadastrarProduto(produto);
+            } catch (Exception e) {
+                //Exibe mensagens de erro para o usuário
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //Caso tenha chegado até aqui, o cliente foi inserido com sucesso
+            //Então exibe uma mensagem de sucesso para o usuário
+            JOptionPane.showMessageDialog(rootPane, "Produto inserido com sucesso",
+                    "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
+
+
+            //Limpa Tela apos inclusao do cadastro
+            jTextTitulo.setText("");
+            jComboBoxCategoria.setSelectedIndex(0);
+            jTextDesenvolvedora.setText("");
+            jTextFornecedor.setText("");
+            jTextGenero.setText("");
+            jComboBoxClassificacao.setSelectedIndex(0);
+            jTextPreco.setText("");
+            jComboBoxPlataforma.setSelectedIndex(0);
+            jTextEstoque.setText("");
+                        
+            this.dispose();
+            menu.setVisible(true);
+            
+        }else{
+            //Fazendo o campo estoque como apenas leitura durante atualizações
+            jTextEstoque.setEditable(false);            
+            
+            produto.setTitulo(jTextTitulo.getText());
+            produto.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
+            produto.setDesenvolvedor(jTextDesenvolvedora.getText());
+            produto.setFornecedor(jTextFornecedor.getText());
+            produto.setGenero(jTextGenero.getText());
+            produto.setPlataforma(jComboBoxPlataforma.getSelectedItem().toString());
+            produto.setClassificacao(jComboBoxClassificacao.getSelectedItem().toString());
+        try{
+            produto.setEstoque(Integer.parseInt(jTextEstoque.getText()));
+            produto.setPreco(Double.parseDouble(jTextPreco.getText()));
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(rootPane, "Os campos 'Estoque' e 'Preço' devem ser preenchidos com caracteres válidos",
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+            try {
+                //Insere novo produto na base de dados
+                servicoProduto.atualizarProduto(produto);
+            } catch (Exception e) {
+                //Exibe mensagens de erro para o usuário
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            JOptionPane.showMessageDialog(rootPane, "Produto atualizado com sucesso",
+                    "Atualização efetuada", JOptionPane.INFORMATION_MESSAGE);
+
+
+            //Limpa Tela apos inclusao do cadastro
+            jTextTitulo.setText("");
+            jComboBoxCategoria.setSelectedIndex(0);
+            jTextDesenvolvedora.setText("");
+            jTextFornecedor.setText("");
+            jTextGenero.setText("");
+            jComboBoxClassificacao.setSelectedIndex(0);
+            jTextPreco.setText("");
+            jComboBoxPlataforma.setSelectedIndex(0);
+            jTextEstoque.setText("");
+            
+            this.dispose();
+            menu.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
         this.setVisible(false);
-        Menu menu = new Menu();
+        this.dispose();
         menu.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVoltarActionPerformed
 
@@ -303,11 +384,32 @@ public class CadastroProduto extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void atualizarForm(Produto produto) {                                         
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(null, alterar);
+            jTextTitulo.setText(produto.getTitulo());
+            jTextPreco.setText(String.valueOf(produto.getPreco()));
+            jComboBoxCategoria.setSelectedItem(produto.getCategoria());
+            jComboBoxClassificacao.setSelectedItem(produto.getClassificacao());
+            jComboBoxPlataforma.setSelectedItem(produto.getPlataforma());
+            jTextGenero.setText(produto.getGenero());
+            jTextFornecedor.setText(produto.getFornecedor());
+            jTextEstoque.setText(String.valueOf(produto.getEstoque()));
+            jTextDesenvolvedora.setText(produto.getDesenvolvedor());
+
+   
+
+        
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonVoltar;
     private javax.swing.JComboBox<String> jComboBoxCategoria;
+    private javax.swing.JComboBox<String> jComboBoxClassificacao;
+    private javax.swing.JComboBox<String> jComboBoxPlataforma;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -321,12 +423,10 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextClassificacao;
     private javax.swing.JTextField jTextDesenvolvedora;
     private javax.swing.JTextField jTextEstoque;
     private javax.swing.JTextField jTextFornecedor;
     private javax.swing.JTextField jTextGenero;
-    private javax.swing.JTextField jTextPlataforma;
     private javax.swing.JTextField jTextPreco;
     private javax.swing.JTextField jTextTitulo;
     // End of variables declaration//GEN-END:variables

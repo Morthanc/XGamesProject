@@ -22,7 +22,8 @@ import javax.swing.table.TableColumn;
 public class ConsultaProduto extends javax.swing.JFrame {
     
     //Instancia do Form CadastrarProduto para efetuar alteracoes
-    CadastroProduto formAlterar = new CadastroProduto();
+    CadastroProduto cadastroProduto = new CadastroProduto();
+    ServicoProduto servicoProduto = new ServicoProduto();
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
     
@@ -280,10 +281,42 @@ public class ConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-        // TODO add your handling code here:
-         this.setVisible(false);
-        CadastroProduto cadastroProduto = new CadastroProduto();
-        cadastroProduto.setVisible(true);  
+        
+        try {
+            //Obtém a linha selecionada na tabela de resultados
+            final int row = jTableProdutos.getSelectedRow();
+            //Verifica se há linha selecionada na tabela
+            if (row >= 0) {
+                //Obtém a linha selecionada na tabela
+                Integer id = (Integer) jTableProdutos.getValueAt(row, 0);
+                
+                //Solicita ao serviço a obtenção do cliente a partir do
+                //ID selecionado na tabela
+                Produto produto = servicoProduto.obterProduto(id);
+                cadastroProduto = new CadastroProduto();   
+                cadastroProduto.populateFields(produto);
+              
+
+                cadastroProduto.invalidate();
+                cadastroProduto.validate();
+                cadastroProduto.repaint();
+                cadastroProduto.setProduto(produto);  
+                this.dispose();
+                this.setVisible(false);
+                cadastroProduto.setVisible(true); 
+                            
+               // formAlterar.toFront();
+                
+            }
+        } catch (Exception e) {
+            //Se ocorrer algum erro técnico, mostra-o no console,
+            //mas esconde-o do usuário
+            e.printStackTrace();
+            //Exibe uma mensagem de erro genérica ao usuário
+            JOptionPane.showMessageDialog(rootPane, "Não é possível "
+                + "exibir os detalhes deste produto.",
+                "Erro ao abrir detalhe", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
 
