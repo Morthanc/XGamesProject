@@ -29,4 +29,9 @@ public class MockCarrinho {
    public static List<Carrinho> listar(){
        return Listacarrinho;
    }
+   
+   //Apaga lista de carrinho inteira
+   public static void apagarLista(){
+       Listacarrinho.clear();
+   }
 }

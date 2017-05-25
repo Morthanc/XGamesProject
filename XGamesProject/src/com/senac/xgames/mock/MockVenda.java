@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class MockVenda {
     //Variável serve para controlar o número de venda
-    private static int totalVenda = 0;
+    private static int totalVenda = 4321;
     
     //Armazena uma lista de vendas para manipulação no Mock
     private static List<Venda> listaVendas = new ArrayList<Venda>();

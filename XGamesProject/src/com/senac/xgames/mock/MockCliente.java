@@ -75,6 +75,26 @@ public class MockCliente {
         //Retorna a lista de clientes encontrados
         return listaResultado;
     }
+    
+     //Procura um cliente no mock, de acordo com o nome
+    //ou com o sobrenome, passado como parâmetro
+    public static List<Cliente> procurarCPF(String cpf)
+            throws Exception {
+        List<Cliente> listaResultado = new ArrayList<Cliente>();
+        
+        if (cpf != null && !listaClientes.isEmpty()) {
+            for (Cliente cliente : listaClientes) {
+
+                    if (cliente.getCpf().toUpperCase().contains(cpf.toUpperCase())) {
+                        listaResultado.add(cliente);
+                    }
+                
+            }
+        }
+        
+        //Retorna a lista de clientes encontrados
+        return listaResultado;
+    }
 
     //Obtém um cliente da lista
     public static Cliente obter(Integer id)
