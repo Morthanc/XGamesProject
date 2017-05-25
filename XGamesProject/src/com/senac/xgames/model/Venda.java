@@ -21,8 +21,7 @@ public class Venda {
     private String rgCliente;
     private String cidadeCliente;
     private String estadoCliente;
-    private Date data;
-    private String Hora;
+    private String data;
     private Double valorTotal;
     private List<ItemVenda> listaItemVenda= new ArrayList<ItemVenda>();
     
@@ -89,20 +88,12 @@ public class Venda {
         this.nomeCliente = nomeCliente;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
-    }
-
-    public String getHora() {
-        return Hora;
-    }
-
-    public void setHora(String Hora) {
-        this.Hora = Hora;
     }
 
     public Double getValorTotal() {

@@ -15,9 +15,27 @@ import java.util.List;
 public class ItemVenda {
     private Integer codigo;
     private Integer codigoVenda;
-    private String produto;
+    private String titulo;
+    private String plataforma;
     private Integer quantidade;
+    private double preco;
+    
+    public String getTitulo() {
+        return titulo;
+    }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getPlataforma() {
+        return plataforma;
+    }
+
+    public void setPlataforma(String plataforma) {
+        this.plataforma = plataforma;
+    }
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -32,14 +50,6 @@ public class ItemVenda {
 
     public void setCodigoVenda(Integer codigoVenda) {
         this.codigoVenda = codigoVenda;
-    }
-
-    public String getProduto() {
-        return produto;
-    }
-
-    public void setProduto(String produto) {
-        this.produto = produto;
     }
 
     public Integer getQuantidade() {
@@ -57,5 +67,5 @@ public class ItemVenda {
     public void setPreco(double preco) {
         this.preco = preco;
     }
-    private double preco;
+    
 }
