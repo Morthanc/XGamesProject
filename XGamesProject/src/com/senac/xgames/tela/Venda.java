@@ -30,8 +30,12 @@ public class Venda extends javax.swing.JFrame {
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
     
+    //Objeto servico carrinho para incluir produtos no carrinho e voltar lista
     public static ServicoCarrinho servicoCarrinho = new ServicoCarrinho();
     
+    
+    //Acumula preco total de venda
+    public static double precototal;
     /**
      * Creates new form Venda
      */
@@ -359,7 +363,10 @@ public class Venda extends javax.swing.JFrame {
                
                //Refresh na tabela de Produtos
                refreshListProdutosVenda();
-            
+               
+               //Atualiza preço total e carrega na tela
+               precototal = atualizaPrecoFinal(servicoCarrinho.listarCarrinho());
+               jLabelValorTotal.setText("R$ " + precototal);
             }
               
         } catch (Exception e) {
@@ -440,6 +447,15 @@ public class Venda extends javax.swing.JFrame {
         //retornamos "true" para o elemento acionante, indicando
         //que não devem ser exibidas mensagens de erro
         return true;
+    }
+    //Método busca preço total da Venda
+    public static double atualizaPrecoFinal(List<Carrinho> lista){
+        precototal = 0;
+        for(int i = 0; i < lista.size(); i++){
+            precototal = precototal + (lista.get(i).getPreco() * lista.get(i).getQuantidade());
+        }
+        
+        return precototal;
     }
     
     /**
