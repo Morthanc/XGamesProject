@@ -17,6 +17,9 @@ public class CadastroProduto extends javax.swing.JFrame {
     ServicoProduto servicoProduto = new ServicoProduto();
     Menu menu = new Menu();
     
+    //Variável criada para estabelecer código do produto
+    public static Integer codigoProduto = 2220;
+    
     public boolean alterar;
     Produto produto = new Produto();
 
@@ -251,7 +254,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         ServicoProduto servicoproduto = new ServicoProduto();
 
         //Instancia do modelo produto
-        if(isAlterar()==false){            
+        if(isAlterar()==false){     
+            produto.setCodigo(codigoProduto++);
             produto.setTitulo(jTextTitulo.getText());
             produto.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
             produto.setDesenvolvedor(jTextDesenvolvedora.getText());
@@ -265,6 +269,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(rootPane, "Os campos 'Estoque' e 'Preço' devem ser preenchidos com caracteres válidos",
                 "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
         }
             try {
                 //Insere novo produto na base de dados
@@ -281,7 +286,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Produto inserido com sucesso",
                     "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
 
-
+            JOptionPane.showMessageDialog(null, "Código do Produto: " + codigoProduto);
             //Limpa Tela apos inclusao do cadastro
             jTextTitulo.setText("");
             jComboBoxCategoria.setSelectedIndex(0);
