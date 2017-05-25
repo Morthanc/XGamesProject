@@ -285,8 +285,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             //Então exibe uma mensagem de sucesso para o usuário
             JOptionPane.showMessageDialog(rootPane, "Produto inserido com sucesso",
                     "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
-
-            JOptionPane.showMessageDialog(null, "Código do Produto: " + codigoProduto);
+            
             //Limpa Tela apos inclusao do cadastro
             jTextTitulo.setText("");
             jComboBoxCategoria.setSelectedIndex(0);
