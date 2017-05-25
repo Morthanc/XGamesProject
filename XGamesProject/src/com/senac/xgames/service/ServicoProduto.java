@@ -74,11 +74,11 @@ public class ServicoProduto {
     }
 
     //Obtem o produto com ID informado do mock
-    public static Produto obterProduto(Integer id)
+    public static Produto obterProduto(Integer codigo)
             throws ProdutoException, DataSourceException {
         try {
             
-            return MockProduto.obter(id);
+            return MockProduto.obter(codigo);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão
@@ -88,11 +88,11 @@ public class ServicoProduto {
     }
 
     //Exclui o cliente com ID informado do mock
-    public static void excluirProduto(Integer id)
+    public static void excluirProduto(Integer codigo)
             throws ProdutoException, DataSourceException {
         try {
             
-            MockProduto.excluir(id);
+            MockProduto.excluir(codigo);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão
