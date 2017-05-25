@@ -256,7 +256,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void BTVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTVendaActionPerformed
        this.setVisible(false);
-       Venda venda = new Venda();
+       TelaVenda venda = new TelaVenda();
        venda.setVisible(true);  
     }//GEN-LAST:event_BTVendaActionPerformed
 

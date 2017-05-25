@@ -4,23 +4,38 @@
  * and open the template in the editor.
  */
 package com.senac.xgames.tela;
+import com.senac.xgames.exceptions.CarrinhoException;
 import com.senac.xgames.exceptions.ProdutoException;
+import com.senac.xgames.exceptions.VendaException;
+import com.senac.xgames.mock.MockCarrinho;
 import com.senac.xgames.model.Carrinho;
+import com.senac.xgames.model.Cliente;
+import com.senac.xgames.model.ItemVenda;
 import com.senac.xgames.model.Produto;
+import com.senac.xgames.model.Venda;
 import com.senac.xgames.model.validador.ValidadorCarrinho;
+import com.senac.xgames.model.validador.ValidadorVenda;
 import com.senac.xgames.service.ServicoProduto;
 import com.senac.xgames.service.ServicoCarrinho;
+import com.senac.xgames.service.ServicoCliente;
+import com.senac.xgames.service.ServicoVenda;
 import com.senac.xgames.tela.ConsultaProduto;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author geoinformacao
  */
-public class Venda extends javax.swing.JFrame {
+public class TelaVenda extends javax.swing.JFrame {
     //Cria novo objeto produto para manipulação do carrinho
     public static Produto produto = new Produto();
     
@@ -36,10 +51,13 @@ public class Venda extends javax.swing.JFrame {
     
     //Acumula preco total de venda
     public static double precototal;
+    
+    public static String cpf = null;
+    
     /**
      * Creates new form Venda
      */
-    public Venda() {
+    public TelaVenda() {
         initComponents();
     }
 
@@ -66,12 +84,13 @@ public class Venda extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCarrinho = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldCPF = new javax.swing.JTextField();
+        JTextFieldCPF = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabelValorTotal = new javax.swing.JLabel();
         jButtonFinalizarVenda = new javax.swing.JButton();
         jButtonVoltar = new javax.swing.JButton();
         jButtonAdicionarCarrinho = new javax.swing.JButton();
+        JButtonCancelarVenda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,7 +177,7 @@ public class Venda extends javax.swing.JFrame {
 
         jLabelValorTotal.setText("<valor>");
 
-        jButtonFinalizarVenda.setText("Finalizar Venda");
+        jButtonFinalizarVenda.setText("Efetuar Venda");
         jButtonFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonFinalizarVendaActionPerformed(evt);
@@ -176,6 +195,13 @@ public class Venda extends javax.swing.JFrame {
         jButtonAdicionarCarrinho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAdicionarCarrinhoActionPerformed(evt);
+            }
+        });
+
+        JButtonCancelarVenda.setText("Cancelar Venda");
+        JButtonCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonCancelarVendaActionPerformed(evt);
             }
         });
 
@@ -211,7 +237,7 @@ public class Venda extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -225,6 +251,8 @@ public class Venda extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JButtonCancelarVenda)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonFinalizarVenda)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -258,13 +286,14 @@ public class Venda extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabelValorTotal))
                 .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonFinalizarVenda)
-                    .addComponent(jButtonVoltar))
+                    .addComponent(jButtonVoltar)
+                    .addComponent(JButtonCancelarVenda))
                 .addGap(71, 71, 71))
         );
 
@@ -286,9 +315,64 @@ public class Venda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarVendaActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            efetuarVenda();
+        } catch (Exception ex) {
+            Logger.getLogger(TelaVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButtonFinalizarVendaActionPerformed
 
+    public void efetuarVenda() throws Exception{
+        List<Carrinho> listarCarrinho = ServicoCarrinho.listarCarrinho();
+        ItemVenda itens = new ItemVenda();
+        Venda venda = new Venda();
+        
+        //Captura data atual e formata
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        Date date = new Date();
+        
+        try {
+            
+            for(int i = 0; i < listarCarrinho.size(); i++){
+                itens.setCodigo(listarCarrinho.get(i).getCodigo());
+                itens.setPlataforma(listarCarrinho.get(i).getPlataforma());
+                itens.setPreco(listarCarrinho.get(i).getPreco());
+                itens.setQuantidade(listarCarrinho.get(i).getQuantidade());
+                itens.setTitulo(listarCarrinho.get(i).getTitulo());
+                venda.setListaItemVenda((List<ItemVenda>) itens);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e + "Falha ao incluir itens do carrinho!");
+           
+        }
+        
+        try {
+            
+            Cliente cliente = new Cliente();
+            cpf = JTextFieldCPF.getText();
+            
+            List<Cliente> listaCliente = ServicoCliente.procurarClienteCpf(cpf);
+            
+            for(int i = 0; i < listaCliente.size(); i++){
+                venda.setNomeCliente(listaCliente.get(i).getNome() + " " + listaCliente.get(i).getSobrenome());
+                venda.setCidadeCliente(listaCliente.get(i).getCidade());
+                venda.setEnderecoCliente(listaCliente.get(i).getLogradouro() + " " + listaCliente.get(i).getComplemento() + " " + 
+                                        listaCliente.get(i).getCep());
+                venda.setEstadoCliente(listaCliente.get(i).getEstado());
+                venda.setCpfCliente(listaCliente.get(i).getCpf());
+                venda.setRgCliente(listaCliente.get(i).getRg());
+                venda.setData(dateFormat.format(date));
+                ValidadorVenda.validar(venda);
+                ServicoVenda.cadastrarVenda(venda);
+            }
+        } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e + "Falha ao incluir Venda!");
+          
+        }
+    }
+    
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
         this.setVisible(false);
         Menu menu = new Menu();
@@ -374,6 +458,12 @@ public class Venda extends javax.swing.JFrame {
                     "Falha ao incluir produto no carrinho", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAdicionarCarrinhoActionPerformed
+
+    private void JButtonCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonCancelarVendaActionPerformed
+    
+    }//GEN-LAST:event_JButtonCancelarVendaActionPerformed
+    
+
     //Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutosVenda() throws ProdutoException, Exception {
         //Realiza a pesquisa de produtos com o último valor de pesquisa
@@ -448,7 +538,7 @@ public class Venda extends javax.swing.JFrame {
         //que não devem ser exibidas mensagens de erro
         return true;
     }
-    //Método busca preço total da Venda
+    //Método busca preço total da TelaVenda
     public static double atualizaPrecoFinal(List<Carrinho> lista){
         precototal = 0;
         for(int i = 0; i < lista.size(); i++){
@@ -475,25 +565,28 @@ public class Venda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Venda().setVisible(true);
+                new TelaVenda().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JButtonCancelarVenda;
+    private javax.swing.JTextField JTextFieldCPF;
     private javax.swing.JButton jButtonAdicionarCarrinho;
     private javax.swing.JButton jButtonFinalizarVenda;
     private javax.swing.JButton jButtonPesquisar;
@@ -512,7 +605,6 @@ public class Venda extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTableCarrinho;
     private javax.swing.JTable jTableProdutos;
-    private javax.swing.JTextField jTextFieldCPF;
     private javax.swing.JTextField jTextFieldNomeProduto;
     // End of variables declaration//GEN-END:variables
 }

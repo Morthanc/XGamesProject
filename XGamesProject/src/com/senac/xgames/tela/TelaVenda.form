@@ -75,7 +75,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextFieldCPF" min="-2" pref="131" max="-2" attributes="0"/>
+                          <Component id="JTextFieldCPF" min="-2" pref="131" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -91,6 +91,8 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jButtonVoltar" min="-2" pref="105" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="JButtonCancelarVenda" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButtonFinalizarVenda" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -132,7 +134,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JTextFieldCPF" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -140,6 +142,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonFinalizarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JButtonCancelarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
               </Group>
@@ -243,7 +246,7 @@
             <Property name="text" type="java.lang.String" value="CPF do Cliente:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldCPF">
+        <Component class="javax.swing.JTextField" name="JTextFieldCPF">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -257,7 +260,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButtonFinalizarVenda">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Finalizar Venda"/>
+            <Property name="text" type="java.lang.String" value="Efetuar Venda"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFinalizarVendaActionPerformed"/>
@@ -277,6 +280,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAdicionarCarrinhoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="JButtonCancelarVenda">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancelar Venda"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JButtonCancelarVendaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
