@@ -3,6 +3,7 @@ package com.senac.xgames.model;
 public class Produto {
     
     private Integer id;
+    private Integer codigo;
     private String titulo;
     private String desenvolvedor;
     private String fornecedor;
@@ -12,6 +13,14 @@ public class Produto {
     private String classificacao;
     private Double preco;
     private Integer estoque;
+    
+    public Integer getCodigo(){
+        return codigo;
+    }
+    
+    public void setCodigo(Integer codigo){
+        this.codigo = codigo;
+    }
     
     public Integer getEstoque() {
         return estoque;
