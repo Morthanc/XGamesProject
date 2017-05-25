@@ -74,6 +74,26 @@ public class ServicoCliente {
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
+    
+    //Realiza a pesquisa de um cliente por nome na fonte de dados
+    public static List<Cliente> procurarClienteCpf(String cpf)
+            throws ClienteException, DataSourceException {
+        try {
+            //Verifica se um parâmetro de pesquisa não foi informado.
+            //Caso afirmativo, realiza uma listagem simples do mock.
+            //Caso contrário, realiza uma pesquisa com o parâmetro
+            if (cpf == null || "".equals(cpf)) {
+                return MockCliente.listar();
+            } else {
+                return MockCliente.procurarCPF(cpf);
+            }
+        } catch (Exception e) {
+            //Imprime qualquer erro técnico no console e devolve
+            //uma exceção e uma mensagem amigável a camada de visão
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
 
     //Obtem o cliente com ID informado do mock
     public static Cliente obterCliente(Integer id)

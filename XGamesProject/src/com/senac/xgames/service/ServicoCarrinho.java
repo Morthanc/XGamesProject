@@ -17,7 +17,7 @@ import java.util.List;
 public class ServicoCarrinho {
     //Insere um Produto na fonte de dados carrinho
     public static void cadastrarProdutonoCarrinho(Carrinho carrinho)
-            throws CarrinhoException, DataSourceException, Exception {
+            throws Exception, CarrinhoException, DataSourceException{
 
         //Chama o validador para verificar se produto pode ser inserido
         ValidadorCarrinho.validar(carrinho);
@@ -39,4 +39,9 @@ public class ServicoCarrinho {
         //Lista todos os produtos que estão no carrinho.
         return MockCarrinho.listar();
     }
+    
+    //Apaga lista inteira
+   public static void apagarLista(){
+       MockCarrinho.apagarLista();
+   }
 }
