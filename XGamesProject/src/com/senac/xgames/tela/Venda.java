@@ -5,21 +5,32 @@
  */
 package com.senac.xgames.tela;
 import com.senac.xgames.exceptions.ProdutoException;
+import com.senac.xgames.model.Carrinho;
 import com.senac.xgames.model.Produto;
+import com.senac.xgames.model.validador.ValidadorCarrinho;
 import com.senac.xgames.service.ServicoProduto;
+import com.senac.xgames.service.ServicoCarrinho;
 import com.senac.xgames.tela.ConsultaProduto;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author geoinformacao
  */
 public class Venda extends javax.swing.JFrame {
+    //Cria novo objeto produto para manipulação do carrinho
+    public static Produto produto = new Produto();
     
+    //Variável criada para controle da quantidade de produtos inseridos
+    public Integer quantidade;
     
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
+    
+    public static ServicoCarrinho servicoCarrinho = new ServicoCarrinho();
     
     /**
      * Creates new form Venda
@@ -80,20 +91,20 @@ public class Venda extends javax.swing.JFrame {
 
         jTableProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Plataforma", "Preço", "Estoque", "Quantidade"
+                "Código", "Título", "Plataforma", "Preço", "Estoque", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -111,20 +122,20 @@ public class Venda extends javax.swing.JFrame {
 
         jTableCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "T[itulo", "Plataforma", "Preço", "Quantidade"
+                "Código", "Título", "Plataforma", "Preço", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -307,8 +318,54 @@ public class Venda extends javax.swing.JFrame {
 
     private void jButtonAdicionarCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarCarrinhoActionPerformed
         // TODO add your handling code here:
-        
-        
+            //Lista de carrinho. 
+            Carrinho carrinho = new Carrinho();
+            
+        try {
+            //Captura a linha selecionada da tabela
+            final int row = jTableProdutos.getSelectedRow();
+            
+            //Pega a quantidade digitada pelo usuário para determinado produto
+            quantidade = (Integer) jTableProdutos.getValueAt(row, 5);
+                
+            //Pega o código do produto da tabela
+            Integer codigo = (Integer) jTableProdutos.getValueAt(row, 0);
+            
+            //Consulta o código do produto e atribui o produto ao objeto produto
+            produto = ServicoProduto.obterProduto(codigo);
+            
+            carrinho.setCodigo(produto.getCodigo());
+            carrinho.setTitulo(produto.getTitulo());
+            carrinho.setPlataforma(produto.getPlataforma());
+            carrinho.setPreco(produto.getPreco());
+            carrinho.setQuantidade(quantidade);
+            
+            //Validação da carrinho
+            ValidadorCarrinho.validar(carrinho);
+            
+            if(carrinho.getQuantidade() > produto.getEstoque() || carrinho.getQuantidade() == 0){
+                JOptionPane.showMessageDialog(rootPane, "Sem saldo em estoque ou produto zerado, favor verificar!", "Sem Estoque",
+                            JOptionPane.ERROR_MESSAGE);
+ 
+            }else{
+                //Cadastra um novo produto na lista do carrinho
+               ServicoCarrinho.cadastrarProdutonoCarrinho(carrinho);
+               
+               //Subtrai o valor do carrinho para o estoque
+               produto.setEstoque(produto.getEstoque() - carrinho.getQuantidade());
+               
+               //Refresh na tabela de carrinho
+               refreshListCarrinho();
+               
+               //Refresh na tabela de Produtos
+               refreshListProdutosVenda();
+            
+            }
+              
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(rootPane, e.getMessage(),
+                    "Falha ao incluir produto no carrinho", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonAdicionarCarrinhoActionPerformed
     //Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutosVenda() throws ProdutoException, Exception {
@@ -333,11 +390,12 @@ public class Venda extends javax.swing.JFrame {
         for (int i = 0; i < resultado.size(); i++) {
             Produto pro = resultado.get(i);
             if (pro != null) {
-                Object[] row = new Object[13];     
-                row[0] = pro.getTitulo();
-                row[1] = pro.getPlataforma();
-                row[2] = pro.getPreco();
-                row[3] = pro.getEstoque();
+                Object[] row = new Object[13];
+                row[0] = pro.getCodigo();
+                row[1] = pro.getTitulo();
+                row[2] = pro.getPlataforma();
+                row[3] = pro.getPreco();
+                row[4] = pro.getEstoque();
                 model.addRow(row);
             }
         }
@@ -347,6 +405,43 @@ public class Venda extends javax.swing.JFrame {
         //que não devem ser exibidas mensagens de erro
         return true;
     }
+    
+    //Atualiza a lista de Produtos. Pode ser chamado por outras telas
+    public boolean refreshListCarrinho() throws Exception {
+
+        //Obtém o elemento representante do conteúdo da tabela na tela
+        DefaultTableModel model = (DefaultTableModel) jTableCarrinho.getModel();
+        //Indica que a tabela deve excluir todos seus elementos
+        //Isto limpará a lista, mesmo que a pesquisa não tenha sucesso
+        model.setRowCount(0);
+        
+        List<Carrinho> listaCarrinho = new ServicoCarrinho().listarCarrinho();
+        //Verifica se não existiram resultados. Caso afirmativo, encerra a
+        //atualização e indica ao elemento acionador o não sucesso da pesquisa
+        if (!listaCarrinho.isEmpty()) {
+            //Percorre a lista de resultados e os adiciona na tabela
+            for (int i = 0; i < ServicoCarrinho.listarCarrinho().size(); i++) {
+                Carrinho pro =  listaCarrinho.get(i);
+                    if (pro != null) {
+                    Object[] row = new Object[13];
+                    row[0] = pro.getCodigo();
+                    row[1] = pro.getTitulo();
+                    row[2] = pro.getPlataforma();
+                    row[3] = pro.getPreco();
+                    row[4] = pro.getQuantidade();
+                    model.addRow(row);
+                }
+            }
+        }
+
+        
+
+        //Se chegamos até aqui, a pesquisa teve sucesso, então
+        //retornamos "true" para o elemento acionante, indicando
+        //que não devem ser exibidas mensagens de erro
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
