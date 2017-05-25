@@ -49,11 +49,11 @@ public class MockProduto {
     }
     
     //Remove um Produto do Mock através da passagem do parâmetro ID
-    public static void excluir(Integer id) throws Exception{
-        if(id != null && !listaProdutos.isEmpty()){
+    public static void excluir(Integer codigo) throws Exception{
+        if(codigo != null && !listaProdutos.isEmpty()){
             for (int i = 0; i < listaProdutos.size(); i++) {
                 Produto produtoCli = listaProdutos.get(i);
-                if (produtoCli != null && produtoCli.getId() == id) {
+                if (produtoCli != null && produtoCli.getCodigo()== codigo) {
                     listaProdutos.remove(i);
                     break;
                 }
@@ -87,11 +87,11 @@ public class MockProduto {
     }
     
     //Obtém um Produto da lista
-    public static Produto obter(Integer id)
+    public static Produto obter(Integer codigo)
             throws Exception {
-        if (id != null && !listaProdutos.isEmpty()) {
+        if (codigo != null && !listaProdutos.isEmpty()) {
             for (int i = 0; i < listaProdutos.size(); i++) {
-                if (listaProdutos.get(i) != null && listaProdutos.get(i).getId() == id) {
+                if (listaProdutos.get(i) != null && listaProdutos.get(i).getCodigo()== codigo) {
                     return listaProdutos.get(i);
                 }                
             }
