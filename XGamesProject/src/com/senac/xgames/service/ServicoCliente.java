@@ -20,7 +20,7 @@ public class ServicoCliente {
     
     //Insere um cliente na fonte de dados
     public static void cadastrarCliente(Cliente cliente)
-            throws ClienteException, DataSourceException {
+            throws ClienteException, DataSourceException, Exception {
 
         //Chama o validador para verificar o cliente
         ValidadorCliente.validar(cliente);
@@ -38,7 +38,7 @@ public class ServicoCliente {
 
     //Atualiza um cliente na fonte de dados
     public static void atualizarCliente(Cliente cliente)
-            throws ClienteException, DataSourceException {
+            throws ClienteException, DataSourceException, Exception {
         
         //Chama o validador para verificar o cliente
         ValidadorCliente.validar(cliente);
@@ -57,7 +57,7 @@ public class ServicoCliente {
 
     //Realiza a pesquisa de um cliente por nome na fonte de dados
     public static List<Cliente> procurarCliente(String nome)
-            throws ClienteException, DataSourceException {
+            throws ClienteException, DataSourceException, Exception {
         try {
             //Verifica se um parâmetro de pesquisa não foi informado.
             //Caso afirmativo, realiza uma listagem simples do mock.
@@ -77,7 +77,7 @@ public class ServicoCliente {
     
     //Realiza a pesquisa de um cliente por nome na fonte de dados
     public static List<Cliente> procurarClienteCpf(String cpf)
-            throws ClienteException, DataSourceException {
+            throws ClienteException, DataSourceException, Exception {
         try {
             //Verifica se um parâmetro de pesquisa não foi informado.
             //Caso afirmativo, realiza uma listagem simples do mock.
@@ -97,7 +97,7 @@ public class ServicoCliente {
 
     //Obtem o cliente com ID informado do mock
     public static Cliente obterCliente(Integer id)
-            throws ClienteException, DataSourceException {
+            throws ClienteException, DataSourceException, Exception {
         try {
             //Retorna o cliente obtido com o DAO
             return MockCliente.obter(id);
@@ -111,7 +111,7 @@ public class ServicoCliente {
 
     //Exclui o cliente com ID informado do mock
     public static void excluirCliente(Integer id)
-            throws ClienteException, DataSourceException {
+            throws ClienteException, DataSourceException, Exception {
         try {
             //Solicita ao DAO a exclusão do cliente informado
             MockCliente.excluir(id);
