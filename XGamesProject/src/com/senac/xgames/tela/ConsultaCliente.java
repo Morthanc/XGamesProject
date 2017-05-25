@@ -31,6 +31,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
     
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
+            
     
     /**
      * Creates new form ConsultaCliente

@@ -320,9 +320,9 @@ public class ConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
 
-//Atualiza a lista de clientes. Pode ser chamado por outras telas
+//Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutos() throws ProdutoException, Exception {
-        //Realiza a pesquisa de clientes com o último valor de pesquisa
+        //Realiza a pesquisa de produtos com o último valor de pesquisa
         //para atualizar a lista
         List<Produto> resultado = ServicoProduto.
                 procurarProduto(ultimaPesquisa);
