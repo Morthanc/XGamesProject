@@ -112,15 +112,5 @@ public class Venda {
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
-
-    public List<ItemVenda> getListaItemReserva() {
-        return listaItemVenda;
-    }
-
-    public void setListaItemReserva(List<ItemVenda> listaItemReserva) {
-        this.listaItemVenda = listaItemReserva;
-    }
-    
-    
     
 }
