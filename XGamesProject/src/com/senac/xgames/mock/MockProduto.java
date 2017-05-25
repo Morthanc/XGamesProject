@@ -15,7 +15,7 @@ import java.util.List;
 
 //Mock de Produto Realiza operações de Mock com o Produto.
 public class MockProduto {
-    //Variável serve 
+    //Variável serve verificar total de produtos
     private static int totalProdutos = 0;
     
     //Armazena uma lista de produtos para manipulação no Mock
