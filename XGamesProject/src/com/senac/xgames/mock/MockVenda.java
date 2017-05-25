@@ -5,6 +5,7 @@
  */
 package com.senac.xgames.mock;
 
+import com.senac.xgames.model.ItemVenda;
 import com.senac.xgames.model.Venda;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,17 @@ public class MockVenda {
         venda.setCodigo(totalVenda++);
         listaVendas.add(venda);
     }
+    
+    //Lista todas as Vendas
+    public static List<Venda> listar()
+            throws Exception {       
+        //Retorna a lista de Vendas
+        return listaVendas;
+    }
+    
+
+    
+    
     
     
 }
