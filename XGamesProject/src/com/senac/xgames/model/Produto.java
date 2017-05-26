@@ -13,6 +13,15 @@ public class Produto {
     private String classificacao;
     private Double preco;
     private Integer estoque;
+    private Integer quantidade = 0;
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
     
     public Integer getCodigo(){
         return codigo;

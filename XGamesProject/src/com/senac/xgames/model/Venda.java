@@ -16,18 +16,18 @@ import java.util.List;
 public class Venda {
     private Integer codigo;
     private Cliente cliente;
-    private Produto produto;
+    private List<Produto> produto;
     private Date data;
-    private int quantidade;
     private Double valorTotal;
 
-    public int getQuantidade() {
-        return quantidade;
+    public List<Produto> getProduto() {
+        return produto;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
     }
+
 
     public Integer getCodigo() {
         return codigo;
@@ -43,14 +43,6 @@ public class Venda {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
     }
 
     public Date getData() {
