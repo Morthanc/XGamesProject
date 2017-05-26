@@ -11,6 +11,8 @@ import com.senac.xgames.exceptions.VendaException;
 import com.senac.xgames.mock.MockVenda;
 import com.senac.xgames.model.validador.ValidadorVenda;
 import com.senac.xgames.model.Venda;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -33,6 +35,22 @@ public class ServicoVenda {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
+    }
+    
+    //Retorna lista com todas as vendas efetuadas
+    public static List<Venda> listarVenda() throws DataSourceException{
+        List<Venda> listaVendas = new ArrayList<>();
+        try {
+            listaVendas = MockVenda.listar();
+            
+        } catch (Exception e) {
+             //Imprime qualquer erro técnico no console e devolve
+            //uma exceção e uma mensagem amigável a camada de visão
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+        
+        return listaVendas;
     }
 
 }
