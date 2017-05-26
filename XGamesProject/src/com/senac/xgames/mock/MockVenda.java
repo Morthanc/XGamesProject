@@ -5,7 +5,6 @@
  */
 package com.senac.xgames.mock;
 
-import com.senac.xgames.model.ItemVenda;
 import com.senac.xgames.model.Venda;
 import java.util.ArrayList;
 import java.util.List;

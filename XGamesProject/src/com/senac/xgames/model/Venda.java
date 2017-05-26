@@ -15,63 +15,20 @@ import java.util.List;
  */
 public class Venda {
     private Integer codigo;
-    private String nomeCliente;
-    private String enderecoCliente;
-    private String cpfCliente;
-    private String rgCliente;
-    private String cidadeCliente;
-    private String estadoCliente;
-    private String data;
+    private Cliente cliente;
+    private Produto produto;
+    private Date data;
+    private int quantidade;
     private Double valorTotal;
-    private List<ItemVenda> listaItemVenda= new ArrayList<ItemVenda>();
-    
-     public String getEnderecoCliente() {
-        return enderecoCliente;
+
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setEnderecoCliente(String enderecoCliente) {
-        this.enderecoCliente = enderecoCliente;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
-    public String getCpfCliente() {
-        return cpfCliente;
-    }
-
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
-    }
-
-    public String getRgCliente() {
-        return rgCliente;
-    }
-
-    public void setRgCliente(String rgCliente) {
-        this.rgCliente = rgCliente;
-    }
-
-    public String getCidadeCliente() {
-        return cidadeCliente;
-    }
-
-    public void setCidadeCliente(String cidadeCliente) {
-        this.cidadeCliente = cidadeCliente;
-    }
-
-    public String getEstadoCliente() {
-        return estadoCliente;
-    }
-
-    public void setEstadoCliente(String estadoCliente) {
-        this.estadoCliente = estadoCliente;
-    }
-
-    public List<ItemVenda> getListaItemVenda() {
-        return listaItemVenda;
-    }
-
-    public void setListaItemVenda(List<ItemVenda> listaItemVenda) {
-        this.listaItemVenda = listaItemVenda;
-    }
     public Integer getCodigo() {
         return codigo;
     }
@@ -80,19 +37,27 @@ public class Venda {
         this.codigo = codigo;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public String getData() {
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
@@ -103,5 +68,6 @@ public class Venda {
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
+
     
 }

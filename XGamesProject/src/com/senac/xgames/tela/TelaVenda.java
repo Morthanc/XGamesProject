@@ -4,33 +4,22 @@
  * and open the template in the editor.
  */
 package com.senac.xgames.tela;
-import com.senac.xgames.exceptions.CarrinhoException;
 import com.senac.xgames.exceptions.ProdutoException;
-import com.senac.xgames.exceptions.VendaException;
-import com.senac.xgames.mock.MockCarrinho;
 import com.senac.xgames.model.Carrinho;
 import com.senac.xgames.model.Cliente;
-import com.senac.xgames.model.ItemVenda;
 import com.senac.xgames.model.Produto;
 import com.senac.xgames.model.Venda;
 import com.senac.xgames.model.validador.ValidadorCarrinho;
-import com.senac.xgames.model.validador.ValidadorItemVenda;
 import com.senac.xgames.model.validador.ValidadorVenda;
 import com.senac.xgames.service.ServicoProduto;
 import com.senac.xgames.service.ServicoCarrinho;
 import com.senac.xgames.service.ServicoCliente;
-import com.senac.xgames.service.ServicoItemVenda;
 import com.senac.xgames.service.ServicoVenda;
-import com.senac.xgames.tela.ConsultaProduto;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -330,42 +319,39 @@ public class TelaVenda extends javax.swing.JFrame {
 
     public void efetuarVenda() throws Exception{
         List<Carrinho> listarCarrinho = ServicoCarrinho.listarCarrinho();
-        ItemVenda itens = new ItemVenda();
-        List<ItemVenda> listaItens = new ArrayList();
+//        ItemVenda itens = new ItemVenda();
+//        List<ItemVenda> listaItens = new ArrayList();
         Venda venda = new Venda();
         
         //Captura data atual e formata
         DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
         Date date = new Date();
+        date.getTime();
+        dateFormat.format(date);
         
         try {
             
             for(int i = 0; i < listarCarrinho.size(); i++){
-                itens.setCodigo(listarCarrinho.get(i).getCodigo());
-                itens.setPlataforma(listarCarrinho.get(i).getPlataforma());
-                itens.setPreco(listarCarrinho.get(i).getPreco());
-                itens.setQuantidade(listarCarrinho.get(i).getQuantidade());
-                itens.setTitulo(listarCarrinho.get(i).getTitulo());
+                
+                venda.setCodigo(listarCarrinho.get(i).getCodigo());
+                venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
+                venda.setProduto(produto);
+                venda.setData(date);
                 
                 //Verifica se for o primeiro item do carrinho ele inclui a cabeca da venda
                 if(i == 0){
                    try {
-                       List<Cliente> listaCLiente = new ServicoCliente().procurarClienteCpf(JTextFieldCPF.getText());
+                       List<Cliente> listaCliente = new ServicoCliente().procurarClienteCpf(JTextFieldCPF.getText());
+                       Cliente cliente = listaCliente.get(0);
             
-                        if(!listaCLiente.isEmpty()){
+                        if(!listaCliente.isEmpty()){
                             JOptionPane.showMessageDialog(null, "Cliente encontrado!");
                             
                         }else{
                             JOptionPane.showMessageDialog(null, "Cliente nao encontrado!");
                             return;
                         }
-                        venda.setNomeCliente(listaCLiente.get(0).getNome() + " " + listaCLiente.get(0).getSobrenome());
-                        venda.setEnderecoCliente(listaCLiente.get(0).getLogradouro() + " " + listaCLiente.get(0).getNumero());
-                        venda.setCpfCliente(listaCLiente.get(0).getCpf());
-                        venda.setRgCliente(listaCLiente.get(0).getRg());
-                        venda.setCidadeCliente(listaCLiente.get(0).getCidade());
-                        venda.setEstadoCliente(listaCLiente.get(0).getEstado());
-                        venda.setData(dateFormat.format(date));
+                        venda.setCliente(cliente);
                         venda.setValorTotal(precototal);
                         
                         ValidadorVenda.validar(venda);
@@ -373,33 +359,33 @@ public class TelaVenda extends javax.swing.JFrame {
                         //Cadastra um novo objeto venda
                         ServicoVenda.cadastrarVenda(venda);
                         
-                        //Inclui o codigo da venda ao item
-                        itens.setCodigoVenda(venda.getCodigo());
+                       // //Inclui o codigo da venda ao item
+                       // itens.setCodigoVenda(venda.getCodigo());
                         
                         //Inclui em uma lista provisoria
-                        listaItens.add(itens);
+                       // listaItens.add(itens);
                         
                         //Grava no ArrayLista do Modelo de Venda
-                        venda.setListaItemVenda(listaItens);
+                       // venda.setListaItemVenda(listaItens);
                         
                         //Limpa para nao duplicar os itens
-                        listaItens.clear();
+                      //  listaItens.clear();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e + "Falha ao incluir Venda!");
           
                     } 
                 }else{
                         //Inclui o codigo da venda ao item
-                        itens.setCodigoVenda(venda.getCodigo());
+                        //itens.setCodigoVenda(venda.getCodigo());
                         
                         //Inclui em uma lista provisoria
-                        listaItens.add(itens);
+                        //listaItens.add(itens);
                         
                         //Grava no ArrayLista do Modelo de Venda
-                        venda.setListaItemVenda(listaItens);
+                      //  venda.setListaItemVenda(listaItens);
                         
                         //Limpa para nao duplicar os itens
-                        listaItens.clear();
+                       // listaItens.clear();
                 }
                 
             }
@@ -410,8 +396,9 @@ public class TelaVenda extends javax.swing.JFrame {
         
         //Caso tenha chegado até aqui,a venda foi realizada com sucesso
             //Então exibe uma mensagem de sucesso para o usuário
-            JOptionPane.showMessageDialog(rootPane, "Venda realizada com sucesso: Cliente - " + venda.getNomeCliente() + " " + 
-                    "- valor - R$ " + venda.getValorTotal(),
+            JOptionPane.showMessageDialog(rootPane, "Venda realizada com sucesso: Cliente - " + venda.getCliente().getNome() + " " + 
+                    "- valor - R$ " + venda.getValorTotal() +
+                            "\n Data: "+venda.getData(),
                     "Venda Efetuada", JOptionPane.INFORMATION_MESSAGE);
             
             
@@ -541,14 +528,14 @@ public class TelaVenda extends javax.swing.JFrame {
 
         //Percorre a lista de resultados e os adiciona na tabela
         for (int i = 0; i < resultado.size(); i++) {
-            Produto pro = resultado.get(i);
-            if (pro != null) {
+            produto = resultado.get(i);
+            if (produto != null) {
                 Object[] row = new Object[13];
-                row[0] = pro.getCodigo();
-                row[1] = pro.getTitulo();
-                row[2] = pro.getPlataforma();
-                row[3] = pro.getPreco();
-                row[4] = pro.getEstoque();
+                row[0] = produto.getCodigo();
+                row[1] = produto.getTitulo();
+                row[2] = produto.getPlataforma();
+                row[3] = produto.getPreco();
+                row[4] = produto.getEstoque();
                 model.addRow(row);
             }
         }
