@@ -17,6 +17,7 @@ import com.senac.xgames.service.ServicoCliente;
 import com.senac.xgames.service.ServicoVenda;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -26,13 +27,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author geoinformacao
  */
-public class TelaVenda extends javax.swing.JFrame {
-    //Cria novo objeto produto para manipulação do carrinho
-    public static Produto produto = new Produto();
-    
-    //Variável criada para controle da quantidade de produtos inseridos
-    public Integer quantidade;
-    
+public class TelaVenda extends javax.swing.JFrame { 
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
     
@@ -41,7 +36,7 @@ public class TelaVenda extends javax.swing.JFrame {
     
     
     //Acumula preco total de venda
-    public static double precototal;
+    public static double precototal = 0.0;
     
     //Variavel para pegar valor digitado do cpf
     public static String cpf = null;
@@ -318,10 +313,21 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonFinalizarVendaActionPerformed
 
     public void efetuarVenda() throws Exception{
+        //Cria novo objeto produto para manipulação do carrinho
+        Produto produto = new Produto();
+        
+        //Objeto venda para cadastrar todas as vendas
+        Venda venda = new Venda();
+      
+        //Carrega Produtos do Carrinho
         List<Carrinho> listarCarrinho = ServicoCarrinho.listarCarrinho();
+        
+        //Pega produtos do Carrinho para lista de produtos de venda
+        List<Produto> listaProdutos = new ArrayList<Produto>();
+        
 //        ItemVenda itens = new ItemVenda();
 //        List<ItemVenda> listaItens = new ArrayList();
-        Venda venda = new Venda();
+        
         
         //Captura data atual e formata
         DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
@@ -332,11 +338,15 @@ public class TelaVenda extends javax.swing.JFrame {
         try {
             
             for(int i = 0; i < listarCarrinho.size(); i++){
+               
+                //venda.setCodigo(listarCarrinho.get(i).getCodigo());
+                //venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
                 
-                venda.setCodigo(listarCarrinho.get(i).getCodigo());
-                venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
-                venda.setProduto(produto);
-                venda.setData(date);
+                //Adiciona novo produto na lista de produtos da Venda
+                produto = ServicoProduto.obterProduto(listarCarrinho.get(i).getCodigo());
+                produto.setQuantidade(listarCarrinho.get(i).getQuantidade());
+                
+                listaProdutos.add(produto);
                 
                 //Verifica se for o primeiro item do carrinho ele inclui a cabeca da venda
                 if(i == 0){
@@ -352,6 +362,7 @@ public class TelaVenda extends javax.swing.JFrame {
                             return;
                         }
                         venda.setCliente(cliente);
+                        venda.setData(date);    
                         venda.setValorTotal(precototal);
                         
                         ValidadorVenda.validar(venda);
@@ -387,8 +398,11 @@ public class TelaVenda extends javax.swing.JFrame {
                         //Limpa para nao duplicar os itens
                        // listaItens.clear();
                 }
-                
+               
             }
+            //inclui itens extraidos do pedido na lista da venda
+            venda.setProduto(listaProdutos);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e + "Falha ao incluir itens do carrinho!");
            
@@ -401,10 +415,10 @@ public class TelaVenda extends javax.swing.JFrame {
                             "\n Data: "+venda.getData(),
                     "Venda Efetuada", JOptionPane.INFORMATION_MESSAGE);
             
-            
-            
+            //Apaga serviços utilizados para carregar venda, para que seja possível gerar próxima venda
             ServicoCarrinho.apagarLista();
-            
+            listaProdutos.clear();
+            listarCarrinho.clear();           
             try {
                 refreshListCarrinho();
                 refreshListProdutosVenda();
@@ -430,6 +444,8 @@ public class TelaVenda extends javax.swing.JFrame {
         
         try {
             resultadoPesquisa = refreshListProdutosVenda();
+            refreshListCarrinho();
+            jLabelValorTotal.setText("R$ " + precototal);
         } catch (Exception e) {
             //Exibe mensagens de erro na fonte de dados e para o listener
             JOptionPane.showMessageDialog(rootPane, e.getMessage(),
@@ -451,6 +467,10 @@ public class TelaVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
             //Lista de carrinho. 
             Carrinho carrinho = new Carrinho();
+            Produto produto = new Produto();
+            
+            //Variável criada para controle da quantidade de produtos inseridos
+            Integer quantidade;
             
         try {
             //Captura a linha selecionada da tabela
@@ -464,6 +484,24 @@ public class TelaVenda extends javax.swing.JFrame {
             
             //Consulta o código do produto e atribui o produto ao objeto produto
             produto = ServicoProduto.obterProduto(codigo);
+            
+            //Verifica se já existe produto na lista
+            for(int i = 0; i < ServicoCarrinho.listarCarrinho().size(); i++){
+                if(produto.getCodigo().equals(ServicoCarrinho.listarCarrinho().get(i).getCodigo())){
+                    ServicoCarrinho.listarCarrinho().get(i).setQuantidade(ServicoCarrinho.listarCarrinho().get(i).getQuantidade() + quantidade);
+                    //Atualiza preço total e carrega na tela
+                    precototal = atualizaPrecoFinal(servicoCarrinho.listarCarrinho());
+                    jLabelValorTotal.setText("R$ " + precototal);
+                        
+                    //Subtrai o valor do carrinho para o estoque
+                    carrinho.setQuantidade(quantidade);
+                    produto.setEstoque(produto.getEstoque() - carrinho.getQuantidade());
+                    
+                    refreshListCarrinho();
+                    refreshListProdutosVenda();
+                    return;
+                }
+            }
             
             carrinho.setCodigo(produto.getCodigo());
             carrinho.setTitulo(produto.getTitulo());
@@ -509,6 +547,8 @@ public class TelaVenda extends javax.swing.JFrame {
 
     //Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutosVenda() throws ProdutoException, Exception {
+        Produto produto = new Produto();
+        
         //Realiza a pesquisa de produtos com o último valor de pesquisa
         //para atualizar a lista
         List<Produto> resultado = ServicoProduto.

@@ -5,6 +5,14 @@
  */
 package com.senac.xgames.tela;
 
+import com.senac.xgames.exceptions.VendaException;
+import com.senac.xgames.model.Venda;
+import com.senac.xgames.service.ServicoVenda;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author geoinformacao
@@ -51,11 +59,11 @@ public class Relatorio extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código Venda", "Data", "Cliente", "Valor Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -85,6 +93,11 @@ public class Relatorio extends javax.swing.JFrame {
         });
 
         jButtonGerarRelatorio.setText("Gerar Relatório");
+        jButtonGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGerarRelatorioActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Voltar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +178,56 @@ public class Relatorio extends javax.swing.JFrame {
         menu.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarRelatorioActionPerformed
+        // TODO add your handling code here:
+        try {
+           refreshListProdutosVenda();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e + "Falha ao imprimir relatório!");
+                return;
+        }
+
+        
+    }//GEN-LAST:event_jButtonGerarRelatorioActionPerformed
+//Atualiza a lista de Produtos. Pode ser chamado por outras telas
+    public boolean refreshListProdutosVenda() throws VendaException, Exception {
+        Venda venda = new Venda();
+        //Realiza a pesquisa de vendas
+        //para atualizar a lista
+        List<Venda> relatorio = new ArrayList<Venda>();
+            relatorio = ServicoVenda.listarVenda();
+
+        //Obtém o elemento representante do conteúdo da tabela na tela
+        DefaultTableModel model = (DefaultTableModel) jTableRelatorioVendas.getModel();
+        //Indica que a tabela deve excluir todos seus elementos
+        //Isto limpará a lista, mesmo que a pesquisa não tenha sucesso
+        model.setRowCount(0);
+
+        //Verifica se não existiram resultados. Caso afirmativo, encerra a
+        //atualização e indica ao elemento acionador o não sucesso da pesquisa
+        if (relatorio == null || relatorio.size() <= 0) {
+            return false;
+        }
+
+        //Percorre a lista de resultados e os adiciona na tabela
+        for (int i = 0; i < relatorio.size(); i++) {
+            venda = relatorio.get(i);
+            if (venda != null) {
+                Object[] row = new Object[13];
+                row[0] = venda.getCodigo();
+                row[1] = venda.getData();
+                row[2] = venda.getCliente().getNome() + " " + venda.getCliente().getSobrenome();
+                row[3] = "R$ " + venda.getValorTotal();
+                model.addRow(row);
+            }
+        }
+
+        //Se chegamos até aqui, a pesquisa teve sucesso, então
+        //retornamos "true" para o elemento acionante, indicando
+        //que não devem ser exibidas mensagens de erro
+        return true;
+    }
     /**
      * @param args the command line arguments
      */
