@@ -222,7 +222,9 @@ public class Relatorio extends javax.swing.JFrame {
             dateInicio = dateFormat.parse(jTextFieldDataInicio.getText());
             dateFim = dateFormat.parse(jTextFieldDataFim.getText());
 
-            //System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
+        if(dateInicio.after(dateFim)){
+            JOptionPane.showMessageDialog(null, "Data início não pode ser maior que data fim!");
+        }
             
         }catch(ParseException e){
             JOptionPane.showMessageDialog(null, e + "O formato da Data deve ser dd/mm/yyyy (01/12/1999)!");
@@ -255,7 +257,7 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldDataFimFocusGained
 
     private void jTextFieldDataFimFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataFimFocusLost
-        jTextFieldDataInicio.setText("dd/MM/aaaa");
+
     }//GEN-LAST:event_jTextFieldDataFimFocusLost
 
     private void jTextFieldDataInicioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioFocusGained
@@ -263,7 +265,7 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldDataInicioFocusGained
 
     private void jTextFieldDataInicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioFocusLost
-jTextFieldDataInicio.setText("dd/MM/aaaa");        // TODO add your handling code here:
+    // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDataInicioFocusLost
 //Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutosVenda() throws VendaException, Exception {
