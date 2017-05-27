@@ -8,7 +8,11 @@ package com.senac.xgames.tela;
 import com.senac.xgames.exceptions.VendaException;
 import com.senac.xgames.model.Venda;
 import com.senac.xgames.service.ServicoVenda;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +22,9 @@ import javax.swing.table.DefaultTableModel;
  * @author geoinformacao
  */
 public class Relatorio extends javax.swing.JFrame {
-
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateInicio;
+        Date dateFim;
     /**
      * Creates new form Relatorio
      */
@@ -81,11 +87,42 @@ public class Relatorio extends javax.swing.JFrame {
 
         jLabel1.setText("Data Início:");
 
-        jTextFieldDataInicio.setText("xx/xx/xxx");
+        jTextFieldDataInicio.setText("dd/MM/aaaa");
+        jTextFieldDataInicio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldDataInicioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldDataInicioFocusLost(evt);
+            }
+        });
+        jTextFieldDataInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldDataInicioMouseClicked(evt);
+            }
+        });
+        jTextFieldDataInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDataInicioActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Data Fim:");
 
-        jTextFieldDataFim.setText("xx/xx/xxxx");
+        jTextFieldDataFim.setText("dd/MM/aaaa");
+        jTextFieldDataFim.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldDataFimFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldDataFimFocusLost(evt);
+            }
+        });
+        jTextFieldDataFim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldDataFimMouseClicked(evt);
+            }
+        });
         jTextFieldDataFim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldDataFimActionPerformed(evt);
@@ -179,7 +216,17 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarRelatorioActionPerformed
-        // TODO add your handling code here:
+
+        //date.getTime();
+        try{
+            dateInicio = dateFormat.parse(jTextFieldDataInicio.getText());
+            dateFim = dateFormat.parse(jTextFieldDataFim.getText());
+
+            //System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
+            
+        }catch(ParseException e){
+            JOptionPane.showMessageDialog(null, e + "O formato da Data deve ser dd/mm/yyyy (01/12/1999)!");
+        }
         try {
            refreshListProdutosVenda();
             
@@ -190,6 +237,34 @@ public class Relatorio extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_jButtonGerarRelatorioActionPerformed
+
+    private void jTextFieldDataInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDataInicioActionPerformed
+
+    private void jTextFieldDataFimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDataFimMouseClicked
+      
+    }//GEN-LAST:event_jTextFieldDataFimMouseClicked
+
+    private void jTextFieldDataInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioMouseClicked
+       
+    }//GEN-LAST:event_jTextFieldDataInicioMouseClicked
+
+    private void jTextFieldDataFimFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataFimFocusGained
+        jTextFieldDataFim.setText("");
+    }//GEN-LAST:event_jTextFieldDataFimFocusGained
+
+    private void jTextFieldDataFimFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataFimFocusLost
+        jTextFieldDataInicio.setText("dd/MM/aaaa");
+    }//GEN-LAST:event_jTextFieldDataFimFocusLost
+
+    private void jTextFieldDataInicioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioFocusGained
+        jTextFieldDataInicio.setText("");
+    }//GEN-LAST:event_jTextFieldDataInicioFocusGained
+
+    private void jTextFieldDataInicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioFocusLost
+jTextFieldDataInicio.setText("dd/MM/aaaa");        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDataInicioFocusLost
 //Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutosVenda() throws VendaException, Exception {
         Venda venda = new Venda();
@@ -211,15 +286,19 @@ public class Relatorio extends javax.swing.JFrame {
         }
 
         //Percorre a lista de resultados e os adiciona na tabela
+        
         for (int i = 0; i < relatorio.size(); i++) {
             venda = relatorio.get(i);
             if (venda != null) {
-                Object[] row = new Object[13];
-                row[0] = venda.getCodigo();
-                row[1] = venda.getData();
-                row[2] = venda.getCliente().getNome() + " " + venda.getCliente().getSobrenome();
-                row[3] = "R$ " + venda.getValorTotal();
-                model.addRow(row);
+                 System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
+                if(dateInicio.before(venda.getData()) && dateFim.after(venda.getData()) || dateFim.equals(venda.getData())){
+                    Object[] row = new Object[13];
+                    row[0] = venda.getCodigo();
+                    row[1] = dateFormat.format(venda.getData());
+                    row[2] = venda.getCliente().getNome() + " " + venda.getCliente().getSobrenome();
+                    row[3] = "R$ " + venda.getValorTotal();
+                    model.addRow(row);
+                }
             }
         }
 

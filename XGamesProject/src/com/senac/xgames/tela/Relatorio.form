@@ -127,8 +127,14 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDataInicio">
           <Properties>
-            <Property name="text" type="java.lang.String" value="xx/xx/xxx"/>
+            <Property name="text" type="java.lang.String" value="dd/MM/aaaa"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldDataInicioFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldDataInicioFocusLost"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextFieldDataInicioMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldDataInicioActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -137,9 +143,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDataFim">
           <Properties>
-            <Property name="text" type="java.lang.String" value="xx/xx/xxxx"/>
+            <Property name="text" type="java.lang.String" value="dd/MM/aaaa"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldDataFimFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldDataFimFocusLost"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextFieldDataFimMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldDataFimActionPerformed"/>
           </Events>
         </Component>

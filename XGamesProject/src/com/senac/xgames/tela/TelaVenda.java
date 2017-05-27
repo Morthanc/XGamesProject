@@ -5,6 +5,7 @@
  */
 package com.senac.xgames.tela;
 import com.senac.xgames.exceptions.ProdutoException;
+import com.senac.xgames.exceptions.VendaException;
 import com.senac.xgames.model.Carrinho;
 import com.senac.xgames.model.Cliente;
 import com.senac.xgames.model.Produto;
@@ -20,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +34,8 @@ public class TelaVenda extends javax.swing.JFrame {
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
     
+    //armmazena globalmente o 
+    Integer quantidade;
     //Objeto servico carrinho para incluir produtos no carrinho e voltar lista
     public static ServicoCarrinho servicoCarrinho = new ServicoCarrinho();
     
@@ -303,12 +308,13 @@ public class TelaVenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarVendaActionPerformed
+
         try {
             this.efetuarVenda();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e + "Falha ao finalizar venda!");
-            return;
-        } 
+        } catch (Exception ex) {
+            System.out.println("Algo deu errado na finalização de venda, linha 315");
+        }
+
         
     }//GEN-LAST:event_jButtonFinalizarVendaActionPerformed
 
@@ -334,9 +340,7 @@ public class TelaVenda extends javax.swing.JFrame {
         Date date = new Date();
         date.getTime();
         dateFormat.format(date);
-        
-        try {
-            
+
             for(int i = 0; i < listarCarrinho.size(); i++){
                
                 //venda.setCodigo(listarCarrinho.get(i).getCodigo());
@@ -369,44 +373,18 @@ public class TelaVenda extends javax.swing.JFrame {
                         
                         //Cadastra um novo objeto venda
                         ServicoVenda.cadastrarVenda(venda);
-                        
-                       // //Inclui o codigo da venda ao item
-                       // itens.setCodigoVenda(venda.getCodigo());
-                        
-                        //Inclui em uma lista provisoria
-                       // listaItens.add(itens);
-                        
-                        //Grava no ArrayLista do Modelo de Venda
-                       // venda.setListaItemVenda(listaItens);
-                        
-                        //Limpa para nao duplicar os itens
-                      //  listaItens.clear();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e + "Falha ao incluir Venda!");
-          
-                    } 
-                }else{
-                        //Inclui o codigo da venda ao item
-                        //itens.setCodigoVenda(venda.getCodigo());
-                        
-                        //Inclui em uma lista provisoria
-                        //listaItens.add(itens);
-                        
-                        //Grava no ArrayLista do Modelo de Venda
-                      //  venda.setListaItemVenda(listaItens);
-                        
-                        //Limpa para nao duplicar os itens
-                       // listaItens.clear();
+
+                    } catch (NullPointerException e) {
+                        JOptionPane.showMessageDialog(null,"Cliente nao encontrado!");      
+                    } catch(IndexOutOfBoundsException x){
+                        JOptionPane.showMessageDialog(null, "Cliente nao encontrado!");  
+                            }
                 }
                
             }
             //inclui itens extraidos do pedido na lista da venda
             venda.setProduto(listaProdutos);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e + "Falha ao incluir itens do carrinho!");
-           
-        }
         
         //Caso tenha chegado até aqui,a venda foi realizada com sucesso
             //Então exibe uma mensagem de sucesso para o usuário
@@ -464,20 +442,23 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButtonAdicionarCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarCarrinhoActionPerformed
-        // TODO add your handling code here:
-            //Lista de carrinho. 
+
+            String qtdString;
+            //Lista de carrinho.
             Carrinho carrinho = new Carrinho();
-            Produto produto = new Produto();
+            Produto produto;
+
+
             
             //Variável criada para controle da quantidade de produtos inseridos
-            Integer quantidade;
+            
             
         try {
             //Captura a linha selecionada da tabela
             final int row = jTableProdutos.getSelectedRow();
             
             //Pega a quantidade digitada pelo usuário para determinado produto
-            quantidade = (Integer) jTableProdutos.getValueAt(row, 5);
+           // quantidade = (Integer) jTableProdutos.getValueAt(row, 5);
                 
             //Pega o código do produto da tabela
             Integer codigo = (Integer) jTableProdutos.getValueAt(row, 0);
@@ -503,6 +484,17 @@ public class TelaVenda extends javax.swing.JFrame {
                 }
             }
             
+                        
+        try{//lógica para abrir uma mensagem de texto e pedir para digitar a quantidade
+            qtdString = JOptionPane.showInputDialog(rootPane,"Digite a quantidade");
+            quantidade = Integer.valueOf(qtdString);
+            if (qtdString==null){
+                JOptionPane.showMessageDialog(rootPane,"Por favor, digite a quantidade");
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(rootPane,"Por favor, digite um número");
+        } 
+        
             carrinho.setCodigo(produto.getCodigo());
             carrinho.setTitulo(produto.getTitulo());
             carrinho.setPlataforma(produto.getPlataforma());
