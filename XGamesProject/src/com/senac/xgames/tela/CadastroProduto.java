@@ -74,9 +74,21 @@ public class CadastroProduto extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTextPreco = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter preco= new javax.swing.text.MaskFormatter("R$ #######");
+            jTextPreco = new javax.swing.JFormattedTextField(preco);
+        }
+        catch (Exception e){
+        }
         jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jTextEstoque = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter estoque= new javax.swing.text.MaskFormatter("#######");
+            jTextEstoque = new javax.swing.JFormattedTextField(estoque);
+        }
+        catch (Exception e){
+        }
         jButtonCadastrar = new javax.swing.JButton();
         jButtonVoltar = new javax.swing.JButton();
         jComboBoxCategoria = new javax.swing.JComboBox<>();
