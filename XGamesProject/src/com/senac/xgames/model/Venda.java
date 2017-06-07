@@ -16,7 +16,7 @@ import java.util.List;
 public class Venda {
     private Integer codigo;
     private Cliente cliente;
-    private List<Produto> produto;
+    public List<Produto> produto = new ArrayList<Produto>();
     private Date data;
     private Double valorTotal;
 
