@@ -39,11 +39,19 @@ public class ValidadorCliente {
                     + "RG do cliente");
         }
          
+         if(cliente.getRg().length() < 12){
+             throw new ClienteException("RG incorreto, favor verificar!");
+         }
+         
           if (cliente.getCpf()== null
                 || "".equals(cliente.getCpf())) {
             throw new ClienteException("É necessário informar o "
                     + "Cpf do cliente");
         }
+          
+          if(cliente.getCpf().length() < 14){
+              throw new ClienteException("CPF incorreto, favor verificar!");
+          }
           
            if (cliente.getSexo()== null
                 || "".equals(cliente.getSexo())) {
@@ -56,7 +64,10 @@ public class ValidadorCliente {
             throw new ClienteException("É necessário informar pelo menos "
                     + "1 número de telefone do cliente");
         }
-           
+           if(cliente.getTelefone1().length() < 13){
+               throw new ClienteException("Telefone incorreto, favor verificar!");
+           }
+
             if (cliente.getLogradouro()== null
                 || "".equals(cliente.getLogradouro())) {
             throw new ClienteException("É necessário informar o "
@@ -80,6 +91,9 @@ public class ValidadorCliente {
             throw new ClienteException("É necessário informar o "
                     + "CEP do cliente");
         }
+          if(cliente.getCep().length() < 9){
+              throw new ClienteException("CEP incorreto, favor verificar!");
+          }
           
           if (cliente.getNumero()== null
                 || "".equals(cliente.getNumero())) {
