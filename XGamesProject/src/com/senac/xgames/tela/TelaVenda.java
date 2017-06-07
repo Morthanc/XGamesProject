@@ -83,7 +83,7 @@ public class TelaVenda extends javax.swing.JFrame {
         jButtonFinalizarVenda = new javax.swing.JButton();
         jButtonVoltar = new javax.swing.JButton();
         jButtonAdicionarCarrinho = new javax.swing.JButton();
-        JButtonCancelarVenda = new javax.swing.JButton();
+        jLabelCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -191,12 +191,7 @@ public class TelaVenda extends javax.swing.JFrame {
             }
         });
 
-        JButtonCancelarVenda.setText("Cancelar Venda");
-        JButtonCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JButtonCancelarVendaActionPerformed(evt);
-            }
-        });
+        jLabelCliente.setText("<Cliente>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -231,6 +226,8 @@ public class TelaVenda extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -244,8 +241,6 @@ public class TelaVenda extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(JButtonCancelarVenda)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonFinalizarVenda)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -281,12 +276,12 @@ public class TelaVenda extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(JTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabelValorTotal))
+                    .addComponent(jLabelValorTotal)
+                    .addComponent(jLabelCliente))
                 .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonFinalizarVenda)
-                    .addComponent(jButtonVoltar)
-                    .addComponent(JButtonCancelarVenda))
+                    .addComponent(jButtonVoltar))
                 .addGap(71, 71, 71))
         );
 
@@ -359,10 +354,10 @@ public class TelaVenda extends javax.swing.JFrame {
                        Cliente cliente = listaCliente.get(0);
             
                         if(!listaCliente.isEmpty()){
-                            JOptionPane.showMessageDialog(null, "Cliente encontrado!");
+                            jLabelCliente.setText("Cliente: " + listaCliente.get(0).getNome() + " " + listaCliente.get(0).getSobrenome());
                             
                         }else{
-                            JOptionPane.showMessageDialog(null, "Cliente nao encontrado!");
+                            jLabelCliente.setText("Cliente não encontrado!");
                             return;
                         }
                         venda.setCliente(cliente);
@@ -375,9 +370,9 @@ public class TelaVenda extends javax.swing.JFrame {
                         ServicoVenda.cadastrarVenda(venda);
 
                     } catch (NullPointerException e) {
-                        JOptionPane.showMessageDialog(null,"Cliente nao encontrado!");      
+                        jLabelCliente.setText("Cliente não encontrado!");
                     } catch(IndexOutOfBoundsException x){
-                        JOptionPane.showMessageDialog(null, "Cliente nao encontrado!");  
+                        jLabelCliente.setText("Cliente não encontrado!");  
                             }
                 }
                
@@ -396,7 +391,10 @@ public class TelaVenda extends javax.swing.JFrame {
             //Apaga serviços utilizados para carregar venda, para que seja possível gerar próxima venda
             ServicoCarrinho.apagarLista();
             listaProdutos.clear();
-            listarCarrinho.clear();           
+            listarCarrinho.clear();
+            jLabelCliente.setText("<Cliente>");
+            JTextFieldCPF.setText("");
+            jLabelValorTotal.setText("<Valor>");
             try {
                 refreshListCarrinho();
                 refreshListProdutosVenda();
@@ -448,14 +446,23 @@ public class TelaVenda extends javax.swing.JFrame {
             Carrinho carrinho = new Carrinho();
             Produto produto;
 
-
-            
-            //Variável criada para controle da quantidade de produtos inseridos
+        try{//lógica para abrir uma mensagem de texto e pedir para digitar a quantidade
+            qtdString = JOptionPane.showInputDialog(rootPane,"Digite a quantidade");
+            quantidade = Integer.valueOf(qtdString);
+                
+            if (qtdString==null || quantidade <= 0){
+                JOptionPane.showMessageDialog(rootPane,"Por favor, digite a quantidade");
+                return;
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(rootPane,"Por favor, digite um número");
+        } 
             
             
         try {
             //Captura a linha selecionada da tabela
             final int row = jTableProdutos.getSelectedRow();
+            
             
             //Pega a quantidade digitada pelo usuário para determinado produto
            // quantidade = (Integer) jTableProdutos.getValueAt(row, 5);
@@ -483,17 +490,6 @@ public class TelaVenda extends javax.swing.JFrame {
                     return;
                 }
             }
-            
-                        
-        try{//lógica para abrir uma mensagem de texto e pedir para digitar a quantidade
-            qtdString = JOptionPane.showInputDialog(rootPane,"Digite a quantidade");
-            quantidade = Integer.valueOf(qtdString);
-            if (qtdString==null){
-                JOptionPane.showMessageDialog(rootPane,"Por favor, digite a quantidade");
-            }
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(rootPane,"Por favor, digite um número");
-        } 
         
             carrinho.setCodigo(produto.getCodigo());
             carrinho.setTitulo(produto.getTitulo());
@@ -527,14 +523,9 @@ public class TelaVenda extends javax.swing.JFrame {
             }
               
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(rootPane, e.getMessage(),
-                    "Falha ao incluir produto no carrinho", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null, "Erro ao incluir produto no carrinho, verifique produto e quantidade!");
         }
     }//GEN-LAST:event_jButtonAdicionarCarrinhoActionPerformed
-
-    private void JButtonCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonCancelarVendaActionPerformed
-    
-    }//GEN-LAST:event_JButtonCancelarVendaActionPerformed
     
 
     //Atualiza a lista de Produtos. Pode ser chamado por outras telas
@@ -660,7 +651,6 @@ public class TelaVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JButtonCancelarVenda;
     private javax.swing.JTextField JTextFieldCPF;
     private javax.swing.JButton jButtonAdicionarCarrinho;
     private javax.swing.JButton jButtonFinalizarVenda;
@@ -672,6 +662,7 @@ public class TelaVenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelCliente;
     private javax.swing.JLabel jLabelValorTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -478,6 +478,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
+       int idade = 0;
         if(isAlterar()==false){
             Cliente cliente = new Cliente();
             cliente.setNome(jTextNome.getText());
@@ -493,10 +494,11 @@ public class CadastroCliente extends javax.swing.JFrame {
             cliente.setCidade(jTextCidade.getText());
             
             try {
-                cliente.setIdade(jTextFieldIdade.getText());
+                idade = Integer.parseInt(jTextFieldIdade.getText());
+                cliente.setIdade(String.valueOf(idade));
             } catch (NumberFormatException e) {
-                
                 JOptionPane.showMessageDialog(null, "Erro ao digitar idade: " + e);
+                return;
             }
             
             
@@ -517,7 +519,6 @@ public class CadastroCliente extends javax.swing.JFrame {
                 cliente.setCpf(jTextFieldCPF.getText());
             }
             
-            cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
             
             //Verifica se foi digitado algo ou se existe algum traço da mascara
             if(jTextTelefone.getText().contains(" ")){
@@ -592,10 +593,11 @@ public class CadastroCliente extends javax.swing.JFrame {
             ClienteAltera.setCidade(jTextCidade.getText());
             
              try {
-                ClienteAltera.setIdade(jTextFieldIdade.getText());
+                idade = Integer.parseInt(jTextFieldIdade.getText());
+                ClienteAltera.setIdade(String.valueOf(idade));
             } catch (NumberFormatException e) {
-                
                 JOptionPane.showMessageDialog(null, "Erro ao digitar idade: " + e);
+                return;
             }
             
             //Verifica se foi digitado algo ou se existe algum traço da mascara
@@ -614,7 +616,6 @@ public class CadastroCliente extends javax.swing.JFrame {
                 ClienteAltera.setCpf(jTextFieldCPF.getText());
             }
             
-            ClienteAltera.setIdade(String.valueOf(jTextFieldIdade.getText()));
             
             //Verifica se foi digitado algo ou se existe algum traço da mascara
             if(jTextTelefone.getText().contains(" ")){
