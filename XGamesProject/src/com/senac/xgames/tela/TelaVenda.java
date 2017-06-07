@@ -46,7 +46,8 @@ public class TelaVenda extends javax.swing.JFrame {
     //Variavel para pegar valor digitado do cpf
     public static String cpf = null;
     
-    
+     //Pega produtos do Carrinho para lista de produtos de venda
+    public List<Produto> listaProdutos = new ArrayList<Produto>();
     /**
      * Creates new form Venda
      */
@@ -323,8 +324,7 @@ public class TelaVenda extends javax.swing.JFrame {
         //Carrega Produtos do Carrinho
         List<Carrinho> listarCarrinho = ServicoCarrinho.listarCarrinho();
         
-        //Pega produtos do Carrinho para lista de produtos de venda
-        List<Produto> listaProdutos = new ArrayList<Produto>();
+       
         
 //        ItemVenda itens = new ItemVenda();
 //        List<ItemVenda> listaItens = new ArrayList();
@@ -387,6 +387,21 @@ public class TelaVenda extends javax.swing.JFrame {
                     "- valor - R$ " + venda.getValorTotal() +
                             "\n Data: "+venda.getData(),
                     "Venda Efetuada", JOptionPane.INFORMATION_MESSAGE);
+            
+            for(int i = 0; i < venda.getProduto().size(); i++){
+                System.out.println("Produto: " + venda.getProduto().get(i).getTitulo());
+            }
+            
+            
+            for(int i = 0; i < ServicoVenda.listarVenda().size(); i++){
+                List<Venda> listaVenda = new ArrayList<Venda>();
+                listaVenda = ServicoVenda.listarVenda();
+                
+                List<Produto> listaProduto = new ArrayList<Produto>();
+                listaProduto = listaVenda.get(0).getProduto();
+                
+                System.out.println("Tamanho = " + listaProduto.size());
+            }
             
             //Apaga serviços utilizados para carregar venda, para que seja possível gerar próxima venda
             ServicoCarrinho.apagarLista();

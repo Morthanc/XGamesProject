@@ -6,6 +6,7 @@
 package com.senac.xgames.tela;
 
 import com.senac.xgames.exceptions.VendaException;
+import com.senac.xgames.model.Produto;
 import com.senac.xgames.model.Venda;
 import com.senac.xgames.service.ServicoVenda;
 import java.text.DateFormat;
@@ -25,6 +26,8 @@ public class Relatorio extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dateInicio;
         Date dateFim;
+        
+        public List<Produto> listaProdutosRel = new ArrayList<Produto>();
     /**
      * Creates new form Relatorio
      */
@@ -59,20 +62,20 @@ public class Relatorio extends javax.swing.JFrame {
 
         jTableRelatorioVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Código Venda", "Data", "Cliente", "Valor Total"
+                "Código Venda", "Data", "Cliente", "Produto", "Valor Produto", "Valor Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -274,12 +277,19 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldDataInicioFocusLost
 //Atualiza a lista de Produtos. Pode ser chamado por outras telas
     public boolean refreshListProdutosVenda() throws VendaException, Exception {
-        Venda venda = new Venda();
+       
         //Realiza a pesquisa de vendas
         //para atualizar a lista
         List<Venda> relatorio = new ArrayList<Venda>();
             relatorio = ServicoVenda.listarVenda();
-
+        
+        
+        
+        listaProdutosRel = relatorio.get(0).getProduto();
+        
+        System.out.println("Tamanho Lista = " + listaProdutosRel.size());
+        System.out.println("Vendas =" + relatorio.size());
+        
         //Obtém o elemento representante do conteúdo da tabela na tela
         DefaultTableModel model = (DefaultTableModel) jTableRelatorioVendas.getModel();
         //Indica que a tabela deve excluir todos seus elementos
@@ -293,7 +303,7 @@ public class Relatorio extends javax.swing.JFrame {
         }
 
         //Percorre a lista de resultados e os adiciona na tabela
-        
+        Venda venda = new Venda();
         for (int i = 0; i < relatorio.size(); i++) {
             venda = relatorio.get(i);
             if (venda != null) {
@@ -303,8 +313,13 @@ public class Relatorio extends javax.swing.JFrame {
                     row[0] = venda.getCodigo();
                     row[1] = dateFormat.format(venda.getData());
                     row[2] = venda.getCliente().getNome() + " " + venda.getCliente().getSobrenome();
-                    row[3] = "R$ " + venda.getValorTotal();
+                    
+                    System.out.println("Tamanho = " + venda.getProduto().size());
+                    
+                    row[5] = "R$ " + venda.getValorTotal();
                     model.addRow(row);
+                    
+                   
                 }
             }
         }
