@@ -78,12 +78,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldIdade = new javax.swing.JTextField();
-        try{
-            javax.swing.text.MaskFormatter idade= new javax.swing.text.MaskFormatter("###");
-            jTextFieldIdade = new javax.swing.JFormattedTextField(idade);
-        }
-        catch (Exception e){
-        }
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -339,23 +333,24 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jComboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel18))
-                        .addGap(8, 8, 8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel15)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextSobrenome)
-                    .addComponent(jTextFieldIdade)
-                    .addComponent(jTextCelular)
-                    .addComponent(jTextRG, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
-                .addGap(29, 29, 29))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldIdade)
+                            .addComponent(jTextCelular)
+                            .addComponent(jTextRG, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                        .addGap(29, 29, 29))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,16 +363,13 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jTextNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
@@ -406,7 +398,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(jComboSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
@@ -491,12 +483,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             cliente.setNome(jTextNome.getText());
             cliente.setSobrenome(jTextSobrenome.getText());
             cliente.setSexo(jComboSexo.getSelectedItem().toString());
-            cliente.setRg(jTextRG.getText());
-            cliente.setCpf(jTextFieldCPF.getText());
-            cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
-            cliente.setTelefone1(jTextTelefone.getText());
             cliente.setTelefone2(jTextCelular.getText());
-            cliente.setCep(jTextCep.getText());
             cliente.setLogradouro(jTextLogradouro.getText());
             cliente.setBairro(jTextBairro.getText());
             cliente.setComplemento(jTextComplemento.getText());
@@ -504,6 +491,53 @@ public class CadastroCliente extends javax.swing.JFrame {
             cliente.setEmail(jTextEmail.getText());
             cliente.setEstado(jComboEstado.getSelectedItem().toString());
             cliente.setCidade(jTextCidade.getText());
+            
+            try {
+                cliente.setIdade(jTextFieldIdade.getText());
+            } catch (NumberFormatException e) {
+                
+                JOptionPane.showMessageDialog(null, "Erro ao digitar idade: " + e);
+            }
+            
+            
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextRG.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do RG!");
+                return;
+            }else{
+                cliente.setRg(jTextRG.getText());
+            }
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextFieldCPF.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do CPF!");
+                return;
+            }else{
+                cliente.setCpf(jTextFieldCPF.getText());
+            }
+            
+            cliente.setIdade(String.valueOf(jTextFieldIdade.getText()));
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextTelefone.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do Telefone!");
+                return;
+            }else{
+                cliente.setTelefone1(jTextTelefone.getText());
+            }
+            
+           
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextCep.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do CEP!");
+                return;
+            }else{
+                cliente.setCep(jTextCep.getText());
+            }
+            
+            
         
         
             try {
@@ -544,23 +578,61 @@ public class CadastroCliente extends javax.swing.JFrame {
             menu.setVisible(true);
         
         }else{
+           
             ClienteAltera.setNome(jTextNome.getText());
             ClienteAltera.setSobrenome(jTextSobrenome.getText());
             ClienteAltera.setSexo(jComboSexo.getSelectedItem().toString());
-            ClienteAltera.setRg(jTextRG.getText());
-            ClienteAltera.setCpf(jTextFieldCPF.getText());
-            ClienteAltera.setIdade(String.valueOf(jTextFieldIdade.getText()));
-            ClienteAltera.setTelefone1(jTextTelefone.getText());
             ClienteAltera.setTelefone2(jTextCelular.getText());
-            ClienteAltera.setCep(jTextCep.getText());
             ClienteAltera.setLogradouro(jTextLogradouro.getText());
             ClienteAltera.setBairro(jTextBairro.getText());
             ClienteAltera.setComplemento(jTextComplemento.getText());
             ClienteAltera.setNumero(jTextNumero.getText());
             ClienteAltera.setEmail(jTextEmail.getText());
             ClienteAltera.setEstado(jComboEstado.getSelectedItem().toString());
-            ClienteAltera.setCidade(jTextCidade.getText());        
-        
+            ClienteAltera.setCidade(jTextCidade.getText());
+            
+             try {
+                ClienteAltera.setIdade(jTextFieldIdade.getText());
+            } catch (NumberFormatException e) {
+                
+                JOptionPane.showMessageDialog(null, "Erro ao digitar idade: " + e);
+            }
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextRG.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do RG!");
+                return;
+            }else{
+                ClienteAltera.setRg(jTextRG.getText());
+            }
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextFieldCPF.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do CPF!");
+                return;
+            }else{
+                ClienteAltera.setCpf(jTextFieldCPF.getText());
+            }
+            
+            ClienteAltera.setIdade(String.valueOf(jTextFieldIdade.getText()));
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextTelefone.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do Telefone!");
+                return;
+            }else{
+                ClienteAltera.setTelefone1(jTextTelefone.getText());
+            }
+            
+           
+            
+            //Verifica se foi digitado algo ou se existe algum traço da mascara
+            if(jTextCep.getText().contains(" ")){
+                JOptionPane.showMessageDialog(null, "Erro no formato do CEP!");
+                return;
+            }else{
+                ClienteAltera.setCep(jTextCep.getText());
+            }
             try {
                 //Chama o serviço para cadastro do cliente
                 ServicoCliente.atualizarCliente(ClienteAltera);

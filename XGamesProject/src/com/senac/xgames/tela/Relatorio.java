@@ -216,20 +216,25 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarRelatorioActionPerformed
-
+        int maior30 = 0;
         //date.getTime();
         try{
             dateInicio = dateFormat.parse(jTextFieldDataInicio.getText());
             dateFim = dateFormat.parse(jTextFieldDataFim.getText());
 
-        if(dateInicio.after(dateFim)){
-            JOptionPane.showMessageDialog(null, "Data início não pode ser maior que data fim!");
-        }
+            if(dateInicio.after(dateFim)){
+                JOptionPane.showMessageDialog(null, "Data início não pode ser maior que data fim!");
+            }
             
         }catch(ParseException e){
             JOptionPane.showMessageDialog(null, e + "O formato da Data deve ser dd/mm/yyyy (01/12/1999)!");
         }
+        
         try {
+           maior30 = dateInicio.compareTo(dateFim);
+           
+            System.out.println(maior30);
+            
            refreshListProdutosVenda();
             
         } catch (Exception e) {
