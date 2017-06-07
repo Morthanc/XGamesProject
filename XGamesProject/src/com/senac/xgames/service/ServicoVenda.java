@@ -19,6 +19,8 @@ import java.util.List;
  * @author magno
  */
 public class ServicoVenda {
+    public static List<Venda> listaVendas = new ArrayList<>();
+    
     //Insere um Produto na fonte de dados
     public static void cadastrarVenda(Venda venda)
             throws VendaException, DataSourceException, ItemVendaException {
@@ -39,7 +41,7 @@ public class ServicoVenda {
     
     //Retorna lista com todas as vendas efetuadas
     public static List<Venda> listarVenda() throws DataSourceException{
-        List<Venda> listaVendas = new ArrayList<>();
+        
         try {
             listaVendas = MockVenda.listar();
             
