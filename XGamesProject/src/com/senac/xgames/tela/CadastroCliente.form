@@ -361,6 +361,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldIdade">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xd;&#xa;javax.swing.text.MaskFormatter idade= new javax.swing.text.MaskFormatter(&quot;###&quot;);&#xd;&#xa;jTextFieldIdade = new javax.swing.JFormattedTextField(idade);&#xd;&#xa;}&#xd;&#xa;catch (Exception e){&#xd;&#xa;}"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>

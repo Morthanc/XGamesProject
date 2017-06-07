@@ -229,9 +229,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextPreco">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xd;&#xa;javax.swing.text.MaskFormatter preco= new javax.swing.text.MaskFormatter(&quot;R$ #######&quot;);&#xd;&#xa;jTextPreco = new javax.swing.JFormattedTextField(preco);&#xd;&#xa;}&#xd;&#xa;catch (Exception e){&#xd;&#xa;}"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>
@@ -242,7 +239,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextEstoque">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xd;&#xa;javax.swing.text.MaskFormatter estoque= new javax.swing.text.MaskFormatter(&quot;#######&quot;);&#xd;&#xa;jTextEstoque = new javax.swing.JFormattedTextField(estoque);&#xd;&#xa;}&#xd;&#xa;catch (Exception e){&#xd;&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="CadastroProduto_jTextEstoque"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonCadastrar">

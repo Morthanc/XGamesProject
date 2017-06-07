@@ -78,6 +78,12 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldIdade = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter idade= new javax.swing.text.MaskFormatter("###");
+            jTextFieldIdade = new javax.swing.JFormattedTextField(idade);
+        }
+        catch (Exception e){
+        }
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
