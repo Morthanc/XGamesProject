@@ -543,7 +543,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         
             try {
                 //Chama o serviço para cadastro do cliente
-                ServicoCliente.cadastrarCliente(cliente);
+                servicoCliente.cadastrarCliente(cliente);
             } catch (Exception e) {
                 //Exibe mensagens de erro para o usuário
                 JOptionPane.showMessageDialog(rootPane, e.getMessage(),

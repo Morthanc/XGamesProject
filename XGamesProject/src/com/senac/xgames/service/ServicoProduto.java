@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.senac.xgames.service;
+import com.senac.xgames.dao.ProdutoDAO;
 import com.senac.xgames.exceptions.ProdutoException;
 import com.senac.xgames.model.Produto;
 import com.senac.xgames.model.validador.ValidadorProduto;
@@ -16,16 +17,15 @@ import java.util.List;
  */
 //Classe de Servico de Produto
 public class ServicoProduto {
-    //Insere um Produto na fonte de dados
-    public static void cadastrarProduto(Produto produto)
-            throws ProdutoException, DataSourceException {
-
-        //Chama o validador para verificar o produto
+    ProdutoDAO produtoDAO = new ProdutoDAO();
+    
+    public void cadastrarProduto(Produto produto) throws ProdutoException, DataSourceException {
+        
         ValidadorProduto.validar(produto);
 
         try {
             //Realiza a chamada de inserção na fonte de dados
-            MockProduto.inserir(produto);
+            produtoDAO.inserirProduto(produto);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão

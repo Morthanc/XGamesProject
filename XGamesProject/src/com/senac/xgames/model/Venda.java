@@ -18,7 +18,17 @@ public class Venda {
     private Cliente cliente;
     public List<Produto> produto = new ArrayList<Produto>();
     private Date data;
+    private int quantidade;
     private Double valorTotal;
+    
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+  
 
     public List<Produto> getProduto() {
         return produto;

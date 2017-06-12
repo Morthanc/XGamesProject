@@ -343,7 +343,7 @@ public class TelaVenda extends javax.swing.JFrame {
                 
                 //Adiciona novo produto na lista de produtos da Venda
                 produto = ServicoProduto.obterProduto(listarCarrinho.get(i).getCodigo());
-                produto.setQuantidade(listarCarrinho.get(i).getQuantidade());
+                venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
                 
                 listaProdutos.add(produto);
                 

@@ -6,27 +6,27 @@
 package com.senac.xgames.dao;
 
 import com.senac.xgames.model.Venda;
+import com.senac.xgames.utils.ConexaoBanco;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
- *    private Integer codigo;
-    private Cliente cliente;
-    public List<Produto> produto = new ArrayList<Produto>();
-    private Date data;
-    private Double valorTotal;
  * @author Uriel
  */
 public class VendaDAO {
+        ConexaoBanco conexaoBanco = new ConexaoBanco();    
+        Connection conn = conexaoBanco.createConnection();
+        
     public void cadastrarVenda(Venda venda){
                  String query = " insert into venda (codigo,id_cliente, id_produto, data, valorTotal )"
         + " values (?, ?, ?, ?, ?)";
         
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
+        
         try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, venda.getCodigo());
             preparedStatement.setObject(2, venda.getCliente());
             preparedStatement.setObject(3, venda.getProduto());
@@ -38,7 +38,7 @@ public class VendaDAO {
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO2.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erro ao salvar venda");
         }
     }
 }

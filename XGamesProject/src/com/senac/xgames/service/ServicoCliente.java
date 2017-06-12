@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.senac.xgames.service;
+import com.senac.xgames.dao.ClienteDAO;
 import com.senac.xgames.exceptions.ClienteException;
 import com.senac.xgames.model.Cliente;
 import com.senac.xgames.model.validador.ValidadorCliente;
@@ -17,20 +18,16 @@ import java.util.List;
 
 //Classe de servico do cliente
 public class ServicoCliente {
-    
-    //Insere um cliente na fonte de dados
-    public static void cadastrarCliente(Cliente cliente)
-            throws ClienteException, DataSourceException, Exception {
+     ClienteDAO clienteDAO = new ClienteDAO();
+     
 
-        //Chama o validador para verificar o cliente
+    public void cadastrarCliente(Cliente cliente) throws ClienteException, DataSourceException, Exception {
+
         ValidadorCliente.validar(cliente);
 
         try {
-            //Realiza a chamada de inserção na fonte de dados
-            MockCliente.inserir(cliente);
+            clienteDAO.inserirCliente(cliente);
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
@@ -56,16 +53,13 @@ public class ServicoCliente {
     }
 
     //Realiza a pesquisa de um cliente por nome na fonte de dados
-    public static List<Cliente> procurarCliente(String nome)
-            throws ClienteException, DataSourceException, Exception {
+    public List<Cliente> procurarCliente(String cpf) throws ClienteException, DataSourceException, Exception {
         try {
-            //Verifica se um parâmetro de pesquisa não foi informado.
-            //Caso afirmativo, realiza uma listagem simples do mock.
-            //Caso contrário, realiza uma pesquisa com o parâmetro
-            if (nome == null || "".equals(nome)) {
-                return MockCliente.listar();
+
+            if (cpf == null || "".equals(cpf)) {
+                return clienteDAO.listarCliente(cpf);
             } else {
-                return MockCliente.procurar(nome);
+                return clienteDAO.listarCliente(cpf);
             }
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve

@@ -28,6 +28,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
     //Variável para verificar que alteração foi solicitada
     public boolean alterar = false;
     
+    ServicoCliente servicoCliente = new ServicoCliente();
     
     //Armazena a ultima pesquisa
     String ultimaPesquisa = null;
@@ -70,7 +71,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Cliente");
 
-        jLabel2.setText("Nome do Cliente:");
+        jLabel2.setText("CPF do Cliente:");
 
         jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -354,8 +355,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
     public boolean refreshListClientes() throws ClienteException, Exception {
         //Realiza a pesquisa de clientes com o último valor de pesquisa
         //para atualizar a lista
-        List<Cliente> resultado = ServicoCliente.
-                procurarCliente(ultimaPesquisa);
+        List<Cliente> resultado = servicoCliente.procurarCliente(ultimaPesquisa);
 
         //Obtém o elemento representante do conteúdo da tabela na tela
         DefaultTableModel model = (DefaultTableModel) jTableCliente.getModel();

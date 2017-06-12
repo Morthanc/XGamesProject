@@ -249,11 +249,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
-        // TODO add your handling code here:
-        //Instancia da Classe de ServicoProduto
-        ServicoProduto servicoproduto = new ServicoProduto();
 
-        //Instancia do modelo produto
         if(isAlterar()==false){     
             produto.setCodigo(codigoProduto++);
             produto.setTitulo(jTextTitulo.getText());
@@ -273,7 +269,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         }
             try {
                 //Insere novo produto na base de dados
-                servicoproduto.cadastrarProduto(produto);
+                servicoProduto.cadastrarProduto(produto);
             } catch (Exception e) {
                 //Exibe mensagens de erro para o usuário
                 JOptionPane.showMessageDialog(rootPane, e.getMessage(),
