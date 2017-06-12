@@ -38,7 +38,7 @@ public class TelaVenda extends javax.swing.JFrame {
     Integer quantidade;
     //Objeto servico carrinho para incluir produtos no carrinho e voltar lista
     public static ServicoCarrinho servicoCarrinho = new ServicoCarrinho();
-    
+    ServicoProduto servicoProduto = new ServicoProduto();
     
     //Acumula preco total de venda
     public static double precototal = 0.0;
@@ -547,10 +547,7 @@ public class TelaVenda extends javax.swing.JFrame {
     public boolean refreshListProdutosVenda() throws ProdutoException, Exception {
         Produto produto = new Produto();
         
-        //Realiza a pesquisa de produtos com o último valor de pesquisa
-        //para atualizar a lista
-        List<Produto> resultado = ServicoProduto.
-                procurarProduto(ultimaPesquisa);
+        List<Produto> resultado = servicoProduto.procurarProduto(ultimaPesquisa);
 
         //Obtém o elemento representante do conteúdo da tabela na tela
         DefaultTableModel model = (DefaultTableModel) jTableProdutos.getModel();

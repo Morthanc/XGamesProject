@@ -34,16 +34,12 @@ public class ServicoCliente {
     }
 
     //Atualiza um cliente na fonte de dados
-    public static void atualizarCliente(Cliente cliente)
-            throws ClienteException, DataSourceException, Exception {
+    public void atualizarCliente(Cliente cliente) throws ClienteException, DataSourceException, Exception {
         
-        //Chama o validador para verificar o cliente
-        ValidadorCliente.validar(cliente);
+        //ValidadorCliente.validar(cliente);
 
         try {
-            //Realiza a chamada de atualização na fonte de dados
-            MockCliente.atualizar(cliente);
-            return;
+            clienteDAO.updateCliente(cliente);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão
@@ -53,37 +49,29 @@ public class ServicoCliente {
     }
 
     //Realiza a pesquisa de um cliente por nome na fonte de dados
-    public List<Cliente> procurarCliente(String cpf) throws ClienteException, DataSourceException, Exception {
+    public List<Cliente> procurarCliente(String nome) throws ClienteException, DataSourceException, Exception {
         try {
 
-            if (cpf == null || "".equals(cpf)) {
-                return clienteDAO.listarCliente(cpf);
+            if (nome == null || "".equals(nome)) {
+                throw new Exception("Campo nome vazio!");
             } else {
-                return clienteDAO.listarCliente(cpf);
+                return clienteDAO.listarCliente(nome);
             }
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
     
     //Realiza a pesquisa de um cliente por nome na fonte de dados
-    public static List<Cliente> procurarClienteCpf(String cpf)
-            throws ClienteException, DataSourceException, Exception {
+    public Cliente obterClientePorCpf(String cpf) throws ClienteException, DataSourceException, Exception {
         try {
-            //Verifica se um parâmetro de pesquisa não foi informado.
-            //Caso afirmativo, realiza uma listagem simples do mock.
-            //Caso contrário, realiza uma pesquisa com o parâmetro
             if (cpf == null || "".equals(cpf)) {
-                return MockCliente.listar();
+                throw new Exception("Campo nome vazio!");
             } else {
-                return MockCliente.procurarCPF(cpf);
+                return clienteDAO.encontrarClientePorCpf(cpf);
             }
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
@@ -104,11 +92,10 @@ public class ServicoCliente {
     }
 
     //Exclui o cliente com ID informado do mock
-    public static void excluirCliente(Integer id)
-            throws ClienteException, DataSourceException, Exception {
+    public void excluirCliente(String cpf) throws ClienteException, DataSourceException, Exception {
         try {
             //Solicita ao DAO a exclusão do cliente informado
-            MockCliente.excluir(id);
+            clienteDAO.deletarCliente(cpf);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão

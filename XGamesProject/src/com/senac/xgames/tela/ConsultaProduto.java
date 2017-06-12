@@ -261,9 +261,9 @@ public class ConsultaProduto extends javax.swing.JFrame {
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
                     //Obtém o ID do cliente
-                    Integer id = (Integer) jTableProdutos.getValueAt(row, 0);
+                    Integer codigo = (Integer) jTableProdutos.getValueAt(row, 0);
                     //Solicita ao serviço a inativação do cliente com o ID
-                    ServicoProduto.excluirProduto(id);
+                    servicoProduto.excluirProduto(codigo);
                     //Atualiza a lista após a "exclusão"
                     this.refreshListProdutos();
                 } catch (Exception e) {
@@ -290,7 +290,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
                 
                 //Solicita ao serviço a obtenção do cliente a partir do
                 //ID selecionado na tabela
-                Produto produto = servicoProduto.obterProduto(codigo);
+                Produto produto = servicoProduto.encontrarProdutoPorCodigo(codigo);
                 cadastroProduto = new CadastroProduto();   
                 cadastroProduto.populateFields(produto);
               
@@ -322,8 +322,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
     public boolean refreshListProdutos() throws ProdutoException, Exception {
         //Realiza a pesquisa de produtos com o último valor de pesquisa
         //para atualizar a lista
-        List<Produto> resultado = ServicoProduto.
-                procurarProduto(ultimaPesquisa);
+        List<Produto> resultado = servicoProduto.procurarProduto(ultimaPesquisa);
 
         //Obtém o elemento representante do conteúdo da tabela na tela
         DefaultTableModel model = (DefaultTableModel) jTableProdutos.getModel();

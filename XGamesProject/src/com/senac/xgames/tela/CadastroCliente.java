@@ -484,15 +484,21 @@ public class CadastroCliente extends javax.swing.JFrame {
             cliente.setNome(jTextNome.getText());
             cliente.setSobrenome(jTextSobrenome.getText());
             cliente.setSexo(jComboSexo.getSelectedItem().toString());
+            cliente.setCpf(jTextFieldCPF.getText());            
+            cliente.setRg(jTextRG.getText());            
+            cliente.setTelefone1(jTextTelefone.getText());
             cliente.setTelefone2(jTextCelular.getText());
-            cliente.setLogradouro(jTextLogradouro.getText());
-            cliente.setBairro(jTextBairro.getText());
-            cliente.setComplemento(jTextComplemento.getText());
-            cliente.setNumero(jTextNumero.getText());
             cliente.setEmail(jTextEmail.getText());
-            cliente.setEstado(jComboEstado.getSelectedItem().toString());
+            cliente.setBairro(jTextBairro.getText());
+            cliente.setCep(jTextCep.getText());
+            cliente.setComplemento(jTextComplemento.getText());
+            cliente.setLogradouro(jTextLogradouro.getText());
+            cliente.setNumero(jTextNumero.getText());
             cliente.setCidade(jTextCidade.getText());
-            
+            cliente.setEstado(jComboEstado.getSelectedItem().toString());
+            System.out.println(cliente.toString());
+    
+           
             try {
                 idade = Integer.parseInt(jTextFieldIdade.getText());
                 cliente.setIdade(String.valueOf(idade));
@@ -579,64 +585,38 @@ public class CadastroCliente extends javax.swing.JFrame {
             menu.setVisible(true);
         
         }else{
-           
+            //System.out.println("ID: "+ClienteAltera.getId());
+            System.out.println(ClienteAltera.toString());
             ClienteAltera.setNome(jTextNome.getText());
             ClienteAltera.setSobrenome(jTextSobrenome.getText());
             ClienteAltera.setSexo(jComboSexo.getSelectedItem().toString());
+            ClienteAltera.setCpf(jTextFieldCPF.getText());            
+            ClienteAltera.setRg(jTextRG.getText());            
+            ClienteAltera.setTelefone1(jTextTelefone.getText());
             ClienteAltera.setTelefone2(jTextCelular.getText());
-            ClienteAltera.setLogradouro(jTextLogradouro.getText());
-            ClienteAltera.setBairro(jTextBairro.getText());
-            ClienteAltera.setComplemento(jTextComplemento.getText());
-            ClienteAltera.setNumero(jTextNumero.getText());
             ClienteAltera.setEmail(jTextEmail.getText());
-            ClienteAltera.setEstado(jComboEstado.getSelectedItem().toString());
+            ClienteAltera.setBairro(jTextBairro.getText());
+            ClienteAltera.setCep(jTextCep.getText());
+            ClienteAltera.setComplemento(jTextComplemento.getText());
+            ClienteAltera.setLogradouro(jTextLogradouro.getText());
+            ClienteAltera.setNumero(jTextNumero.getText());
             ClienteAltera.setCidade(jTextCidade.getText());
+            ClienteAltera.setEstado(jComboEstado.getSelectedItem().toString());
+            System.out.println(ClienteAltera.toString());
+    
+           
             
-             try {
+            try {
                 idade = Integer.parseInt(jTextFieldIdade.getText());
                 ClienteAltera.setIdade(String.valueOf(idade));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao digitar idade: " + e);
                 return;
             }
-            
-            //Verifica se foi digitado algo ou se existe algum traço da mascara
-            if(jTextRG.getText().contains(" ")){
-                JOptionPane.showMessageDialog(null, "Erro no formato do RG!");
-                return;
-            }else{
-                ClienteAltera.setRg(jTextRG.getText());
-            }
-            
-            //Verifica se foi digitado algo ou se existe algum traço da mascara
-            if(jTextFieldCPF.getText().contains(" ")){
-                JOptionPane.showMessageDialog(null, "Erro no formato do CPF!");
-                return;
-            }else{
-                ClienteAltera.setCpf(jTextFieldCPF.getText());
-            }
-            
-            
-            //Verifica se foi digitado algo ou se existe algum traço da mascara
-            if(jTextTelefone.getText().contains(" ")){
-                JOptionPane.showMessageDialog(null, "Erro no formato do Telefone!");
-                return;
-            }else{
-                ClienteAltera.setTelefone1(jTextTelefone.getText());
-            }
-            
-           
-            
-            //Verifica se foi digitado algo ou se existe algum traço da mascara
-            if(jTextCep.getText().contains(" ")){
-                JOptionPane.showMessageDialog(null, "Erro no formato do CEP!");
-                return;
-            }else{
-                ClienteAltera.setCep(jTextCep.getText());
-            }
+             
             try {
                 //Chama o serviço para cadastro do cliente
-                ServicoCliente.atualizarCliente(ClienteAltera);
+                servicoCliente.atualizarCliente(ClienteAltera);
                 JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso",
                     "Atualização efetuada", JOptionPane.INFORMATION_MESSAGE);
                 

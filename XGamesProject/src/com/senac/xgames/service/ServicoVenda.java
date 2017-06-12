@@ -22,8 +22,7 @@ public class ServicoVenda {
     public static List<Venda> listaVendas = new ArrayList<>();
     
     //Insere um Produto na fonte de dados
-    public static void cadastrarVenda(Venda venda)
-            throws VendaException, DataSourceException, ItemVendaException {
+    public static void cadastrarVenda(Venda venda) throws VendaException, DataSourceException, ItemVendaException {
 
         //Chama o validador para verificar o produto
         ValidadorVenda.validar(venda);

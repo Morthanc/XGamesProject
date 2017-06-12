@@ -35,27 +35,19 @@ public class ServicoProduto {
     }
 
     //Atualiza um produto na fonte de dados
-    public static void atualizarProduto(Produto produto)
-            throws ProdutoException, DataSourceException {
-        
-        //Chama o validador para verificar o produto
+    public void atualizarProduto(Produto produto) throws ProdutoException, DataSourceException {
         ValidadorProduto.validar(produto);
 
         try {
-            //Realiza a chamada de atualização na fonte de dados
-            MockProduto.atualizar(produto);
-            return;
+            produtoDAO.updateProduto(produto);
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
 
-    //Realiza a pesquisa de um produto por nome na fonte de dados
-    public static List<Produto> procurarProduto(String nome)
-            throws ProdutoException, DataSourceException {
+
+    public  List<Produto> procurarProduto(String nome) throws ProdutoException, DataSourceException {
         try {
             //Verifica se um parâmetro de pesquisa não foi informado.
             //Caso afirmativo, realiza uma listagem simples do mock.
@@ -63,7 +55,7 @@ public class ServicoProduto {
             if (nome == null || "".equals(nome)) {
                 return MockProduto.listar();
             } else {
-                return MockProduto.procurar(nome);
+                 return produtoDAO.listarProduto(nome);
             }
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
@@ -72,31 +64,23 @@ public class ServicoProduto {
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
+    
+    
 
-    //Obtem o produto com ID informado do mock
-    public static Produto obterProduto(Integer codigo)
-            throws ProdutoException, DataSourceException {
+
+    public Produto encontrarProdutoPorCodigo(int codigo) throws ProdutoException, DataSourceException {
         try {
-            
-            return MockProduto.obter(codigo);
+            return produtoDAO.encontrarProduto(codigo);
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
 
-    //Exclui o cliente com ID informado do mock
-    public static void excluirProduto(Integer codigo)
-            throws ProdutoException, DataSourceException {
+    public void excluirProduto(Integer codigo) throws ProdutoException, DataSourceException {
         try {
-            
-            MockProduto.excluir(codigo);
+            produtoDAO.deletarProduto(codigo);
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
-            e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }

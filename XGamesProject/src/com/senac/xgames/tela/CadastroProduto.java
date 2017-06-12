@@ -17,9 +17,6 @@ public class CadastroProduto extends javax.swing.JFrame {
     ServicoProduto servicoProduto = new ServicoProduto();
     Menu menu = new Menu();
     
-    //Variável criada para estabelecer código do produto
-    public static Integer codigoProduto = 2220;
-    
     public boolean alterar;
     Produto produto = new Produto();
 
@@ -251,7 +248,9 @@ public class CadastroProduto extends javax.swing.JFrame {
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
 
         if(isAlterar()==false){     
-            produto.setCodigo(codigoProduto++);
+            double random = (Math.random()*9000)+1000;
+            System.out.println("RANDOM NUMBER: "+ random);
+            produto.setCodigo((int)random);
             produto.setTitulo(jTextTitulo.getText());
             produto.setCategoria(jComboBoxCategoria.getSelectedItem().toString());
             produto.setDesenvolvedor(jTextDesenvolvedora.getText());

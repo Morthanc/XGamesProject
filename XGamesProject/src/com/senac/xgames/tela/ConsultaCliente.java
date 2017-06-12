@@ -71,24 +71,24 @@ public class ConsultaCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Cliente");
 
-        jLabel2.setText("CPF do Cliente:");
+        jLabel2.setText("Nome do Cliente:");
 
         jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Nome", "Sexo", "Idade", "Telefone", "Celular", "RG", "CPF", "Endereço", "CEP", "e-mail", "Cidade", "Estado"
+                "Nome", "Sexo", "Idade", "Telefone", "Celular", "RG", "CPF", "Endereço", "CEP", "e-mail", "Cidade", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -281,19 +281,17 @@ public class ConsultaCliente extends javax.swing.JFrame {
             final int row = jTableCliente.getSelectedRow();
             //Obtém o nome do cliente da linha indicada para exibição
             //de mensagem de confirmação de exclusão utilizando seu nome
-            String nome = (String) jTableCliente.getValueAt(row, 1);
+            String nome = (String) jTableCliente.getValueAt(row, 6);
             //Mostra o diálogo de confirmação de exclusão
             int resposta = JOptionPane.showConfirmDialog(rootPane,
-                "Excluir o cliente \"" + nome + "\"?",
+                "Excluir o cliente de cpf\"" + nome + "\"?",
                 "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
             //Se o valor de resposta for "Sim" para a exclusão
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    //Obtém o ID do cliente
-                    Integer id = (Integer) jTableCliente.getValueAt(row, 0);
-                    //Solicita ao serviço a inativação do cliente com o ID
-                    ServicoCliente.excluirCliente(id);
-                    //Atualiza a lista após a "exclusão"
+                    String cpf = jTableCliente.getValueAt(row, 6).toString();
+                    servicoCliente.excluirCliente(cpf);
+                    
                     this.refreshListClientes();
                 } catch (Exception e) {
                     //Se ocorrer algum erro técnico, mostra-o no console,
@@ -317,31 +315,36 @@ public class ConsultaCliente extends javax.swing.JFrame {
             //Verifica se há linha selecionada na tabela
             if (row >= 0) {
                 //Obtém a linha selecionada na tabela
-                Integer id = (Integer) jTableCliente.getValueAt(row, 0);
+                String cpf = jTableCliente.getValueAt(row, 6).toString();
                 
                 //Solicita ao serviço a obtenção do cliente a partir do
                 //ID selecionado na tabela
-                Cliente cliente = ServicoCliente.obterCliente(id);
-                formAlterar = new CadastroCliente();   
-                formAlterar.populateFields(cliente);
-              
-                    
-                formAlterar.invalidate();
-                formAlterar.validate();
-                formAlterar.repaint();
-                formAlterar.setCliente(cliente);    
-                this.dispose();
-                this.setVisible(false);
-                formAlterar.setVisible(true); 
+                System.out.println("procurando cliente de cpf:"+cpf);
+                Cliente cliente = servicoCliente.obterClientePorCpf(cpf);
+                
+                if (cliente!=null){
+                    formAlterar = new CadastroCliente();   
+                    formAlterar.populateFields(cliente);
+
+
+                    formAlterar.invalidate();
+                    formAlterar.validate();
+                    formAlterar.repaint();
+                    formAlterar.setCliente(cliente);    
+                    this.dispose();
+                    this.setVisible(false);
+                    formAlterar.setVisible(true); 
+                }else{
+                     JOptionPane.showMessageDialog(rootPane, "Cliente não encontrado","Erro ao abrir detalhe", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                
                             
                // formAlterar.toFront();
                 
             }
         } catch (Exception e) {
-            //Se ocorrer algum erro técnico, mostra-o no console,
-            //mas esconde-o do usuário
             e.printStackTrace();
-            //Exibe uma mensagem de erro genérica ao usuário
             JOptionPane.showMessageDialog(rootPane, "Não é possível "
                 + "exibir os detalhes deste cliente.",
                 "Erro ao abrir detalhe", JOptionPane.ERROR_MESSAGE);
@@ -377,19 +380,19 @@ public class ConsultaCliente extends javax.swing.JFrame {
             Cliente cli = resultado.get(i);
             if (cli != null) {
                 Object[] row = new Object[13];
-                row[0] = cli.getId();
-                row[1] = cli.getNome() + " " + cli.getSobrenome();
-                row[2] = cli.getSexo();
-                row[3] = cli.getIdade();
-                row[4] = cli.getTelefone1();
-                row[5] = cli.getTelefone2();
-                row[6] = cli.getRg();
-                row[7] = cli.getCpf();
-                row[8] = cli.getLogradouro() + ", " + cli.getNumero() + " - " + cli.getBairro() + " " + cli.getComplemento();
-                row[9] = cli.getCep();
-                row[10] = cli.getEmail();
-                row[11] = cli.getCidade();
-                row[12] = cli.getEstado();
+                //row[0] = cli.getId();
+                row[0] = cli.getNome() + " " + cli.getSobrenome();
+                row[1] = cli.getSexo();
+                row[2] = cli.getIdade();
+                row[3] = cli.getTelefone1();
+                row[4] = cli.getTelefone2();
+                row[5] = cli.getRg();
+                row[6] = cli.getCpf();
+                row[7] = cli.getLogradouro() + ", " + cli.getNumero() + " - " + cli.getBairro() + " " + cli.getComplemento();
+                row[8] = cli.getCep();
+                row[9] = cli.getEmail();
+                row[10] = cli.getCidade();
+                row[11] = cli.getEstado();
                 model.addRow(row);
             }
         }
