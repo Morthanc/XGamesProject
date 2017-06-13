@@ -16,28 +16,9 @@ import java.util.List;
 public class Venda {
     private Integer codigo;
     private Cliente cliente;
-    public List<Produto> produto = new ArrayList<Produto>();
     private Date data;
-    private int quantidade;
     private Double valorTotal;
     
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-  
-
-    public List<Produto> getProduto() {
-        return produto;
-    }
-
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
-    }
-
 
     public Integer getCodigo() {
         return codigo;
