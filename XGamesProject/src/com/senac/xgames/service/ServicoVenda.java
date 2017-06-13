@@ -5,6 +5,7 @@
  */
 package com.senac.xgames.service;
 
+import com.senac.xgames.dao.VendaDAO;
 import com.senac.xgames.exceptions.DataSourceException;
 import com.senac.xgames.exceptions.ItemVendaException;
 import com.senac.xgames.exceptions.VendaException;
@@ -20,19 +21,16 @@ import java.util.List;
  */
 public class ServicoVenda {
     public static List<Venda> listaVendas = new ArrayList<>();
+    VendaDAO vendaDAO = new VendaDAO();
     
     //Insere um Produto na fonte de dados
-    public static void cadastrarVenda(Venda venda) throws VendaException, DataSourceException, ItemVendaException {
+    public void cadastrarVenda(Venda venda) throws VendaException, DataSourceException, ItemVendaException {
 
-        //Chama o validador para verificar o produto
         ValidadorVenda.validar(venda);
 
         try {
-            //Realiza a chamada de inserção na fonte de dados
-            MockVenda.inserir(venda);
+            vendaDAO.cadastrarVenda(venda);
         } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }

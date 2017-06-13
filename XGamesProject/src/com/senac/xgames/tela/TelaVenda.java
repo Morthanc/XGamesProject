@@ -39,6 +39,8 @@ public class TelaVenda extends javax.swing.JFrame {
     //Objeto servico carrinho para incluir produtos no carrinho e voltar lista
     public static ServicoCarrinho servicoCarrinho = new ServicoCarrinho();
     ServicoProduto servicoProduto = new ServicoProduto();
+    ServicoVenda servicoVenda = new ServicoVenda();
+    ServicoCliente servicoCliente = new ServicoCliente();
     
     //Acumula preco total de venda
     public static double precototal = 0.0;
@@ -342,7 +344,7 @@ public class TelaVenda extends javax.swing.JFrame {
                 //venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
                 
                 //Adiciona novo produto na lista de produtos da Venda
-                produto = ServicoProduto.obterProduto(listarCarrinho.get(i).getCodigo());
+                produto = servicoProduto.encontrarProdutoPorCodigo(listarCarrinho.get(i).getCodigo());
                 venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
                 
                 listaProdutos.add(produto);
@@ -350,11 +352,11 @@ public class TelaVenda extends javax.swing.JFrame {
                 //Verifica se for o primeiro item do carrinho ele inclui a cabeca da venda
                 if(i == 0){
                    try {
-                       List<Cliente> listaCliente = new ServicoCliente().procurarClienteCpf(JTextFieldCPF.getText());
-                       Cliente cliente = listaCliente.get(0);
+                       Cliente cliente = servicoCliente.obterClientePorCpf(JTextFieldCPF.getText());
+                       
             
-                        if(!listaCliente.isEmpty()){
-                            jLabelCliente.setText("Cliente: " + listaCliente.get(0).getNome() + " " + listaCliente.get(0).getSobrenome());
+                        if(cliente!=null){
+                            jLabelCliente.setText("Cliente: " + cliente.getNome() + " " + cliente.getSobrenome());
                             
                         }else{
                             jLabelCliente.setText("Cliente não encontrado!");
@@ -367,7 +369,7 @@ public class TelaVenda extends javax.swing.JFrame {
                         ValidadorVenda.validar(venda);
                         
                         //Cadastra um novo objeto venda
-                        ServicoVenda.cadastrarVenda(venda);
+                        servicoVenda.cadastrarVenda(venda);
 
                     } catch (NullPointerException e) {
                         jLabelCliente.setText("Cliente não encontrado!");
@@ -486,7 +488,7 @@ public class TelaVenda extends javax.swing.JFrame {
             Integer codigo = (Integer) jTableProdutos.getValueAt(row, 0);
             
             //Consulta o código do produto e atribui o produto ao objeto produto
-            produto = ServicoProduto.obterProduto(codigo);
+            produto = servicoProduto.encontrarProdutoPorCodigo(codigo);
             
             //Verifica se já existe produto na lista
             for(int i = 0; i < ServicoCarrinho.listarCarrinho().size(); i++){

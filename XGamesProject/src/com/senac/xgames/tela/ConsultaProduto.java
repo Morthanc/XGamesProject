@@ -192,54 +192,25 @@ public class ConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonvoltarActionPerformed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        // TODO add your handling code here:
-        
-        // TODO add your handling code here:
-        //Determina o valor do resultado da pesquisa
+
         boolean resultadoPesquisa = false;
         
         //Pega valor da pesquisa e atribui a variavel para efetuar busca
         ultimaPesquisa = jTextFieldNomeProduto.getText();
         
         try {
-            //Solicita a atualização da lista com o novo critério
-            //de pesquisa (ultimaPesquisa)
             resultadoPesquisa = refreshListProdutos();
         } catch (Exception e) {
-            //Exibe mensagens de erro na fonte de dados e para o listener
             JOptionPane.showMessageDialog(rootPane, e.getMessage(),
                     "Falha ao obter lista", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        //Exibe mensagem de erro caso a pesquisa não tenha resultados
         if (!resultadoPesquisa) {
             JOptionPane.showMessageDialog(rootPane, "A pesquisa não retornou resultados ",
                     "Sem resultados", JOptionPane.ERROR_MESSAGE);
         }
-        
-        /*//Serve para ajustar tamanho das colunas com texto utilizado.
-        for (int column = 0; column < jTableProdutos.getColumnCount(); column++){
-        
-            TableColumn tableColumn = jTableProdutos.getColumnModel().getColumn(column);
-            int preferredWidth = tableColumn.getMinWidth();
-            int maxWidth = tableColumn.getMaxWidth();
- 
-            for (int row = 0; row < jTableProdutos.getRowCount(); row++){
-            
-                TableCellRenderer cellRenderer = jTableProdutos.getCellRenderer(row, column);
-                Component c = jTableProdutos.prepareRenderer(cellRenderer, row, column);
-                int width = c.getPreferredSize().width + jTableProdutos.getIntercellSpacing().width;
-                preferredWidth = Math.max(preferredWidth, width);
- 
-            if (preferredWidth >= maxWidth){
-            preferredWidth = maxWidth;
-            break;
-                }
-            }
- 
-            tableColumn.setPreferredWidth( preferredWidth );
-        }*/
+
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
