@@ -33,9 +33,10 @@ public class VendaDAO {
             preparedStatement.setObject(2,venda.getData());
             preparedStatement.setDouble(3,venda.getValorTotal());
             
-            //ResultSet rs = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             
             ResultSet  rs = preparedStatement.getGeneratedKeys();
+            rs.next();
             preparedStatement.close();
             return rs.getInt(1);
         } catch (SQLException ex) {
