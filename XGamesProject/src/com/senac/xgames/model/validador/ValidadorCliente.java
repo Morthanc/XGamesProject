@@ -53,6 +53,11 @@ public class ValidadorCliente {
               throw new ClienteException("CPF incorreto, favor verificar!");
           }
           
+          if(cliente.getIdade()== null
+                  || "".equals(cliente.getIdade())){
+              throw new ClienteException("É necessário informar a idade do cliente!");
+          }
+          
            if (cliente.getSexo()== null
                 || "".equals(cliente.getSexo())) {
             throw new ClienteException("É necessário informar o "
