@@ -33,12 +33,13 @@ public class VendaDAO {
             preparedStatement.setObject(2,venda.getData());
             preparedStatement.setDouble(3,venda.getValorTotal());
             
-            preparedStatement.executeUpdate();
-            
+            preparedStatement.executeUpdate();            
             ResultSet  rs = preparedStatement.getGeneratedKeys();
             rs.next();
+            int codigo = rs.getInt(1);
             preparedStatement.close();
-            return rs.getInt(1);
+
+            return codigo;
         } catch (SQLException ex) {
             System.out.println("Erro ao salvar venda");
             return null;
