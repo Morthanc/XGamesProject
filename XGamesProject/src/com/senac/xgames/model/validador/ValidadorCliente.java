@@ -118,6 +118,8 @@ public class ValidadorCliente {
                     + "estado do cliente");
         }
 
-        
+        if (cliente.getIdade().length() > 3){
+            throw  new ClienteException("Idade inválida!");
+        }
     }
 }
