@@ -5,42 +5,40 @@
  */
 package com.senac.xgames.dao;
 
+import com.senac.xgames.model.ItemVenda;
 import com.senac.xgames.model.Venda;
 import com.senac.xgames.utils.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 
 /**
- * @author Uriel
+ *
+ * @author uriel.oliveira
  */
-public class VendaDAO {
+public class ItemVendaDAO {
+    
         ConexaoBanco conexaoBanco = new ConexaoBanco();    
         Connection conn = conexaoBanco.createConnection();
-        
-    public Integer cadastrarVenda(Venda venda){
-                 String query = " insert into venda (idcliente, data, valorTotal )"
+    
+    public void cadastrarItemVenda(ItemVenda itemVenda,int codigo){
+                 String query = " insert into itemvenda (id_venda, id_produto, quantidade )"
         + " values (?, ?, ?)";
         
         
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, venda.getCliente().getId());
-            preparedStatement.setObject(2,venda.getData());
-            preparedStatement.setDouble(3,venda.getValorTotal());
-            
-            //ResultSet rs = preparedStatement.executeQuery();
-            
-            ResultSet  rs = preparedStatement.getGeneratedKeys();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setObject(1, codigo);
+            preparedStatement.setInt(2, itemVenda.getProduto().getId());
+            preparedStatement.setInt(3, itemVenda.getQuantidade());
+
+
+        
+            preparedStatement.execute();
             preparedStatement.close();
-            return rs.getInt(1);
         } catch (SQLException ex) {
             System.out.println("Erro ao salvar venda");
-            return null;
         }
     }
 }

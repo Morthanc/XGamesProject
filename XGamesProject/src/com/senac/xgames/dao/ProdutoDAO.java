@@ -74,10 +74,29 @@ public class ProdutoDAO {
             throw new Exception("Erro ao atualizar produto", ex);
         }
 
-        
         return produto;
-    
     }
+    
+    public void atualizarEstoque(int codigo, int estoque) throws Exception{
+        System.out.println("Atualizando produto...");
+         String query = "UPDATE produto SET estoque=? WHERE codigo=?";
+        
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+          
+            preparedStatement.setInt(1, estoque);
+            preparedStatement.setInt(2, codigo);
+            System.out.println("Estoque:"+estoque);
+            
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao atualizar produto");
+            throw new Exception("Erro ao atualizar produto", ex);
+        }
+    }
+    
     
     public List<Produto> listarProduto(String titulo){ //retorna todos itens
         List<Produto> lista = new ArrayList<>();
@@ -131,6 +150,7 @@ public class ProdutoDAO {
             ResultSet rs = preparedStatement.executeQuery();
             
             while (rs.next()){
+                produto.setId(rs.getInt(1));
                 produto.setCodigo(rs.getInt(2));
                 produto.setTitulo(rs.getString(3));
                 produto.setDesenvolvedor(rs.getString(4));

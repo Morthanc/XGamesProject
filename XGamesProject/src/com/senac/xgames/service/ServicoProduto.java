@@ -84,4 +84,12 @@ public class ServicoProduto {
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
+    
+    public void atualizaEstoque(int codigo, int estoque) throws ProdutoException, DataSourceException {
+        try {
+            produtoDAO.atualizarEstoque(codigo, estoque);
+        } catch (Exception e) {
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+}
 }

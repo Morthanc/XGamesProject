@@ -8,6 +8,7 @@ import com.senac.xgames.exceptions.ProdutoException;
 import com.senac.xgames.exceptions.VendaException;
 import com.senac.xgames.model.Carrinho;
 import com.senac.xgames.model.Cliente;
+import com.senac.xgames.model.ItemVenda;
 import com.senac.xgames.model.Produto;
 import com.senac.xgames.model.Venda;
 import com.senac.xgames.model.validador.ValidadorCarrinho;
@@ -48,8 +49,7 @@ public class TelaVenda extends javax.swing.JFrame {
     //Variavel para pegar valor digitado do cpf
     public static String cpf = null;
     
-     //Pega produtos do Carrinho para lista de produtos de venda
-    public List<Produto> listaProdutos = new ArrayList<Produto>();
+ 
     /**
      * Creates new form Venda
      */
@@ -110,20 +110,20 @@ public class TelaVenda extends javax.swing.JFrame {
 
         jTableProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Código", "Título", "Plataforma", "Preço", "Estoque", "Quantidade"
+                "Código", "Título", "Plataforma", "Preço", "Estoque"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -337,50 +337,55 @@ public class TelaVenda extends javax.swing.JFrame {
         Date date = new Date();
         date.getTime();
         dateFormat.format(date);
+        Cliente cliente = servicoCliente.obterClientePorCpf(JTextFieldCPF.getText());
+        
+        venda.setCliente(cliente);
+        venda.setData(date);    
+        venda.setValorTotal(precototal);
 
-            for(int i = 0; i < listarCarrinho.size(); i++){
-               
+        ValidadorVenda.validar(venda);
+
+            for(int i = 0; i < listarCarrinho.size(); i++){               
+                ItemVenda itemVenda = new ItemVenda();
+    
                 //venda.setCodigo(listarCarrinho.get(i).getCodigo());
                 //venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
                 
                 //Adiciona novo produto na lista de produtos da Venda
                 produto = servicoProduto.encontrarProdutoPorCodigo(listarCarrinho.get(i).getCodigo());
-                venda.setQuantidade(listarCarrinho.get(i).getQuantidade());
-                
-                listaProdutos.add(produto);
+                itemVenda.setQuantidade(listarCarrinho.get(i).getQuantidade());
+                itemVenda.setProduto(produto);
                 
                 //Verifica se for o primeiro item do carrinho ele inclui a cabeca da venda
-                if(i == 0){
+                //if(i == 0){
                    try {
-                       Cliente cliente = servicoCliente.obterClientePorCpf(JTextFieldCPF.getText());
-                       
-            
                         if(cliente!=null){
                             jLabelCliente.setText("Cliente: " + cliente.getNome() + " " + cliente.getSobrenome());
                             
                         }else{
                             jLabelCliente.setText("Cliente não encontrado!");
-                            return;
+                            break;
                         }
-                        venda.setCliente(cliente);
-                        venda.setData(date);    
-                        venda.setValorTotal(precototal);
-                        
-                        ValidadorVenda.validar(venda);
-                        
+                        int qtde;
+                        quantidade = Integer.valueOf(jTableCarrinho.getValueAt(i, 4).toString());
+                        itemVenda.setVenda(venda);
                         //Cadastra um novo objeto venda
-                        servicoVenda.cadastrarVenda(venda);
+                        int codigo = servicoVenda.cadastrarVenda(venda);//RETURN GENERATED KEYS
+                        servicoVenda.cadastrarItemVenda(itemVenda, codigo);//NAO TA PEGANDO O ID DO VENDA
+                        System.out.println("QUANTIDADE:"+ quantidade+" ID:"+produto.getCodigo());
+                        servicoProduto.atualizaEstoque(produto.getCodigo(), quantidade);//NAO ATUALIZA O ESTOQUE
+                        
 
                     } catch (NullPointerException e) {
                         jLabelCliente.setText("Cliente não encontrado!");
                     } catch(IndexOutOfBoundsException x){
                         jLabelCliente.setText("Cliente não encontrado!");  
                             }
-                }
+                //}
                
             }
             //inclui itens extraidos do pedido na lista da venda
-            venda.setProduto(listaProdutos);
+           // venda.setProduto(listaProdutos);
 
         
         //Caso tenha chegado até aqui,a venda foi realizada com sucesso
@@ -390,9 +395,9 @@ public class TelaVenda extends javax.swing.JFrame {
                             "\n Data: "+venda.getData(),
                     "Venda Efetuada", JOptionPane.INFORMATION_MESSAGE);
             
-            for(int i = 0; i < venda.getProduto().size(); i++){
-                System.out.println("Produto: " + venda.getProduto().get(i).getTitulo());
-            }
+//            for(int i = 0; i < venda.getProduto().size(); i++){
+//                System.out.println("Produto: " + venda.getProduto().get(i).getTitulo());
+//            }
             
             
             for(int i = 0; i < ServicoVenda.listarVenda().size(); i++){
@@ -400,14 +405,14 @@ public class TelaVenda extends javax.swing.JFrame {
                 listaVenda = ServicoVenda.listarVenda();
                 
                 List<Produto> listaProduto = new ArrayList<Produto>();
-                listaProduto = listaVenda.get(0).getProduto();
+                //listaProduto = listaVenda.get(0).getProduto();
                 
                 System.out.println("Tamanho = " + listaProduto.size());
             }
             
             //Apaga serviços utilizados para carregar venda, para que seja possível gerar próxima venda
             ServicoCarrinho.apagarLista();
-            listaProdutos.clear();
+            //listaProdutos.clear();
             listarCarrinho.clear();
             jLabelCliente.setText("<Cliente>");
             JTextFieldCPF.setText("");
@@ -466,7 +471,7 @@ public class TelaVenda extends javax.swing.JFrame {
         try{//lógica para abrir uma mensagem de texto e pedir para digitar a quantidade
             qtdString = JOptionPane.showInputDialog(rootPane,"Digite a quantidade");
             quantidade = Integer.valueOf(qtdString);
-                
+            
             if (qtdString==null || quantidade <= 0){
                 JOptionPane.showMessageDialog(rootPane,"Por favor, digite a quantidade");
                 return;
