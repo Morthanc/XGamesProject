@@ -285,7 +285,7 @@ public class Relatorio extends javax.swing.JFrame {
         
         
         
-        listaProdutosRel = relatorio.get(0).getProduto();
+        //listaProdutosRel = relatorio.get(0).();
         
         System.out.println("Tamanho Lista = " + listaProdutosRel.size());
         System.out.println("Vendas =" + relatorio.size());
@@ -314,7 +314,7 @@ public class Relatorio extends javax.swing.JFrame {
                     row[1] = dateFormat.format(venda.getData());
                     row[2] = venda.getCliente().getNome() + " " + venda.getCliente().getSobrenome();
                     
-                    System.out.println("Tamanho = " + venda.getProduto().size());
+                    //System.out.println("Tamanho = " + venda.getProduto().size());
                     
                     row[5] = "R$ " + venda.getValorTotal();
                     model.addRow(row);

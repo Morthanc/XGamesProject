@@ -9,6 +9,7 @@ import com.senac.xgames.model.Cliente;
 import javax.swing.JOptionPane;
 import com.senac.xgames.service.ServicoCliente;
 import javax.swing.text.MaskFormatter;
+import jdk.nashorn.internal.scripts.JO;
 
 
 /**
@@ -549,7 +550,14 @@ public class CadastroCliente extends javax.swing.JFrame {
         
             try {
                 //Chama o serviço para cadastro do cliente
-                servicoCliente.cadastrarCliente(cliente);
+                //mas antes verifica se o mesmo já não existe na tabela
+                if(servicoCliente.obterClientePorCpf(cliente.getCpf()).getCpf() != null){
+                    JOptionPane.showMessageDialog(null, "Cliente já cadastrado!");
+                    return;
+                }else{
+                   servicoCliente.cadastrarCliente(cliente); 
+                }
+                
             } catch (Exception e) {
                 //Exibe mensagens de erro para o usuário
                 JOptionPane.showMessageDialog(rootPane, e.getMessage(),
@@ -561,6 +569,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             //Então exibe uma mensagem de sucesso para o usuário
             JOptionPane.showMessageDialog(rootPane, "Cliente inserido com sucesso",
                     "Cadastro efetuado", JOptionPane.INFORMATION_MESSAGE);
+            
         
             //Limpa tela apos inclusao do cadastro
             jTextNome.setText("");
