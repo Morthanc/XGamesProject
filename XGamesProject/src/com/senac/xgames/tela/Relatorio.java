@@ -5,6 +5,8 @@
  */
 package com.senac.xgames.tela;
 
+import com.senac.xgames.dao.RelatorioDAO;
+import com.senac.xgames.dto.RelatorioDTO;
 import com.senac.xgames.exceptions.VendaException;
 import com.senac.xgames.model.Produto;
 import com.senac.xgames.model.Venda;
@@ -23,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
  * @author geoinformacao
  */
 public class Relatorio extends javax.swing.JFrame {
+        RelatorioDAO relatorioDAO = new RelatorioDAO();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dateInicio;
         Date dateFim;
@@ -62,20 +65,20 @@ public class Relatorio extends javax.swing.JFrame {
 
         jTableRelatorioVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código Venda", "Data", "Cliente", "Produto", "Valor Produto", "Valor Total"
+                "Cliente", "Data", "Codigo Produto", "Título", "Preço", "Quantidade", "Valor Total", "Estoque atual"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -237,8 +240,10 @@ public class Relatorio extends javax.swing.JFrame {
            maior30 = dateInicio.compareTo(dateFim);
            
             System.out.println(maior30);
+        
+            List<RelatorioDTO> relatorios = relatorioDAO.gerarRelatorio(dateInicio, dateFim);
             
-           refreshListProdutosVenda();
+           refreshListProdutosVenda(relatorios);
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e + "Falha ao imprimir relatório!");
@@ -276,21 +281,8 @@ public class Relatorio extends javax.swing.JFrame {
     // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDataInicioFocusLost
 //Atualiza a lista de Produtos. Pode ser chamado por outras telas
-    public boolean refreshListProdutosVenda() throws VendaException, Exception {
-       
-        //Realiza a pesquisa de vendas
-        //para atualizar a lista
-        List<Venda> relatorio = new ArrayList<Venda>();
-            relatorio = ServicoVenda.listarVenda();
-        
-        
-        
-        //listaProdutosRel = relatorio.get(0).();
-        
-        System.out.println("Tamanho Lista = " + listaProdutosRel.size());
-        System.out.println("Vendas =" + relatorio.size());
-        
-        //Obtém o elemento representante do conteúdo da tabela na tela
+   public boolean refreshListProdutosVenda(List<RelatorioDTO> listaRelatorio) throws VendaException, Exception {
+
         DefaultTableModel model = (DefaultTableModel) jTableRelatorioVendas.getModel();
         //Indica que a tabela deve excluir todos seus elementos
         //Isto limpará a lista, mesmo que a pesquisa não tenha sucesso
@@ -298,32 +290,28 @@ public class Relatorio extends javax.swing.JFrame {
 
         //Verifica se não existiram resultados. Caso afirmativo, encerra a
         //atualização e indica ao elemento acionador o não sucesso da pesquisa
-        if (relatorio == null || relatorio.size() <= 0) {
+        if (listaRelatorio.isEmpty() || listaRelatorio.get(0)==null) {
             return false;
         }
 
-        //Percorre a lista de resultados e os adiciona na tabela
-        Venda venda = new Venda();
-        for (int i = 0; i < relatorio.size(); i++) {
-            venda = relatorio.get(i);
-            if (venda != null) {
-                 System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
-                if(dateInicio.before(venda.getData()) && dateFim.after(venda.getData()) || dateFim.equals(venda.getData())){
+//        //Percorre a lista de resultados e os adiciona na tabela
+            for(int i = 0; i < listaRelatorio.size();i++){  
+                RelatorioDTO relatorioDTO = listaRelatorio.get(i);
+                System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
+                if(dateInicio.before(relatorioDTO.getData()) && dateFim.after(relatorioDTO.getData()) || dateFim.equals(relatorioDTO.getData())){
                     Object[] row = new Object[13];
-                    row[0] = venda.getCodigo();
-                    row[1] = dateFormat.format(venda.getData());
-                    row[2] = venda.getCliente().getNome() + " " + venda.getCliente().getSobrenome();
+                    row[0] = relatorioDTO.getNome() + " "+relatorioDTO.getSobrenome();
+                    row[1] = dateFormat.format(relatorioDTO.getData());
+                    row[2] = relatorioDTO.getCodigo();
+                    row[3] = relatorioDTO.getTitulo();
+                    row[4] = "R$ " + String.valueOf(relatorioDTO.getPreco());
+                    row[5] = relatorioDTO.getQuantidade();
+                    row[6] = "R$ " + String.valueOf(relatorioDTO.getValorTotal());
+                    row[7] = relatorioDTO.getEstoque();
                     
-                    //System.out.println("Tamanho = " + venda.getProduto().size());
-                    
-                    row[5] = "R$ " + venda.getValorTotal();
                     model.addRow(row);
-                    
-                   
                 }
             }
-        }
-
         //Se chegamos até aqui, a pesquisa teve sucesso, então
         //retornamos "true" para o elemento acionante, indicando
         //que não devem ser exibidas mensagens de erro

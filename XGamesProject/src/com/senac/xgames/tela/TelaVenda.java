@@ -333,7 +333,7 @@ public class TelaVenda extends javax.swing.JFrame {
         
         
         //Captura data atual e formata
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         date.getTime();
         dateFormat.format(date);
@@ -345,6 +345,9 @@ public class TelaVenda extends javax.swing.JFrame {
 
         ValidadorVenda.validar(venda);
 
+        //Cadastra um novo objeto venda
+        int codigo = servicoVenda.cadastrarVenda(venda);//RETURN GENERATED KEYS
+        
             for(int i = 0; i < listarCarrinho.size(); i++){               
                 ItemVenda itemVenda = new ItemVenda();
     
@@ -356,8 +359,7 @@ public class TelaVenda extends javax.swing.JFrame {
                 itemVenda.setQuantidade(listarCarrinho.get(i).getQuantidade());
                 itemVenda.setProduto(produto);
                 
-                //Verifica se for o primeiro item do carrinho ele inclui a cabeca da venda
-                //if(i == 0){
+
                    try {
                         if(cliente!=null){
                             jLabelCliente.setText("Cliente: " + cliente.getNome() + " " + cliente.getSobrenome());
@@ -369,8 +371,7 @@ public class TelaVenda extends javax.swing.JFrame {
                         int qtde;
                         quantidade = Integer.valueOf(jTableCarrinho.getValueAt(i, 4).toString());
                         itemVenda.setVenda(venda);
-                        //Cadastra um novo objeto venda
-                        int codigo = servicoVenda.cadastrarVenda(venda);//RETURN GENERATED KEYS
+
                         servicoVenda.cadastrarItemVenda(itemVenda, codigo);//NAO TA PEGANDO O ID DO VENDA
                         System.out.println("QUANTIDADE:"+ quantidade+" ID:"+produto.getCodigo());
                         servicoProduto.atualizaEstoque(produto.getCodigo(), quantidade);//NAO ATUALIZA O ESTOQUE
