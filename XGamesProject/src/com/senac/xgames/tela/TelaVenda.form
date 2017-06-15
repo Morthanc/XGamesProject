@@ -278,6 +278,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="JTextFieldCPF">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xd;&#xa;javax.swing.text.MaskFormatter cpf= new javax.swing.text.MaskFormatter(&quot;###.###.###-##&quot;);&#xd;&#xa;JTextFieldCPF = new javax.swing.JFormattedTextField(cpf);&#xd;&#xa;}&#xd;&#xa;catch (Exception e){&#xd;&#xa;JOptionPane.showMessageDialog(null, &quot;Erro &quot; + e);&#xd;&#xa;}"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>

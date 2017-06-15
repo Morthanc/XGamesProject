@@ -17,6 +17,7 @@ import com.senac.xgames.service.ServicoProduto;
 import com.senac.xgames.service.ServicoCarrinho;
 import com.senac.xgames.service.ServicoCliente;
 import com.senac.xgames.service.ServicoVenda;
+import static com.senac.xgames.tela.TelaVenda.servicoCarrinho;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,6 +82,13 @@ public class TelaVenda extends javax.swing.JFrame {
         jTableCarrinho = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         JTextFieldCPF = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter cpf= new javax.swing.text.MaskFormatter("###.###.###-##");
+            JTextFieldCPF = new javax.swing.JFormattedTextField(cpf);
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro " + e);
+        }
         jLabel6 = new javax.swing.JLabel();
         jLabelValorTotal = new javax.swing.JLabel();
         jButtonFinalizarVenda = new javax.swing.JButton();
@@ -374,7 +382,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
                         servicoVenda.cadastrarItemVenda(itemVenda, codigo);//NAO TA PEGANDO O ID DO VENDA
                         System.out.println("QUANTIDADE:"+ quantidade+" ID:"+produto.getCodigo());
-                        servicoProduto.atualizaEstoque(produto.getCodigo(), quantidade);//NAO ATUALIZA O ESTOQUE
+                        //servicoProduto.atualizaEstoque(produto.getCodigo(), quantidade);//NAO ATUALIZA O ESTOQUE
                         
 
                     } catch (NullPointerException e) {
@@ -508,6 +516,8 @@ public class TelaVenda extends javax.swing.JFrame {
                     carrinho.setQuantidade(quantidade);
                     produto.setEstoque(produto.getEstoque() - carrinho.getQuantidade());
                     
+                    servicoProduto.atualizaEstoque(produto.getCodigo(), produto.getEstoque());
+                    
                     refreshListCarrinho();
                     refreshListProdutosVenda();
                     return;
@@ -533,6 +543,7 @@ public class TelaVenda extends javax.swing.JFrame {
                
                //Subtrai o valor do carrinho para o estoque
                produto.setEstoque(produto.getEstoque() - carrinho.getQuantidade());
+               servicoProduto.atualizaEstoque(produto.getCodigo(), produto.getEstoque());
                
                //Refresh na tabela de carrinho
                refreshListCarrinho();
