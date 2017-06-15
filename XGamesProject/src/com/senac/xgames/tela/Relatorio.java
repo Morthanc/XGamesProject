@@ -266,7 +266,7 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldDataInicioMouseClicked
 
     private void jTextFieldDataFimFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataFimFocusGained
-        jTextFieldDataFim.setText("");
+    
     }//GEN-LAST:event_jTextFieldDataFimFocusGained
 
     private void jTextFieldDataFimFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataFimFocusLost
@@ -274,7 +274,7 @@ public class Relatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldDataFimFocusLost
 
     private void jTextFieldDataInicioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioFocusGained
-        jTextFieldDataInicio.setText("");
+       
     }//GEN-LAST:event_jTextFieldDataInicioFocusGained
 
     private void jTextFieldDataInicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDataInicioFocusLost
