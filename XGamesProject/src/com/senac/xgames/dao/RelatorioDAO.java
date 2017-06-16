@@ -25,10 +25,15 @@ public class RelatorioDAO {
         List<RelatorioDTO> lista = new ArrayList<>();
         
         System.out.println("Buscando produto na base de dados...");
-        String queryVendaItem = "SELECT * FROM venda v inner join itemvenda iv on v.codigo = iv.id_venda "
-                + "inner join cliente c on c.idcliente = v.idcliente "
-                + "inner join produto p on p.idproduto=iv.id_produto "
-                + "WHERE v.data between ? and ?;";       
+        String queryVendaItem = "SELECT concat(c.nome, ' ' ,c.sobrenome) as nome, c.cpf as cpf, "
+                              + "v.codigo as CodigoVenda, v.valorTotal as ValorTotal, v.data as dataVenda, "
+                              + "p.titulo as nomeProduto, p.preco as precoProduto, p.codigo as CodigoProduto "
+                              + "FROM venda v "
+                              + "inner join itemvenda iv on v.codigo = iv.id_venda "
+                              + "inner join cliente c on c.idcliente = v.idcliente "
+                              + "inner join produto p on p.idproduto=iv.id_produto "
+                              + "WHERE v.data between ? and ? "
+                              + "order by CodigoVenda";       
             System.out.println("inicio: "+inicio+ " fim: "+fim);
         try {
             PreparedStatement ps = conn.prepareStatement(queryVendaItem);
@@ -39,17 +44,15 @@ public class RelatorioDAO {
 
                 while (rs.next()){
                     RelatorioDTO relatorioDTO = new RelatorioDTO();
-                    relatorioDTO.setData(rs.getDate(3));
+                    relatorioDTO.setNome(rs.getString(1));
+                    relatorioDTO.setCpf(rs.getString(2));
+                    relatorioDTO.setCodigoVenda(rs.getInt(3));
                     relatorioDTO.setValorTotal(rs.getDouble(4));
-                    relatorioDTO.setQuantidade(rs.getInt(8));
-                    relatorioDTO.setNome(rs.getString(10));
-                    relatorioDTO.setSobrenome(rs.getString(11));
-                    relatorioDTO.setCpf(rs.getString(13));
-                    relatorioDTO.setCodigo(rs.getInt(27));
-                    relatorioDTO.setTitulo(rs.getString(28));
-                    relatorioDTO.setPreco(rs.getDouble(35));
-                    relatorioDTO.setQuantidade(rs.getInt(36));
-                    
+                    relatorioDTO.setData(rs.getDate(5));
+                    relatorioDTO.setTitulo(rs.getString(6));
+                    relatorioDTO.setPreco(rs.getDouble(7));
+                    relatorioDTO.setCodigoProduto(rs.getInt(8));
+              
                     lista.add(relatorioDTO);
                     System.out.println(relatorioDTO.toString());
                 }
