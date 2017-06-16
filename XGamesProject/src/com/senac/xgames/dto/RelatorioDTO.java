@@ -14,19 +14,19 @@ import java.util.Date;
 public class RelatorioDTO {
     private Date data;
     private Double valorTotal;
-    private int quantidade;
     private String nome;
-    private String sobrenome;
     private String cpf;
-    private int codigo;
+    private int CodigoVenda;
     private String titulo;
     private Double preco;
-    private int estoque;
+    private int CodigoProduto;
 
     @Override
     public String toString() {
-        return "RelatorioDTO{" + "data=" + data + ", valorTotal=" + valorTotal + ", quantidade=" + quantidade + ", nome=" + nome + ", sobrenome=" + sobrenome + ", cpf=" + cpf + ", codigo=" + codigo + ", titulo=" + titulo + ", preco=" + preco + ", estoque=" + estoque + '}';
+        return "RelatorioDTO{" + "data=" + data + ", valorTotal=" + valorTotal + ", nome=" + nome + ", cpf=" + cpf + ", CodigoVenda=" + CodigoVenda + ", titulo=" + titulo + ", preco=" + preco + ", CodigoProduto=" + CodigoProduto + '}';
     }
+    
+    
 
     public Date getData() {
         return data;
@@ -44,28 +44,12 @@ public class RelatorioDTO {
         this.valorTotal = valorTotal;
     }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
     }
 
     public String getCpf() {
@@ -76,12 +60,12 @@ public class RelatorioDTO {
         this.cpf = cpf;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getCodigoVenda() {
+        return CodigoVenda;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setCodigoVenda(int CodigoVenda) {
+        this.CodigoVenda = CodigoVenda;
     }
 
     public String getTitulo() {
@@ -100,11 +84,13 @@ public class RelatorioDTO {
         this.preco = preco;
     }
 
-    public int getEstoque() {
-        return estoque;
+    public int getCodigoProduto() {
+        return CodigoProduto;
     }
 
-    public void setEstoque(int estoque) {
-        this.estoque = estoque;
+    public void setCodigoProduto(int CodigoProduto) {
+        this.CodigoProduto = CodigoProduto;
     }
+
+    
 }
