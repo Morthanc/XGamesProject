@@ -20,14 +20,21 @@ public class RelatorioDTO {
     private String titulo;
     private Double preco;
     private int CodigoProduto;
+    private int quantidade;
 
     @Override
     public String toString() {
         return "RelatorioDTO{" + "data=" + data + ", valorTotal=" + valorTotal + ", nome=" + nome + ", cpf=" + cpf + ", CodigoVenda=" + CodigoVenda + ", titulo=" + titulo + ", preco=" + preco + ", CodigoProduto=" + CodigoProduto + '}';
     }
-    
-    
 
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    
     public Date getData() {
         return data;
     }
