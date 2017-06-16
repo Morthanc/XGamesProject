@@ -27,7 +27,7 @@ public class RelatorioDAO {
         System.out.println("Buscando produto na base de dados...");
         String queryVendaItem = "SELECT concat(c.nome, ' ' ,c.sobrenome) as nome, c.cpf as cpf, "
                               + "v.codigo as CodigoVenda, v.valorTotal as ValorTotal, v.data as dataVenda, "
-                              + "p.titulo as nomeProduto, p.preco as precoProduto, p.codigo as CodigoProduto "
+                              + "p.titulo as nomeProduto, p.preco as precoProduto, p.codigo as CodigoProduto, iv.quantidade as quantidade "
                               + "FROM venda v "
                               + "inner join itemvenda iv on v.codigo = iv.id_venda "
                               + "inner join cliente c on c.idcliente = v.idcliente "
@@ -52,7 +52,7 @@ public class RelatorioDAO {
                     relatorioDTO.setTitulo(rs.getString(6));
                     relatorioDTO.setPreco(rs.getDouble(7));
                     relatorioDTO.setCodigoProduto(rs.getInt(8));
-              
+                    relatorioDTO.setQuantidade(rs.getInt(9));
                     lista.add(relatorioDTO);
                     System.out.println(relatorioDTO.toString());
                 }
