@@ -67,20 +67,20 @@ public class Relatorio extends javax.swing.JFrame {
 
         jTableRelatorioVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código Venda", "Cliente", "CPF", "Código Produto", "Nome Produto", "Preço Unitário", "Data Venda", "Valor Total"
+                "Código Venda", "Cliente", "CPF", "Código Produto", "Nome Produto", "Preço Unitário", "Quantidade Produto", "Data Venda", "Valor Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -306,7 +306,7 @@ public class Relatorio extends javax.swing.JFrame {
             for(int i = 0; i < listaRelatorio.size();i++){  
                 RelatorioDTO relatorioDTO = listaRelatorio.get(i);
                 System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
-                if(dateInicio.before(relatorioDTO.getData()) && dateFim.after(relatorioDTO.getData()) || dateFim.equals(relatorioDTO.getData())){
+                //if(dateInicio.before(relatorioDTO.getData()) && dateFim.after(relatorioDTO.getData()) || dateFim.equals(relatorioDTO.getData())){
                     Object[] row = new Object[13];
                     row[0] = relatorioDTO.getCodigoVenda();
                     row[1] = relatorioDTO.getNome();
@@ -314,11 +314,12 @@ public class Relatorio extends javax.swing.JFrame {
                     row[3] = relatorioDTO.getCodigoProduto();
                     row[4] = relatorioDTO.getTitulo();
                     row[5] = "R$ " + String.valueOf(relatorioDTO.getPreco());
-                    row[6] = dateFormat.format(relatorioDTO.getData());
-                    row[7] = "R$ " + String.valueOf(relatorioDTO.getValorTotal());
+                    row[6] = relatorioDTO.getQuantidade();
+                    row[7] = dateFormat.format(relatorioDTO.getData());
+                    row[8] = "R$ " + String.valueOf(relatorioDTO.getValorTotal());
                     
                     model.addRow(row);
-                }
+                //}
             }
         //Se chegamos até aqui, a pesquisa teve sucesso, então
         //retornamos "true" para o elemento acionante, indicando
