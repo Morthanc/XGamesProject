@@ -14,6 +14,8 @@ import com.senac.xgames.service.ServicoVenda;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,11 +73,11 @@ public class Relatorio extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Cliente", "Data", "Codigo Produto", "Título", "Preço", "Quantidade", "Valor Total", "Estoque atual"
+                "Código Venda", "Cliente", "CPF", "Código Produto", "Nome Produto", "Preço Unitário", "Data Venda", "Valor Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false
@@ -237,13 +239,19 @@ public class Relatorio extends javax.swing.JFrame {
         }
         
         try {
-           maior30 = dateInicio.compareTo(dateFim);
+           maior30 = (int) (((dateFim.getTime() - dateInicio.getTime()) + 3600000L) / 86400000L);
+
+           if(maior30 > 30){
+               JOptionPane.showMessageDialog(null, "Não é possível buscar periodo maior que 30 dias!");
+               return;
+           }
            
-            System.out.println(maior30);
-        
-            List<RelatorioDTO> relatorios = relatorioDAO.gerarRelatorio(dateInicio, dateFim);
-            
+           
+           //maior30 = dateInicio.compareTo(dateFim);
+           System.out.println("Diferença entre datas = " + maior30);
+           List<RelatorioDTO> relatorios = relatorioDAO.gerarRelatorio(dateInicio, dateFim);
            refreshListProdutosVenda(relatorios);
+           
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e + "Falha ao imprimir relatório!");
@@ -300,14 +308,14 @@ public class Relatorio extends javax.swing.JFrame {
                 System.out.println("inicio: "+dateFormat.format(dateInicio)+"\nFim"+dateFormat.format(dateFim));
                 if(dateInicio.before(relatorioDTO.getData()) && dateFim.after(relatorioDTO.getData()) || dateFim.equals(relatorioDTO.getData())){
                     Object[] row = new Object[13];
-                    row[0] = relatorioDTO.getNome() + " "+relatorioDTO.getSobrenome();
-                    row[1] = dateFormat.format(relatorioDTO.getData());
-                    row[2] = relatorioDTO.getCodigo();
-                    row[3] = relatorioDTO.getTitulo();
-                    row[4] = "R$ " + String.valueOf(relatorioDTO.getPreco());
-                    row[5] = relatorioDTO.getQuantidade();
-                    row[6] = "R$ " + String.valueOf(relatorioDTO.getValorTotal());
-                    row[7] = relatorioDTO.getEstoque();
+                    row[0] = relatorioDTO.getCodigoVenda();
+                    row[1] = relatorioDTO.getNome();
+                    row[2] = relatorioDTO.getCpf();
+                    row[3] = relatorioDTO.getCodigoProduto();
+                    row[4] = relatorioDTO.getTitulo();
+                    row[5] = "R$ " + String.valueOf(relatorioDTO.getPreco());
+                    row[6] = dateFormat.format(relatorioDTO.getData());
+                    row[7] = "R$ " + String.valueOf(relatorioDTO.getValorTotal());
                     
                     model.addRow(row);
                 }
