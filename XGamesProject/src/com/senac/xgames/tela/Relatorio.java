@@ -242,7 +242,7 @@ public class Relatorio extends javax.swing.JFrame {
            maior30 = (int) (((dateFim.getTime() - dateInicio.getTime()) + 3600000L) / 86400000L);
 
            if(maior30 > 30){
-               JOptionPane.showMessageDialog(null, "Não é possível buscar periodo maior que 30 dias!");
+               JOptionPane.showMessageDialog(null, "Prazo máximo para consulta é de 30 dias, por gentileza verificar período solicitado!");
                return;
            }
            

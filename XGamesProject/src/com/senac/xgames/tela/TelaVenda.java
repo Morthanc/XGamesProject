@@ -177,6 +177,12 @@ public class TelaVenda extends javax.swing.JFrame {
 
         jLabel5.setText("CPF do Cliente:");
 
+        JTextFieldCPF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTextFieldCPFFocusLost(evt);
+            }
+        });
+
         jLabel6.setText("Valor total:");
 
         jLabelValorTotal.setText("<valor>");
@@ -560,6 +566,23 @@ public class TelaVenda extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null, "Erro ao incluir produto no carrinho, verifique produto e quantidade!");
         }
     }//GEN-LAST:event_jButtonAdicionarCarrinhoActionPerformed
+
+    private void JTextFieldCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextFieldCPFFocusLost
+        // TODO add your handling code here:
+        try {
+            Cliente cliente = servicoCliente.obterClientePorCpf(JTextFieldCPF.getText());
+        
+            if(cliente!=null){
+                jLabelCliente.setText("Cliente: " + cliente.getNome() + " " + cliente.getSobrenome());
+                            
+            }else{
+                jLabelCliente.setText("Cliente não encontrado!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao efetuar busca por CPF!");
+        }
+        
+    }//GEN-LAST:event_JTextFieldCPFFocusLost
     
 
     //Atualiza a lista de Produtos. Pode ser chamado por outras telas

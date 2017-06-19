@@ -226,9 +226,10 @@ public class ConsultaCliente extends javax.swing.JFrame {
         //Determina o valor do resultado da pesquisa
         boolean resultadoPesquisa = false;
         
+       
         //Pega valor da pesquisa e atribui a variavel para efetuar busca
         ultimaPesquisa = jTextFieldNomeCliente.getText();
-        
+
         try {
             //Solicita a atualização da lista com o novo critério
             //de pesquisa (ultimaPesquisa)
@@ -359,6 +360,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
         //Realiza a pesquisa de clientes com o último valor de pesquisa
         //para atualizar a lista
         List<Cliente> resultado = servicoCliente.procurarCliente(ultimaPesquisa);
+      
 
         //Obtém o elemento representante do conteúdo da tabela na tela
         DefaultTableModel model = (DefaultTableModel) jTableCliente.getModel();
