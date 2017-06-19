@@ -79,11 +79,11 @@ public class ValidadorCliente {
                     + "endereço do cliente");
         }
             
-          if (cliente.getComplemento()== null
+          /*if (cliente.getComplemento()== null
                 || "".equals(cliente.getComplemento())) {
             throw new ClienteException("É necessário informar o "
                     + "complemento de endereço do cliente");
-        }  
+        }  */
           
           if (cliente.getBairro()== null
                 || "".equals(cliente.getBairro())) {
