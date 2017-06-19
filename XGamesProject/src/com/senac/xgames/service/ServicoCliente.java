@@ -51,15 +51,12 @@ public class ServicoCliente {
     //Realiza a pesquisa de um cliente por nome na fonte de dados
     public List<Cliente> procurarCliente(String nome) throws ClienteException, DataSourceException, Exception {
         try {
-
-            if (nome == null || "".equals(nome)) {
-                throw new Exception("Campo nome vazio!");
-            } else {
-                return clienteDAO.listarCliente(nome);
-            }
+            return clienteDAO.listarCliente(nome);
+            
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
+            
         }
     }
     

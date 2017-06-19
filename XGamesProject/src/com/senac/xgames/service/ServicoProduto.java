@@ -49,14 +49,8 @@ public class ServicoProduto {
 
     public  List<Produto> procurarProduto(String nome) throws ProdutoException, DataSourceException {
         try {
-            //Verifica se um parâmetro de pesquisa não foi informado.
-            //Caso afirmativo, realiza uma listagem simples do mock.
-            //Caso contrário, realiza uma pesquisa com o parâmetro
-            if (nome == null || "".equals(nome)) {
-                return MockProduto.listar();
-            } else {
-                 return produtoDAO.listarProduto(nome);
-            }
+        return produtoDAO.listarProduto(nome);
+          
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão
