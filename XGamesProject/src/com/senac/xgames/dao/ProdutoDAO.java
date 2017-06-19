@@ -101,8 +101,13 @@ public class ProdutoDAO {
     public List<Produto> listarProduto(String titulo){ //retorna todos itens
         List<Produto> lista = new ArrayList<>();
         System.out.println("Buscando produto na base de dados...");
-        String query = "SELECT * FROM produto WHERE titulo LIKE ?";
+        String query = "";
         
+        if(titulo == ""){
+            query = "SELECT * FROM produto";
+        }else{
+            query = "SELECT * FROM produto WHERE titulo LIKE ?";
+        }
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             

@@ -108,7 +108,13 @@ public class ClienteDAO {
         System.out.println("Iniciando listagem de cliente...");
        
         List<Cliente> lista = new ArrayList<>();
-         String query = "SELECT * FROM cliente WHERE nome LIKE ?";
+        String query = "";
+        if(nome == ""){
+            query = "SELECT * FROM cliente";
+        }else{
+            query = "SELECT * FROM cliente WHERE nome LIKE ?";
+        }
+         
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
